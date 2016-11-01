@@ -272,7 +272,7 @@ namespace DB
             ExecuteNonQueryCommand(query);
         }
 
-        public int Count()
+        /*public int Count()
         {
             string query = "SELECT Count(*) FROM reminder WHERE ";
             int Count = -1;
@@ -297,7 +297,7 @@ namespace DB
             }
         }
 
-        /*public void Update()
+        public void Update()
         {
             //TDO
         }*/
