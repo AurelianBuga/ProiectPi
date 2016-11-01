@@ -1,0 +1,3 @@
+TDO : 
+
+- la baza de date : sa nu existe pe acelasi user acelasi NRORDINE pt acelasi obiect

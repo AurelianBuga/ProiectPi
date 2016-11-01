@@ -1,0 +1,19 @@
+c:\users\aurelian\documents\visual studio 2015\Projects\Proiect PI\Proiect PI\bin\Debug\Proiect PI.exe.config
+c:\users\aurelian\documents\visual studio 2015\Projects\Proiect PI\Proiect PI\bin\Debug\Proiect PI.exe
+c:\users\aurelian\documents\visual studio 2015\Projects\Proiect PI\Proiect PI\bin\Debug\Proiect PI.pdb
+c:\users\aurelian\documents\visual studio 2015\Projects\Proiect PI\Proiect PI\obj\Debug\Proiect PI.csprojResolveAssemblyReference.cache
+c:\users\aurelian\documents\visual studio 2015\Projects\Proiect PI\Proiect PI\obj\Debug\MainWindow.g.cs
+c:\users\aurelian\documents\visual studio 2015\Projects\Proiect PI\Proiect PI\obj\Debug\App.g.cs
+c:\users\aurelian\documents\visual studio 2015\Projects\Proiect PI\Proiect PI\obj\Debug\Proiect PI_MarkupCompile.cache
+c:\users\aurelian\documents\visual studio 2015\Projects\Proiect PI\Proiect PI\obj\Debug\Proiect PI_MarkupCompile.lref
+c:\users\aurelian\documents\visual studio 2015\Projects\Proiect PI\Proiect PI\obj\Debug\MainWindow.baml
+c:\users\aurelian\documents\visual studio 2015\Projects\Proiect PI\Proiect PI\obj\Debug\Proiect PI.g.resources
+c:\users\aurelian\documents\visual studio 2015\Projects\Proiect PI\Proiect PI\obj\Debug\Proiect_PI.Properties.Resources.resources
+c:\users\aurelian\documents\visual studio 2015\Projects\Proiect PI\Proiect PI\obj\Debug\Proiect PI.csproj.GenerateResource.Cache
+c:\users\aurelian\documents\visual studio 2015\Projects\Proiect PI\Proiect PI\obj\Debug\Proiect PI.exe
+c:\users\aurelian\documents\visual studio 2015\Projects\Proiect PI\Proiect PI\obj\Debug\Proiect PI.pdb
+c:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Proiect PI\Proiect PI\bin\Debug\Database1.mdf
+c:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Proiect PI\Proiect PI\bin\Debug\Database1_log.ldf
+c:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Proiect PI\Proiect PI\obj\Debug\Proiect PI_Content.g.cs
+C:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Proiect PI\Proiect PI\bin\Debug\MySql.Data.dll
+C:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Proiect PI\Proiect PI\bin\Debug\MySql.Data.xml
