@@ -14,7 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
 using System.Data.SqlClient;
-
 using System.Reflection;
 using System.IO;
 
@@ -58,6 +57,32 @@ public static partial class Helper
         //TDO
         return dateAndTime;
     }
+
+
+    public static bool GetAppLoginType()
+    {
+        //TDO : trebuie sa fie o clasa care este responsabile cu logarea /// care sa aibe un field loginType de tip boolean ( true - online & false - offline)
+        /*if (loginType)
+            return true;
+        else*/
+            return false;
+    }
+
+    public static int GetNrOrdine(string type , int uid)
+    {
+        if (GetAppLoginType())
+        {
+            //daca aplicatie este rulata online 
+            DB.DBConnection conn = new DB.DBConnection();
+            return conn.Count(uid, type.ToLower()) + 1;
+        }
+        else
+        {
+            //daca aplicatie este rulata offline
+            //TDO
+            return 0;
+        }
+    }
 }
 
 namespace DB
@@ -66,7 +91,7 @@ namespace DB
     {
         public MySql.Data.MySqlClient.MySqlConnection conn;
         public bool connStatus;
-        public enum component { reminder=1 , note=2 , todo=3 , link=4 , timer=5 }
+        public enum component { reminder , note , todo , link , timer }
 
         public DBConnection()
         {
@@ -275,9 +300,9 @@ namespace DB
             ExecuteNonQueryCommand(query);
         }
 
-        public int Count(int uid)
+        public int Count(int uid , string compType)
         {
-            string query = "SELECT Count(*) FROM reminder WHERE ";
+            string query = "SELECT Count(*) FROM " + compType + " WHERE ";
             int Count = -1;
 
             //Open Connection
@@ -433,19 +458,26 @@ namespace Components
     {
         private DateTime datePreview;
 
-        public Reminder(string text, int nrOrdine)
+        public Reminder(string text , DateTime dateAndTime)
         {
             Text = text;
             PreviewText = Helper.GetPreviewText(text, 30); // cat sa fie afisat /// OP : posibil in functie de dimensiunea window-ului si a textului
-            NrOrdine = nrOrdine;
+            //NrOrdine = Helper.GetNrOrdine("reminder" , );
             DateAndTime = DateTime.Now; //TDO : dateAndTime trebuie setat intr-un date and time picker
             DatePreview = Helper.GetDatePreview(DateAndTime);
             /*DB.DBConnection conn = new DB.DBConnection();
             List<string>[] list = conn.GetOneTypeComponentList(DB.DBConnection.component.reminder, 2);
             conn.CloseConnection();*/
 
-            Proiect_PI.XMLManager xml = new Proiect_PI.XMLManager(2);
-            xml.CreateUsrXMLFile();
+            List<string> date = new List<string>();
+            date.Add("5970");
+            date.Add("Aurelian");
+            date.Add("Buga");
+            date.Add("aquatrick");
+            date.Add("Email@yahoo.com");
+            date.Add("passw");
+
+            Proiect_PI.XMLManager.CreateUsrXMLFile(date);
         }
 
         public DateTime DatePreview
@@ -453,16 +485,17 @@ namespace Components
             get { return datePreview; }
             set { datePreview = value; }
         }
+    }
 
-        public class Note : Component
+    public class Note : Component
+    {
+        private string title;
+
+        public Note(string text, int nrOrdine)
         {
-            private string title;
-
-            public Note(string text, int nrOrdine)
-            {
-                Text = text;
-                Title = Helper.GetPreviewText(text, 1);   ///// sau se pune preview-ul
-                NrOrdine = nrOrdine;
+            Text = text;
+            Title = Helper.GetPreviewText(text, 1);   ///// sau se pune preview-ul
+             NrOrdine = nrOrdine;
                 PreviewText = Helper.GetFirstWord(text, 30) + "...";// cat sa fie afisat /// OP : posibil in functie de dimensiunea window-ului si a textului
                 DateAndTime = DateTime.Now;
             }
@@ -483,7 +516,7 @@ namespace Components
             }
         }
 
-        public class ToDo : Component
+    public class ToDo : Component
         {
             private bool statusCheck;
 
@@ -503,14 +536,13 @@ namespace Components
             }
         }
 
-        public class Link : Component
+    public class Link : Component
         {
             private string linkText;
             private DateTime datePreview;
 
             public Link(string text, int nrOrdine, string linkText)
             {
-                DateTime time = new DateTime();
                 Text = text;
                 PreviewText = Helper.GetPreviewText(text, 30); // OP : posibil in functie de dimensiunea window-ului si a textului ///IDEA : preview-ul sa se face in timpul executiei .....nu sa fie in constructor
                 NrOrdine = nrOrdine;
@@ -532,7 +564,7 @@ namespace Components
 
         }
 
-        public class Timer : Component
+    public class Timer : Component
         {
             private int hours;
             private int minutes;
@@ -542,7 +574,6 @@ namespace Components
 
             public Timer(string text, int minutes, int seconds)
             {
-                DateTime time = new DateTime();
                 Text = text;
                 PreviewText = Helper.GetPreviewText(text, 30); // sa aiba o lungime maxima ( text scurt) /// tot la executie nu in constructor
                 DateAndTime = DateTime.Now;
@@ -569,7 +600,6 @@ namespace Components
             }
         }
     }
-}
 
 namespace TabManager
 {
@@ -582,7 +612,7 @@ namespace TabManager
             Label lab = new Label();
             TabItem itemx = new TabItem();
             tabOut = tabIn;
-            Components.Reminder reminder = new Components.Reminder("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn" , 1);
+            Components.Reminder reminder = new Components.Reminder("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn" , DateTime.Now);
 
             lab.Content = reminder.PreviewText;
             stack.Children.Add(lab);
