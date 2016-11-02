@@ -15,12 +15,15 @@ using System.Windows.Shapes;
 using System.Data;
 using System.Data.SqlClient;
 
+using System.Reflection;
+using System.IO;
+
 /// <summary>
 /// IDEA: -sa se salveze automat in XML-uri pt a facilita solosirea programului si offline 
 /// IDEA: - sa adaug contacte (nr de telefon , adrese de email)
 /// </summary>
 
-public static class Helper
+public static partial class Helper
 {
     public static bool IsSpace(char ch)
     {
@@ -272,7 +275,7 @@ namespace DB
             ExecuteNonQueryCommand(query);
         }
 
-        /*public int Count()
+        public int Count(int uid)
         {
             string query = "SELECT Count(*) FROM reminder WHERE ";
             int Count = -1;
@@ -297,7 +300,7 @@ namespace DB
             }
         }
 
-        public void Update()
+        /*public void Update()
         {
             //TDO
         }*/
@@ -440,6 +443,9 @@ namespace Components
             /*DB.DBConnection conn = new DB.DBConnection();
             List<string>[] list = conn.GetOneTypeComponentList(DB.DBConnection.component.reminder, 2);
             conn.CloseConnection();*/
+
+            Proiect_PI.XMLManager xml = new Proiect_PI.XMLManager(2);
+            xml.CreateUsrXMLFile();
         }
 
         public DateTime DatePreview

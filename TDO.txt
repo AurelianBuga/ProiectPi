@@ -1,3 +1,10 @@
 TDO : 
 
-- la baza de date : sa nu existe pe acelasi user acelasi NRORDINE pt acelasi obiect
+----- FA UN PROIECT DE TESTARE AL OUTPUT-ULUI
+
+- ATENTIE:::: la baza de date : sa nu existe pe acelasi user acelasi NRORDINE pt acelasi obiect
+
+- Structurarea fisierelor XML :
+	- vor exista foldere corespunzatoare fiecarui user
+	- va exista cate un fisier XML pentru fiecare tip de componenta
+	- 
