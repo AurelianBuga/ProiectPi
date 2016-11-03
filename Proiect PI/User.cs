@@ -24,6 +24,25 @@ namespace UserManager
             this.lName = lName;
             this.userName = userName;
             this.email = email;
+            this.password = password;
+        }
+
+        public int UId { get { return this.uId; } }
+        public string FName { get { return this.fName; } }
+        public string LName { get { return this.lName; } }
+        public string UserName { get { return this.userName; } }
+        public string Email { get { return this.email; } }
+        public bool LoginType { get { return this.loginType; } }
+        public string Password { get { return this.password; } }
+
+        /// <summary>
+        /// Pentru testare------!!!!
+        /// </summary>
+        /// <returns></returns>
+        public static User CreateUser()
+        {
+            User user = new User(5970, "fname", "lname", "aquatrick", "@yahoo", "pass");
+            return user;
         }
 
         public bool OfflineLogin(string userName , string password)
@@ -39,5 +58,10 @@ namespace UserManager
             //TDO
             return true;
         }
+
+        
+
+
+
      }
 }

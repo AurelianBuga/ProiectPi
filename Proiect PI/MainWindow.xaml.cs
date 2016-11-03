@@ -91,7 +91,7 @@ namespace DB
     {
         public MySql.Data.MySqlClient.MySqlConnection conn;
         public bool connStatus;
-        public enum component { reminder , note , todo , link , timer }
+        
 
         public DBConnection()
         {
@@ -154,32 +154,31 @@ namespace DB
             }
         }
 
-        public List<string>[] GetOneTypeComponentList(component comp, int UID)
+        public List<string>[] GetOneTypeComponentList(Components.Component.component comp, int UID)
         {
             List<string>[] list = new List < string >[4];
-            string query;
             for (int i = 0; i < 4; i++)
                 list[i] = new List<string>();
 
             switch (comp)
             {
-                case component.reminder:
+                case Components.Component.component.reminder:
                     list = GetComponentList3("reminder", "NRORD", "REMINDERTEXT", "DATEANDTIME" , UID.ToString());
                     break;
 
-                case component.note:
+                case Components.Component.component.note:
                     list = GetComponentList4("note", "NRORD", "NOTETITLE", "NOTETEXT", "DATEANDTIME", UID.ToString());
                     break;
 
-                case component.todo:
+                case Components.Component.component.todo:
                     list = GetComponentList4("todo", "NRORD", "STATUSCHECK", "TODOTEXT", "DATEANDTIME", UID.ToString());
                     break;
 
-                case component.link:
+                case Components.Component.component.link:
                     list = GetComponentList4("link", "NRORD", "TEXT", "LINKTEXT", "DATEANDTIME" , UID.ToString());
                     break;
 
-                case component.timer:
+                case Components.Component.component.timer:
                     list = GetComponentList4("timer", "TIMERTEXT", "HOURS", "MINUTES", "SECONDS", UID.ToString());
                     break;
             }
@@ -328,81 +327,13 @@ namespace DB
         /*public void Update()
         {
             //TDO
-        }*/
-
-        /*public void Backup()
-        {
-            try
-            {
-                DateTime Time = DateTime.Now;
-                int year = Time.Year;
-                int month = Time.Month;
-                int day = Time.Day;
-                int hour = Time.Hour;
-                int minute = Time.Minute;
-                int second = Time.Second;
-                int millisecond = Time.Millisecond;
-
-                //Save file to C:\ with the current date as a filename
-                string path;
-                path = "C:\\MySqlBackup" + year + "-" + month + "-" + day +
-            "-" + hour + "-" + minute + "-" + second + "-" + millisecond + ".sql";
-                StreamWriter file = new StreamWriter(path);
-
-
-                ProcessStartInfo psi = new ProcessStartInfo();
-                psi.FileName = "mysqldump";
-                psi.RedirectStandardInput = false;
-                psi.RedirectStandardOutput = true;
-                psi.Arguments = string.Format(@"-u{0} -p{1} -h{2} {3}",
-                    uid, password, server, database);
-                psi.UseShellExecute = false;
-
-                Process process = Process.Start(psi);
-
-                string output;
-                output = process.StandardOutput.ReadToEnd();
-                file.WriteLine(output);
-                process.WaitForExit();
-                file.Close();
-                process.Close();
-            }
-            catch (IOException ex)
-            {
-                MessageBox.Show("Error , unable to backup!");
-            }
         }
+
+        
 
         public void Restore()
         {
-            try
-            {
-                //Read file from C:\
-                string path;
-                path = "C:\\MySqlBackup.sql";
-                StreamReader file = new StreamReader(path);
-                string input = file.ReadToEnd();
-                file.Close();
-
-                ProcessStartInfo psi = new ProcessStartInfo();
-                psi.FileName = "mysql";
-                psi.RedirectStandardInput = true;
-                psi.RedirectStandardOutput = false;
-                psi.Arguments = string.Format(@"-u{0} -p{1} -h{2} {3}",
-                    uid, password, server, database);
-                psi.UseShellExecute = false;
-
-
-                Process process = Process.Start(psi);
-                process.StandardInput.WriteLine(input);
-                process.StandardInput.Close();
-                process.WaitForExit();
-                process.Close();
-            }
-            catch (IOException ex)
-            {
-                MessageBox.Show("Error , unable to Restore!");
-            }
+            TDO
         }*/
 
 
@@ -423,6 +354,7 @@ namespace Components
         private int nrOrdine;
         private DateTime dateAndTime;
         private static int NR = 0;
+        public enum component { reminder, note, todo, link, timer }
 
         public string Text
         {
@@ -469,15 +401,11 @@ namespace Components
             List<string>[] list = conn.GetOneTypeComponentList(DB.DBConnection.component.reminder, 2);
             conn.CloseConnection();*/
 
-            List<string> date = new List<string>();
-            date.Add("5970");
-            date.Add("Aurelian");
-            date.Add("Buga");
-            date.Add("aquatrick");
-            date.Add("Email@yahoo.com");
-            date.Add("passw");
+            Link link = new Link("link", 1, "www.google.com");
+            UserManager.User user = UserManager.User.CreateUser();
 
-            Proiect_PI.XMLManager.CreateUsrXMLFile(date);
+            Proiect_PI.XMLManager.CreateUsrXMLFile(user);
+            Proiect_PI.XMLManager.AddComponent(link, 5970);
         }
 
         public DateTime DatePreview

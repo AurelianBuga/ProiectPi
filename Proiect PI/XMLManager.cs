@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.IO;
+using System.Xml;
 
 
 namespace Proiect_PI
@@ -43,7 +44,7 @@ namespace Proiect_PI
             return path;
         }
 
-        public static string CreateUserFolder(string uid)
+        public static string CreateUserFolder(int uid)
         {
             /// daca nu exista folder pt user se va creea 
             /// returneaza calea catre acest folder
@@ -63,13 +64,24 @@ namespace Proiect_PI
             return folderPath;
         }
 
-        public static void CreateUsrXMLFile(List<string> dataUser)
+        public static string CreateAppDataUsrFile(int uid)
+        {
+            string appDataApplicationPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"AppData\Local\MyApplication");
+            DirectoryInfo appDataAppDir = new DirectoryInfo(appDataApplicationPath);
+
+            if (!appDataAppDir.Exists)
+                Directory.CreateDirectory(appDataApplicationPath);
+
+            return appDataApplicationPath;
+        }
+
+        public static void CreateUsrXMLFile(UserManager.User user)
         {
             //IDEA : datele din fisier vor fi criptate /// TDO : cauta metoda de criptare a fisierelor
             // Fiecare user va avea un fisier criptat
 
-            string fileName = dataUser[0];
-            string userFilePath = Path.Combine(CreateUserFolder(dataUser[0]), fileName + ".xml"); 
+            string fileName = user.UId.ToString();
+            string userFilePath = Path.Combine(CreateUserFolder(user.UId), fileName + ".xml");
             DirectoryInfo userFileDir = new DirectoryInfo(userFilePath);
 
             if (!userFileDir.Exists)
@@ -81,14 +93,14 @@ namespace Proiect_PI
 
                 //------------1---------------------------
                 XDocument xmlUser = new XDocument();
-                XElement user = new XElement("User" , string.Empty);
+                XElement userDoc = new XElement("User" , string.Empty);
 
-                user.SetAttributeValue("UID", dataUser[0]);
-                user.SetAttributeValue("FName", dataUser[1]);
-                user.SetAttributeValue("LName", dataUser[2]);
-                user.SetAttributeValue("UserName", dataUser[3]);
-                user.SetAttributeValue("Email", dataUser[4]);
-                user.SetAttributeValue("Password", dataUser[5]);
+                userDoc.SetAttributeValue("UID", user.UId);
+                userDoc.SetAttributeValue("FName", user.FName);
+                userDoc.SetAttributeValue("LName", user.LName);
+                userDoc.SetAttributeValue("UserName", user.UserName);
+                userDoc.SetAttributeValue("Email", user.Email);
+                userDoc.SetAttributeValue("Password", user.Password);
                 
 
                 XElement content = new XElement("Content");
@@ -96,16 +108,12 @@ namespace Proiect_PI
                 content.Add(new XElement("Notes", string.Empty));
                 content.Add(new XElement("Links", string.Empty));
                 content.Add(new XElement("ToDos", string.Empty));
-                user.Add(content);
-                xmlUser.Add(user);
+                userDoc.Add(content);
+                xmlUser.Add(userDoc);
 
-                string appDataApplicationPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"AppData\Local\MyApplication");
-                DirectoryInfo appDataAppDir = new DirectoryInfo(appDataApplicationPath);
+                
 
-                if (!appDataAppDir.Exists)
-                    Directory.CreateDirectory(appDataApplicationPath);
-
-                string tmpUsrFilePath = Path.Combine(appDataApplicationPath , fileName + ".xml");
+                string tmpUsrFilePath = Path.Combine(CreateAppDataUsrFile(user.UId), fileName + ".xml");
 
                 FileStream write = new FileStream( tmpUsrFilePath , FileMode.Create, FileAccess.Write);
                 xmlUser.Save(write);
@@ -114,9 +122,6 @@ namespace Proiect_PI
                 //--------------2-------------------
                 EncryptManager.EncryptFile(tmpUsrFilePath, userFilePath, fileName + fileName + fileName + fileName);
 
-
-                //EncryptManager.DecryptFile(userFilePath, Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\exemplu.xml", fileName + fileName + fileName + fileName);
-
                 //--------------3-------------------
                 File.Delete(tmpUsrFilePath);
                 write.Close();
@@ -124,14 +129,25 @@ namespace Proiect_PI
         }
 
 
-        /*public string GetUserName(int uid)
+        public static void AddComponent(Components.Link linkElement , int uid)
         {
-            string userName;
+            DirectoryInfo userFolder = new DirectoryInfo(CreateUserFolder(uid));
+            FileInfo encrypfile =  userFolder.GetFiles(uid + ".xml").FirstOrDefault();
+            FileInfo appDataUsrFile = new FileInfo(CreateAppDataUsrFile(uid) + @"\" + uid + ".xml");
 
-            //TDO
+            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName , uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
+            File.Delete(encrypfile.FullName);
 
-            return userName;
-        }*/
+            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
+
+
+
+            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
+            File.Delete(appDataUsrFile.FullName);
+        }
+
+
+
 
 
     }

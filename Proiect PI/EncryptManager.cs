@@ -60,8 +60,6 @@ static class  EncryptManager
             {
                 byte[] key = ASCIIEncoding.UTF8.GetBytes(skey);
 
-                /* This is for demostrating purposes only. 
-                 * Ideally you will want the IV key to be different from your key and you should always generate a new one for each encryption in other to achieve maximum security*/
                 byte[] IV = ASCIIEncoding.UTF8.GetBytes(skey);
 
                 using (FileStream fsCrypt = new FileStream(inputFile, FileMode.Open))
