@@ -11,55 +11,81 @@ using System.Runtime.InteropServices;
 
 static class  EncryptManager
     {
-        // cand se va creea un cont se va creea fisierul xml ( care va avea ca nume UID-ul user-ului)
-        // in acest fisier se vor salva datele user-ului ( la fel ca in DB )
-        // dupa....vor fi criptate... cheia fiind uid-ul user-ului + cuvantul "key"
+    // cand se va creea un cont se va creea fisierul xml ( care va avea ca nume UID-ul user-ului)
+    // in acest fisier se vor salva datele user-ului ( la fel ca in DB )
+    // dupa....vor fi criptate... cheia fiind parola ...introdusa de user ....la logare se decripteaza fisierul
 
-        public static void EncryptFile(string sInputFilename, string sOutputFilename, string sKey)
+    public static void EncryptFile(string inputFile, string outputFile, string skey)
+    {
+        try
         {
-            FileStream fsInput = new FileStream(sInputFilename, FileMode.Open , FileAccess.Read);
-            FileStream fsEncrypted = new FileStream(sOutputFilename, FileMode.Create, FileAccess.Write);
+            using (RijndaelManaged aes = new RijndaelManaged())
+            {
+                byte[] key = ASCIIEncoding.UTF8.GetBytes(skey);
 
-            DESCryptoServiceProvider DES = new DESCryptoServiceProvider();
+                /* This is for demostrating purposes only. 
+                 * Ideally you will want the IV key to be different from your key and you should always generate a new one for each encryption in other to achieve maximum security*/
+                byte[] IV = ASCIIEncoding.UTF8.GetBytes(skey);
 
-            DES.Key = ASCIIEncoding.ASCII.GetBytes(sKey);
-            DES.IV = ASCIIEncoding.ASCII.GetBytes(sKey);
-
-            ICryptoTransform desencrypt = DES.CreateEncryptor();
-            CryptoStream cryptostream = new CryptoStream(fsEncrypted, desencrypt, CryptoStreamMode.Write);
-
-            byte[] bytearrayinput = new byte[fsInput.Length - 1];
-            fsInput.Read(bytearrayinput, 0, bytearrayinput.Length);
-            cryptostream.Write(bytearrayinput, 0, bytearrayinput.Length);
-
-            fsInput.Close();
-            fsEncrypted.Close();
+                using (FileStream fsCrypt = new FileStream(outputFile, FileMode.Create))
+                {
+                    using (ICryptoTransform encryptor = aes.CreateEncryptor(key, IV))
+                    {
+                        using (CryptoStream cs = new CryptoStream(fsCrypt, encryptor, CryptoStreamMode.Write))
+                        {
+                            using (FileStream fsIn = new FileStream(inputFile, FileMode.Open))
+                            {
+                                int data;
+                                while ((data = fsIn.ReadByte()) != -1)
+                                {
+                                    cs.WriteByte((byte)data);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-
-        public static void DecryptFile(string sInputFilename, string sOutputFilename, string sKey)
+        catch (Exception ex)
         {
-            DESCryptoServiceProvider DES = new DESCryptoServiceProvider();
-            //A 64 bit key and IV is required for this provider.
-            //Set secret key For DES algorithm.
-            DES.Key = ASCIIEncoding.ASCII.GetBytes(sKey);
-            //Set initialization vector.
-            DES.IV = ASCIIEncoding.ASCII.GetBytes(sKey);
+            // failed to encrypt file
+        }
+    }
 
-            //Create a file stream to read the encrypted file back.
-            FileStream fsread = new FileStream(sInputFilename,
-               FileMode.Open,
-               FileAccess.Read);
-            //Create a DES decryptor from the DES instance.
-            ICryptoTransform desdecrypt = DES.CreateDecryptor();
-            //Create crypto stream set to read and do a 
-            //DES decryption transform on incoming bytes.
-            CryptoStream cryptostreamDecr = new CryptoStream(fsread,
-               desdecrypt,
-               CryptoStreamMode.Read);
-            //Print the contents of the decrypted file.
-            StreamWriter fsDecrypted = new StreamWriter(sOutputFilename);
-            fsDecrypted.Write(new StreamReader(cryptostreamDecr).ReadToEnd());
-            fsDecrypted.Flush();
-            fsDecrypted.Close();
+    public static void DecryptFile(string inputFile, string outputFile, string skey)
+    {
+        try
+        {
+            using (RijndaelManaged aes = new RijndaelManaged())
+            {
+                byte[] key = ASCIIEncoding.UTF8.GetBytes(skey);
+
+                /* This is for demostrating purposes only. 
+                 * Ideally you will want the IV key to be different from your key and you should always generate a new one for each encryption in other to achieve maximum security*/
+                byte[] IV = ASCIIEncoding.UTF8.GetBytes(skey);
+
+                using (FileStream fsCrypt = new FileStream(inputFile, FileMode.Open))
+                {
+                    using (FileStream fsOut = new FileStream(outputFile, FileMode.Create))
+                    {
+                        using (ICryptoTransform decryptor = aes.CreateDecryptor(key, IV))
+                        {
+                            using (CryptoStream cs = new CryptoStream(fsCrypt, decryptor, CryptoStreamMode.Read))
+                            {
+                                int data;
+                                while ((data = cs.ReadByte()) != -1)
+                                {
+                                    fsOut.WriteByte((byte)data);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // failed to decrypt file
+        }
     }
 }
