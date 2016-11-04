@@ -59,18 +59,9 @@ public static partial class Helper
     }
 
 
-    public static bool GetAppLoginType()
+    /*public static int GetNrOrdine(string type , int uid)
     {
-        //TDO : trebuie sa fie o clasa care este responsabile cu logarea /// care sa aibe un field loginType de tip boolean ( true - online & false - offline)
-        /*if (loginType)
-            return true;
-        else*/
-            return false;
-    }
-
-    public static int GetNrOrdine(string type , int uid)
-    {
-        if (GetAppLoginType())
+        if (UserManager.User.LoginType)
         {
             //daca aplicatie este rulata online 
             DB.DBConnection conn = new DB.DBConnection();
@@ -82,7 +73,7 @@ public static partial class Helper
             //TDO
             return 0;
         }
-    }
+    }*/
 }
 
 namespace DB
@@ -326,14 +317,14 @@ namespace DB
 
         /*public void Update()
         {
-            //TDO
+            //TDO /// un fel de refresh
         }
 
         
 
         public void Restore()
         {
-            TDO
+            TDO /// info se vor extrage din XML-uri
         }*/
 
 

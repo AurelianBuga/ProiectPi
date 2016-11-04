@@ -8,3 +8,16 @@ TDO :
 	- vor exista foldere corespunzatoare fiecarui user
 	- va exista cate un fisier XML pentru fiecare tip de componenta
 	- 
+
+TDO's :
+-User:
+	- OfflineLogin(string userName , string password)
+	- OnlineLogin(string userName , string password)
+- XMLManager :
+	- AddComponent x 5 ///
+- MainWindow :
+	- GetDatePreview(DateTime dateAndTime)
+	- GetNrOrdine(string type , int uid)
+	- Update()
+	- Restore() 
+	- DateAndTimePicker() trebuie creeat
