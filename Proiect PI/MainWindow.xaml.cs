@@ -324,7 +324,7 @@ namespace DB
 
         public void Restore()
         {
-            TDO /// info se vor extrage din XML-uri
+            TDO /// info se vor extrage din x
         }*/
 
 
@@ -393,7 +393,15 @@ namespace Components
             conn.CloseConnection();*/
 
             Link link = new Link("link", 1, "www.google.com");
-            UserManager.User user = UserManager.User.CreateUser();
+
+            UserManager.User user = UserManager.User.UserInstance;
+            user.UId = 1113;
+            user.FName = "aurelian";
+            user.LName = "buga";
+            user.UserName = "aquatrick";
+            user.Email = "@yahoo.com";
+            user.LoginType = true;
+            user.Password = "passwd";
 
             Proiect_PI.XMLManager.CreateUsrXMLFile(user);
             Proiect_PI.XMLManager.AddComponent(link, 5970);

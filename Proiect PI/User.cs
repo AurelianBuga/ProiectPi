@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace UserManager
 {
-    class User
+
+    /// <summary>
+    /// Clasa User este de tip singleton : o singura instanta poate fi creeata
+    /// </summary>
+    public sealed class User
     {
         private int uId;
         private string fName;
@@ -16,33 +20,29 @@ namespace UserManager
         private string email;
         private string password;
         private bool loginType;
+        private static readonly User userInstance = new User();
 
-        private User(int uId , string fName , string lName , string userName , string email , string password)
+        private User()
         {
-            this.uId = uId;
-            this.fName = fName;
-            this.lName = lName;
-            this.userName = userName;
-            this.email = email;
-            this.password = password;
+            
         }
 
-        public int UId { get { return this.uId; } }
-        public string FName { get { return this.fName; } }
-        public string LName { get { return this.lName; } }
-        public string UserName { get { return this.userName; } }
-        public string Email { get { return this.email; } }
-        public bool LoginType { get { return this.loginType; } }
-        public string Password { get { return this.password; } }
+        public int UId { get { return this.uId; } set { this.uId = value; } }
+        public string FName { get { return this.fName; } set { this.fName = value; } }
+        public string LName { get { return this.lName; } set { this.lName = value; } }
+        public string UserName { get { return this.userName; } set { this.userName = value; } }
+        public string Email { get { return this.email; } set { this.email = value; } }
+        public bool LoginType { get { return this.loginType; } set { this.loginType = value; } }
+        public string Password { get { return this.password; } set { this.password = value; } }
 
-        /// <summary>
-        /// Pentru testare------!!!!
-        /// </summary>
-        /// <returns></returns>
-        public static User CreateUser()
+        public static  User UserInstance
         {
-            User user = new User(5970, "fname", "lname", "aquatrick", "@yahoo", "pass");
-            return user;
+            get
+            {
+                return userInstance;
+            }
+            
+            
         }
 
         public bool OfflineLogin(string userName , string password)
