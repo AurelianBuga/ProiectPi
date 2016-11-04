@@ -272,6 +272,7 @@ namespace DB
         {
             string query = "INSERT INTO reminder (REMINDERID ,  USERID , DATEANDTIME , REMINDERTEXT , NRORD) VALUES( '"+
                             remID + "' ,'"+ UID + "' , '"+ dateAndTime + "' , '"+ text + "' , '"+ nrOrdine + "')";
+
             ExecuteNonQueryCommand(query);
         }
 
@@ -279,6 +280,7 @@ namespace DB
         {
             string query = "INSERT INTO note (NOTEID ,  USERID , DATEANDTIME , NOTETEXT , NOTETITLE , NRORD) VALUES( '" + 
                             noteID + "' ,'" + UID + "' , '" + dateAndTime + "' , '" + text + "' , '"+ title + "' , '" + nrOrdine + "')";
+
             ExecuteNonQueryCommand(query);
         }
 
@@ -286,6 +288,7 @@ namespace DB
         {
             string query = "INSERT INTO todo (TODOID ,  USERID , DATEANDTIME , TODOTEXT , STATUSCHECK , NRORD) VALUES( '" + 
                             toDoID + "' ,'" + UID + "' , '" + dateAndTime + "' , '" + text + "' , '" + statusCheck + "' , '" + nrOrdine + "')";
+
             ExecuteNonQueryCommand(query);
         }
 
@@ -293,6 +296,7 @@ namespace DB
         {
             string query = "INSERT INTO link (LINKID ,  USERID , DATEANDTIME , TEXT , LINKTEXT , NRORD) VALUES( '" + 
                             linkID + "' ,'" + UID + "' , '" + dateAndTime + "' , '" + text + "' , '" + linkText + "' , '" + nrOrdine + "')";
+
             ExecuteNonQueryCommand(query);
         }
 
@@ -300,16 +304,18 @@ namespace DB
         {
             string query = "INSERT INTO timer (TIMERID , USERID , TIMERTEXT , HOURS , MINUTES , SECONDS) VALUES( '" + 
                             timerID + "' ,'" + UID + "' , '" + text + "' , '" + hours + "' , '" + minutes + "' , '" + seconds + "')";
+
             ExecuteNonQueryCommand(query);
         }
 
         public void DeleteComponent(int componentID , string componentType)
         {
             string query = "DELETE FROM " + componentType + " WHERE REMINDERID = " + componentID;
+
             ExecuteNonQueryCommand(query);
         }
 
-        public int Count(int uid ,Components.Component.componentType compType )
+        public int Count(int uid ,Components.Component.componentType compType)
         {
             string query = "SELECT Count(*) FROM " + compType.ToString() + " WHERE USERID = " + uid;
             int Count = -1;
@@ -333,26 +339,88 @@ namespace DB
 
         public bool UserExists(string userName, string password)
         {
-            // TDO
-            return true;
+            string query = "SELECT Count(*) FROM users WHERE USERNAME = " + userName + "AND PWD = " + password;
+            int Count = -1;
+
+            if(this.OpenConnection() == true)
+            {
+                MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn);
+
+                //ExecuteScalar will return one value
+                Count = int.Parse(cmd.ExecuteScalar() + "");
+
+                this.CloseConnection();
+            }
+            
+            if(Count == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
-        /*public void Update()
+        public UserManager.UserInfo GetUserInfo(string userName, string password)
+        {
+            UserManager.UserInfo userInfo = new UserManager.UserInfo();
+            if (this.OpenConnection() == true)
+            {
+                string query = "SELECT * FROM users WHERE USERNAME = @" + userName + " LIMIT 1";
+                MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn);
+
+                cmd.Parameters.Add("@UID", MySql.Data.MySqlClient.MySqlDbType.Int16);
+                cmd.Parameters.Add("@FNAME", MySql.Data.MySqlClient.MySqlDbType.VarChar);
+                cmd.Parameters.Add("@LNAME", MySql.Data.MySqlClient.MySqlDbType.VarChar);
+                cmd.Parameters.Add("@USERNAME", MySql.Data.MySqlClient.MySqlDbType.VarChar);
+                cmd.Parameters.Add("@EMAIL", MySql.Data.MySqlClient.MySqlDbType.VarChar);
+                cmd.Parameters.Add("@FNAME", MySql.Data.MySqlClient.MySqlDbType.VarChar);
+                cmd.Parameters.Add("@PWD", MySql.Data.MySqlClient.MySqlDbType.VarChar);
+
+                MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    userInfo.uId = reader["UID"].ToString();
+                    userInfo.uId = reader["FNAME"].ToString();
+                    userInfo.uId = reader["LNAME"].ToString();
+                    userInfo.uId = reader["USERNAME"].ToString();
+                    userInfo.uId = reader["EMAIL"].ToString();
+                    userInfo.uId = reader["FNAME"].ToString();
+                    userInfo.uId = reader["PWD"].ToString();
+                }
+
+                this.CloseConnection();
+            }
+
+            return userInfo;
+        }
+
+        public void AddUser(UserManager.UserInfo userInfo)
+        {
+            string query = "INSERT INTO `proiect`.`users` (`UID`, `FNAME`, `LNAME`, `USERNAME`, `EMAIL`, `PWD`) VALUES"+
+                           " ('"+ userInfo.uId+"', '"+ userInfo.fName +"', '"+ userInfo.lName +"', '"+ userInfo.userName +
+                           "', '"+ userInfo.email +"', '"+ userInfo.password +"');";
+
+            ExecuteNonQueryCommand(query);
+        }
+
+        /*public void UpdateComponent()
         {
             //TDO /// un fel de refresh
         }
 
-        
+        public void UpdateUserInfo()
+        {
+
+        }
 
         public void Restore()
         {
             TDO /// info se vor extrage din x
         }*/
-
-
-
-
-
     }
 }
 
@@ -411,6 +479,14 @@ namespace Components
             DateAndTime = DateTime.Now; //TDO : dateAndTime trebuie setat intr-un date and time picker
             DatePreview = Helper.GetDatePreview(DateAndTime);
             DB.DBConnection conn = new DB.DBConnection();
+            UserManager.UserInfo userInfo = new UserManager.UserInfo();
+            userInfo.uId = "5970";
+            userInfo.fName = "aurelian";
+            userInfo.lName = "buga";
+            userInfo.userName = "aquatrick";
+            userInfo.email = "email@yahoo.com";
+            userInfo.password = "parola";
+            conn.AddUser(userInfo);
             //List<string>[] list = conn.GetOneTypeComponentList(componentType.reminder, 2);
             //int nr = conn.Count(2, componentType.reminder);
             //conn.CloseConnection();

@@ -19,24 +19,22 @@ namespace UserManager
         private string userName;
         private string email;
         private string password;
-        private bool loginType;
+        public bool loginType; // true = online , false = offline
         private static readonly User userInstance = new User();
-        // va fi folosita pt output-ul metodei Login() // daca user.emptyUserInstance == true atunci User-ul nu exista in baza de date / XML-uri
-        public static bool emptyUserInstance = true;
+        public bool emptyUserInstance = true;
 
         private User()
         {
             
         }
 
-        //TDO : validare date introduse
-        public int UId { get { return this.uId; } set { this.uId = value; emptyUserInstance = false; } }
-        public string FName { get { return this.fName; } set { this.fName = value; emptyUserInstance = false; } }
-        public string LName { get { return this.lName; } set { this.lName = value; emptyUserInstance = false; } }
-        public string UserName { get { return this.userName; } set { this.userName = value; emptyUserInstance = false; } }
-        public string Email { get { return this.email; } set { this.email = value; emptyUserInstance = false; } }
-        public bool LoginType { get { return this.loginType; } set { this.loginType = value; emptyUserInstance = false; } }
-        public string Password { get { return this.password; } set { this.password = value; emptyUserInstance = false; } }
+        //TDO : trebuie sterse
+        public int UId { get { return this.uId; } set { this.uId = value;} }
+        public string FName { get { return this.fName; } set { this.fName = value; } }
+        public string LName { get { return this.lName; } set { this.lName = value;} }
+        public string UserName { get { return this.userName; } set { this.userName = value; } }
+        public string Email { get { return this.email; } set { this.email = value; } }
+        public string Password { get { return this.password; } set { this.password = value;  } }
 
         public static  User UserInstance
         {
@@ -48,37 +46,60 @@ namespace UserManager
             
         }
 
-        /*public User Login(string userName , string password)
+        public void Login(string userName , string password)
         {
             // if internet access exists -> login online
             if (Helper.CheckForInternetConnection())
             {
-                loginType = true;
-                if (accountExists)
+                DB.DBConnection conn = new DB.DBConnection();
+                if (conn.UserExists(userName , password))
                 {
-                    //se creeaza obiect User
                     //se verifica daca User-ul exista in baza de date
-                    //se se pun valorile din baza de date 
-                    User user =  UserInstance;
+                    //se se pun valorile din baza de date
+                    UserInfo userInfo= conn.GetUserInfo(userName,password);
 
-                    return user;
-                }    
-            }
-            //else -> login offline
-            else
-            {
-                loginType = false;
-                if (accountExists)
-                {
-                    //se creeaza obiect User
-                    //se verifica daca User-ul exista in baza de date
-                    //se se pun valorile din baza de date 
-                    User user = UserInstance;
-
-                    return user;
                 }
             }
-            return true;
-        }*/
+            //else -> login offline /// va aparea un window care sa intrebe user-ul daca 
+            // doreste se se logeze offline
+            /*else
+            {
+                if (UserExists)
+                {
+                    //se creeaza obiect User
+                    //se verifica daca User-ul exista in baza de date
+                    //se se pun valorile din baza de date 
+                    loginType = false;
+
+                }
+                return user;
+            }*/ 
+        }
+
+        public void Register(UserInfo userInfo)
+        {
+            // if internet access exists -> register online
+            if (Helper.CheckForInternetConnection())
+            {
+                DB.DBConnection conn = new DB.DBConnection();
+                conn.AddUser(userInfo);
+            }
+            //else -> register offline /// va aparea un window care sa intrebe user-ul daca 
+            // doreste se se logeze offline
+            else
+            {
+
+            }
+        }
      }
+
+    public struct UserInfo
+    {
+        public string uId;
+        public string fName;
+        public string lName;
+        public string userName;
+        public string email;
+        public string password;
+    }
 }
