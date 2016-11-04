@@ -16,6 +16,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
 using System.IO;
+using System.Net;
 
 /// <summary>
 /// IDEA: -sa se salveze automat in XML-uri pt a facilita solosirea programului si offline 
@@ -56,6 +57,24 @@ public static partial class Helper
     {
         //TDO
         return dateAndTime;
+    }
+
+    public static bool CheckForInternetConnection()
+    {
+        try
+        {
+            using (var client = new WebClient())
+            {
+                using (var stream = client.OpenRead("http://www.google.com"))
+                {
+                    return true;
+                }
+            }
+        }
+        catch
+        {
+            return false;
+        }
     }
 
 
@@ -145,7 +164,7 @@ namespace DB
             }
         }
 
-        public List<string>[] GetOneTypeComponentList(Components.Component.component comp, int UID)
+        public List<string>[] GetOneTypeComponentList(Components.Component.componentType comp, int UID)
         {
             List<string>[] list = new List < string >[4];
             for (int i = 0; i < 4; i++)
@@ -153,23 +172,23 @@ namespace DB
 
             switch (comp)
             {
-                case Components.Component.component.reminder:
+                case Components.Component.componentType.reminder:
                     list = GetComponentList3("reminder", "NRORD", "REMINDERTEXT", "DATEANDTIME" , UID.ToString());
                     break;
 
-                case Components.Component.component.note:
+                case Components.Component.componentType.note:
                     list = GetComponentList4("note", "NRORD", "NOTETITLE", "NOTETEXT", "DATEANDTIME", UID.ToString());
                     break;
 
-                case Components.Component.component.todo:
+                case Components.Component.componentType.todo:
                     list = GetComponentList4("todo", "NRORD", "STATUSCHECK", "TODOTEXT", "DATEANDTIME", UID.ToString());
                     break;
 
-                case Components.Component.component.link:
+                case Components.Component.componentType.link:
                     list = GetComponentList4("link", "NRORD", "TEXT", "LINKTEXT", "DATEANDTIME" , UID.ToString());
                     break;
 
-                case Components.Component.component.timer:
+                case Components.Component.componentType.timer:
                     list = GetComponentList4("timer", "TIMERTEXT", "HOURS", "MINUTES", "SECONDS", UID.ToString());
                     break;
             }
@@ -290,21 +309,18 @@ namespace DB
             ExecuteNonQueryCommand(query);
         }
 
-        public int Count(int uid , string compType)
+        public int Count(int uid ,Components.Component.componentType compType )
         {
-            string query = "SELECT Count(*) FROM " + compType + " WHERE ";
+            string query = "SELECT Count(*) FROM " + compType.ToString() + " WHERE USERID = " + uid;
             int Count = -1;
 
-            //Open Connection
             if (this.OpenConnection() == true)
             {
-                //Create Mysql Command
                 MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn);
 
                 //ExecuteScalar will return one value
                 Count = int.Parse(cmd.ExecuteScalar()+"");
         
-                //close Connection
                 this.CloseConnection();
 
                 return Count;
@@ -313,6 +329,12 @@ namespace DB
             {
                 return Count;
             }
+        }
+
+        public bool UserExists(string userName, string password)
+        {
+            // TDO
+            return true;
         }
 
         /*public void Update()
@@ -345,7 +367,7 @@ namespace Components
         private int nrOrdine;
         private DateTime dateAndTime;
         private static int NR = 0;
-        public enum component { reminder, note, todo, link, timer }
+        public enum componentType { reminder, note, todo, link, timer }
 
         public string Text
         {
@@ -388,11 +410,12 @@ namespace Components
             //NrOrdine = Helper.GetNrOrdine("reminder" , );
             DateAndTime = DateTime.Now; //TDO : dateAndTime trebuie setat intr-un date and time picker
             DatePreview = Helper.GetDatePreview(DateAndTime);
-            /*DB.DBConnection conn = new DB.DBConnection();
-            List<string>[] list = conn.GetOneTypeComponentList(DB.DBConnection.component.reminder, 2);
-            conn.CloseConnection();*/
+            DB.DBConnection conn = new DB.DBConnection();
+            //List<string>[] list = conn.GetOneTypeComponentList(componentType.reminder, 2);
+            //int nr = conn.Count(2, componentType.reminder);
+            //conn.CloseConnection();
 
-            Link link = new Link("link", 1, "www.google.com");
+            /*Link link = new Link("link", 1, "www.google.com");
 
             UserManager.User user = UserManager.User.UserInstance;
             user.UId = 1113;
@@ -404,7 +427,7 @@ namespace Components
             user.Password = "passwd";
 
             Proiect_PI.XMLManager.CreateUsrXMLFile(user);
-            Proiect_PI.XMLManager.AddComponent(link, 5970);
+            Proiect_PI.XMLManager.AddComponent(link, 5970);*/
         }
 
         public DateTime DatePreview

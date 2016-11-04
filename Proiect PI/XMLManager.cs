@@ -218,5 +218,10 @@ namespace Proiect_PI
             EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
             File.Delete(appDataUsrFile.FullName);
         }
+
+        /*public static bool UserExists(string userName, string password)
+        {
+            
+        }*/
     }
 }
