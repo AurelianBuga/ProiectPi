@@ -139,7 +139,7 @@ namespace Proiect_PI
             File.Delete(encrypfile.FullName);
 
             XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
-
+            //TDO - ar trebui sa existe o metoda care sa returneze XDocumentul
 
 
             EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
@@ -147,8 +147,76 @@ namespace Proiect_PI
         }
 
 
+        public static void AddComponent(Components.Note noteElement, int uid)
+        {
+            //TDO
+            DirectoryInfo userFolder = new DirectoryInfo(CreateUserFolder(uid));
+            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
+            FileInfo appDataUsrFile = new FileInfo(CreateAppDataUsrFile(uid) + @"\" + uid + ".xml");
+
+            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
+            File.Delete(encrypfile.FullName);
+
+            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
+            //TDO
 
 
+            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
+            File.Delete(appDataUsrFile.FullName);
+        }
 
+        public static void AddComponent(Components.Reminder reminderElement, int uid)
+        {
+            //TDO
+            DirectoryInfo userFolder = new DirectoryInfo(CreateUserFolder(uid));
+            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
+            FileInfo appDataUsrFile = new FileInfo(CreateAppDataUsrFile(uid) + @"\" + uid + ".xml");
+
+            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
+            File.Delete(encrypfile.FullName);
+
+            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
+            //TDO
+
+
+            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
+            File.Delete(appDataUsrFile.FullName);
+        }
+
+        public static void AddComponent(Components.Timer timerElement, int uid)
+        {
+            //TDO
+            DirectoryInfo userFolder = new DirectoryInfo(CreateUserFolder(uid));
+            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
+            FileInfo appDataUsrFile = new FileInfo(CreateAppDataUsrFile(uid) + @"\" + uid + ".xml");
+
+            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
+            File.Delete(encrypfile.FullName);
+
+            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
+            //TDO
+
+
+            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
+            File.Delete(appDataUsrFile.FullName);
+        }
+
+        public static void AddComponent(Components.ToDo toDoElement, int uid)
+        {
+            //TDO
+            DirectoryInfo userFolder = new DirectoryInfo(CreateUserFolder(uid));
+            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
+            FileInfo appDataUsrFile = new FileInfo(CreateAppDataUsrFile(uid) + @"\" + uid + ".xml");
+
+            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
+            File.Delete(encrypfile.FullName);
+
+            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
+            //TDO
+
+
+            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
+            File.Delete(appDataUsrFile.FullName);
+        }
     }
 }
