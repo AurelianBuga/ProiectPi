@@ -24,6 +24,9 @@ namespace Proiect_PI
             - a method that restore files for an user for backup
          */
 
+        public static DirectoryInfo applicationPath = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"Documents\MyApplication"));
+        public static DirectoryInfo appDataApplicationPath = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"AppData\Local\MyApplication"));
+
 
         public static string CreateApplicationFolder()
         {
@@ -44,7 +47,7 @@ namespace Proiect_PI
             return path;
         }
 
-        public static string CreateUserFolder(int uid)
+        public static string CreateUserFolder(string uid)
         {
             /// daca nu exista folder pt user se va creea 
             /// returneaza calea catre acest folder
@@ -64,7 +67,7 @@ namespace Proiect_PI
             return folderPath;
         }
 
-        public static string CreateAppDataUsrFile(int uid)
+        public static string CreateAppDataUsrFile(string uid)
         {
             string appDataApplicationPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"AppData\Local\MyApplication");
             DirectoryInfo appDataAppDir = new DirectoryInfo(appDataApplicationPath);
@@ -75,13 +78,13 @@ namespace Proiect_PI
             return appDataApplicationPath;
         }
 
-        public static void CreateUsrXMLFile(UserManager.User user)
+        public static void CreateUsrXMLFile(UserManager.UserInfo userInfo)
         {
             //IDEA : datele din fisier vor fi criptate /// TDO : cauta metoda de criptare a fisierelor
             // Fiecare user va avea un fisier criptat
 
-            string fileName = user.UId.ToString();
-            string userFilePath = Path.Combine(CreateUserFolder(user.UId), fileName + ".xml");
+            string fileName = userInfo.uId.ToString();
+            string userFilePath = Path.Combine(CreateUserFolder(userInfo.uId), fileName + ".xml");
             DirectoryInfo userFileDir = new DirectoryInfo(userFilePath);
 
             if (!userFileDir.Exists)
@@ -95,12 +98,12 @@ namespace Proiect_PI
                 XDocument xmlUser = new XDocument();
                 XElement userDoc = new XElement("User" , string.Empty);
 
-                userDoc.SetAttributeValue("UID", user.UId);
-                userDoc.SetAttributeValue("FName", user.FName);
-                userDoc.SetAttributeValue("LName", user.LName);
-                userDoc.SetAttributeValue("UserName", user.UserName);
-                userDoc.SetAttributeValue("Email", user.Email);
-                userDoc.SetAttributeValue("Password", user.Password);
+                userDoc.SetAttributeValue("UID", userInfo.uId);
+                userDoc.SetAttributeValue("FName", userInfo.fName);
+                userDoc.SetAttributeValue("LName", userInfo.lName);
+                userDoc.SetAttributeValue("UserName", userInfo.userName);
+                userDoc.SetAttributeValue("Email", userInfo.email);
+                userDoc.SetAttributeValue("Password", userInfo.password);
                 
 
                 XElement content = new XElement("Content");
@@ -113,7 +116,7 @@ namespace Proiect_PI
 
                 
 
-                string tmpUsrFilePath = Path.Combine(CreateAppDataUsrFile(user.UId), fileName + ".xml");
+                string tmpUsrFilePath = Path.Combine(CreateAppDataUsrFile(userInfo.uId), fileName + ".xml");
 
                 FileStream write = new FileStream( tmpUsrFilePath , FileMode.Create, FileAccess.Write);
                 xmlUser.Save(write);
@@ -129,7 +132,7 @@ namespace Proiect_PI
         }
 
 
-        public static void AddComponent(Components.Link linkElement , int uid)
+        public static void AddComponent(Components.Link linkElement , string uid)
         {
             DirectoryInfo userFolder = new DirectoryInfo(CreateUserFolder(uid));
             FileInfo encrypfile =  userFolder.GetFiles(uid + ".xml").FirstOrDefault();
@@ -147,7 +150,7 @@ namespace Proiect_PI
         }
 
 
-        public static void AddComponent(Components.Note noteElement, int uid)
+        public static void AddComponent(Components.Note noteElement, string uid)
         {
             //TDO
             DirectoryInfo userFolder = new DirectoryInfo(CreateUserFolder(uid));
@@ -165,7 +168,7 @@ namespace Proiect_PI
             File.Delete(appDataUsrFile.FullName);
         }
 
-        public static void AddComponent(Components.Reminder reminderElement, int uid)
+        public static void AddComponent(Components.Reminder reminderElement, string uid)
         {
             //TDO
             DirectoryInfo userFolder = new DirectoryInfo(CreateUserFolder(uid));
@@ -183,7 +186,7 @@ namespace Proiect_PI
             File.Delete(appDataUsrFile.FullName);
         }
 
-        public static void AddComponent(Components.Timer timerElement, int uid)
+        public static void AddComponent(Components.Timer timerElement, string uid)
         {
             //TDO
             DirectoryInfo userFolder = new DirectoryInfo(CreateUserFolder(uid));
@@ -201,7 +204,7 @@ namespace Proiect_PI
             File.Delete(appDataUsrFile.FullName);
         }
 
-        public static void AddComponent(Components.ToDo toDoElement, int uid)
+        public static void AddComponent(Components.ToDo toDoElement, string uid)
         {
             //TDO
             DirectoryInfo userFolder = new DirectoryInfo(CreateUserFolder(uid));
@@ -221,7 +224,19 @@ namespace Proiect_PI
 
         /*public static bool UserExists(string userName, string password)
         {
-            
+            //DirectoryInfo applicationPath = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"Documents\MyApplication"));
+            // appDataApplicationPath = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"AppData\Local\MyApplication"));
+            DirectoryInfo[] userFoldersList = applicationPath.GetDirectories();
+            foreach(DirectoryInfo userFolder in userFoldersList)
+            {
+                FileInfo[] userFileList = userFolder.GetFiles();
+                //TDO
+            }
+        }
+
+        public UserManager.UserInfo GetUserInfo(string userName, string password)
+        {
+            //TDO
         }*/
     }
 }
