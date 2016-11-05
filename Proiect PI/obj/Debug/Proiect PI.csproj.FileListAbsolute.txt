@@ -31,5 +31,16 @@ C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Proiect PI_MarkupComp
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Proiect PI_MarkupCompile.lref
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\MainWindow.baml
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Proiect PI.g.resources
-C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Proiect_PI.Properties.Resources.resources
-C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Proiect PI.csproj.GenerateResource.Cache
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Proiect PI_Content.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\img\link512.png
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\img\reminder512.png
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\img\timer512.png
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\img\Todo512.png
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\img\reminder256.png
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\img\note256.png
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\LoginWindow.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\LoginWindow.baml
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\RegisterWindow.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\WelcomeWindow.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\RegisterWindow.baml
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\WelcomeWindow.baml

@@ -8,7 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database1.mdf")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database1_log.ldf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("img/link512.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("img/reminder256.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("img/note256.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("img/reminder512.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("img/timer512.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("img/todo512.png")]
 
 

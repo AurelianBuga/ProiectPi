@@ -7,17 +7,21 @@
         mc:Ignorable="d"
         Title="Proiect PI" Height="560" Width="800">
     <Grid>
-        <Grid HorizontalAlignment="Left" Height="410" Margin="18,98,0,0" VerticalAlignment="Top" Width="173">
-            <Menu x:Name="menu" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" Width="186" Margin="-6,0,-7,0">
-                <Grid Height="64" Width="172">
+        <Grid HorizontalAlignment="Left" Height="336" Margin="18,73,0,0" VerticalAlignment="Top" Width="173">
+            <Menu x:Name="menu" HorizontalAlignment="Left" Width="173" Margin="0,0,0,-11" Height="338" VerticalAlignment="Top">
+                <Grid Height="64" Width="175">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="15*"/>
+                        <RowDefinition Height="49*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Image x:Name="image" HorizontalAlignment="Right" Height="58" VerticalAlignment="Top" Width="48" Margin="0,10,122,-4" Source=".\resources\reminder128.png"/>
-                    <Button Click="CreateReminderTab"  Margin="75,25,45,20">
+                    <Image x:Name="image" HorizontalAlignment="Right" Height="68" VerticalAlignment="Top" Width="57" Margin="0,4,118,-8" Source="pack://siteoforigin:,,,/img/reminder256.png" Grid.RowSpan="2"/>
+                    <Button Click="CreateReminderTab" Margin="-6,0,10,0" HorizontalAlignment="Right" Width="171" Grid.RowSpan="2">
                         <Button.Template>
                             <ControlTemplate>
-                                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Reminder" VerticalAlignment="Top" Height="15" Width="52" Grid.Column="1"/>
+                                <TextBlock x:Name="reminderTextSideBar" HorizontalAlignment="Left" Margin="78,19,0,0" TextWrapping="Wrap" Text="Reminders" VerticalAlignment="Top" Height="28" Width="83" Grid.Column="1" FontSize="17"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
@@ -26,24 +30,48 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Image x:Name="image1" HorizontalAlignment="Left" Height="53" VerticalAlignment="Top" Width="52" Source=".\resources\note128.png" Margin="-1,5,0,0"/>
-                    <TextBlock x:Name="textBlock1" TextWrapping="Wrap" Text="Notes" Margin="94,26,44,23"/>
+                    <Image x:Name="image1" HorizontalAlignment="Left" Height="53" VerticalAlignment="Top" Width="52" Source="pack://siteoforigin:,,,/img/note256.png" Margin="-1,5,0,0"/>
+                    <Button Click="CreateReminderTab" Margin="-1,0,0,0" RenderTransformOrigin="0.487,0.469">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <TextBlock x:Name="noteTextSideBar" HorizontalAlignment="Left" Margin="86,17,0,0" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Top" Height="28" Width="51" Grid.Column="1" FontSize="17"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
                 </Grid>
                 <Grid Height="64" Width="172">
-                    <Image x:Name="image2" HorizontalAlignment="Left" Height="58" VerticalAlignment="Top" Width="65" Source=".\resources\ToDo512px.png" Margin="-2,0,0,0"/>
-                    <TextBlock x:Name="textBlock2" TextWrapping="Wrap" Text="To Do List" Margin="86,26,29,23"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="83*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="image2" HorizontalAlignment="Left" Height="58" VerticalAlignment="Top" Width="65" Source="pack://siteoforigin:,,,/img/ToDo512.png" Margin="-2,0,0,0"/>
+                    <Button Click="CreateReminderTab" Margin="-7,0,0,0">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <TextBlock x:Name="toDoTextSideBar" HorizontalAlignment="Left" Margin="78,19,0,0" TextWrapping="Wrap" Text="To Do list" VerticalAlignment="Top" Height="28" Width="83" Grid.Column="1" FontSize="17"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
                 </Grid>
                 <Grid Height="64" Width="172">
-                    <Image x:Name="image3" HorizontalAlignment="Left" Height="62" VerticalAlignment="Top" Width="54" Source=".\resources\folder512.png" Margin="4,6,0,0"/>
-                    <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="71,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Docs and Folders"/><LineBreak/><Run/></TextBlock>
-                </Grid>
-                <Grid Height="64" Width="172">
-                    <Image x:Name="image4" HorizontalAlignment="Left" Height="49" VerticalAlignment="Top" Width="62" Source=".\resources\link512.png" Margin="6,10,0,0"/>
-                    <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="101,27,0,0" TextWrapping="Wrap" Text="Links" VerticalAlignment="Top" RenderTransformOrigin="0.449,0.479"/>
+                    <Image x:Name="image4" HorizontalAlignment="Left" Height="49" VerticalAlignment="Top" Width="62" Source="pack://siteoforigin:,,,/img/link512.png" Margin="6,10,0,0"/>
+                    <Button Click="CreateReminderTab" Margin="-6,0,6,0">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <TextBlock x:Name="timerTextSideBar" HorizontalAlignment="Left" Margin="94,18,0,0" TextWrapping="Wrap" Text="Links" VerticalAlignment="Top" Height="28" Width="43" Grid.Column="1" FontSize="17"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
                 </Grid>
                 <Grid Height="67" Width="172">
-                    <Image x:Name="image5" HorizontalAlignment="Left" Height="67" VerticalAlignment="Top" Width="64" Source=".\resources\timer512.png"/>
-                    <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Margin="96,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16"><Run Text="Timer"/><LineBreak/><Run/></TextBlock>
+                    <Image x:Name="image5" HorizontalAlignment="Left" Height="67" VerticalAlignment="Top" Width="64" Source="pack://siteoforigin:,,,/img/timer512.png"/>
+                    <Button Click="CreateReminderTab" Margin="-6,0,5,-4">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <TextBlock x:Name="reminderTextSideBar" HorizontalAlignment="Left" Margin="91,19,0,0" TextWrapping="Wrap" Text="Timer" VerticalAlignment="Top" Height="28" Width="47" Grid.Column="1" FontSize="17"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
                 </Grid>
             </Menu>
         </Grid>

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\App.xaml
-11151548125
-
-8380430261
+41601044472
+6-715255722
+11-317990192
 14-37733517
-MainWindow.xaml;
+LoginWindow.xaml;MainWindow.xaml;RegisterWindow.xaml;WelcomeWindow.xaml;
 
 False
 

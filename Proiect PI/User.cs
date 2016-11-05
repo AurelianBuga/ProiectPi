@@ -113,7 +113,7 @@ namespace UserManager
             // doreste se se logeze offline
             else
             {
-                
+                DataManager.XMLManager.CreateUsrXMLFile(userInfo);
             }
         }
      }

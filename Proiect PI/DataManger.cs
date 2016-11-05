@@ -77,6 +77,18 @@ namespace DataManager
             return passwordX2.Substring(0, 16);
         }
 
+        public static string GetUID()
+        {
+            if(CheckForInternetConnection())
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
 
         /*public static int GetNrOrdine(string type , int uid)
         {
