@@ -10,7 +10,7 @@ namespace UserManager
 
     public struct UserInfo
     {
-        public string uId;
+        public int uId;
         public string fName;
         public string lName;
         public string userName;
@@ -23,7 +23,7 @@ namespace UserManager
     /// </summary>
     public sealed class User
     {
-        private string uId;
+        private int uId;
         private string fName;
         private string lName;
         private string userName;

@@ -71,7 +71,7 @@ namespace Components
 
          
             UserManager.UserInfo user = new UserManager.UserInfo();
-            user.uId = "1113";
+            user.uId = 1113;
             user.fName = "aurelian";
             user.lName = "buga";
             user.userName = "aquatrick";
