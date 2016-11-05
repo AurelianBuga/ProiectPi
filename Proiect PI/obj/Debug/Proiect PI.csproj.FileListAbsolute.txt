@@ -17,3 +17,19 @@ c:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Proiect PI\Proiect PI\bi
 c:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Proiect PI\Proiect PI\obj\Debug\Proiect PI_Content.g.cs
 C:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Proiect PI\Proiect PI\bin\Debug\MySql.Data.dll
 C:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Proiect PI\Proiect PI\bin\Debug\MySql.Data.xml
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\Proiect PI.exe.config
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Proiect PI.exe
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Proiect PI.pdb
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\Proiect PI.exe
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\Proiect PI.pdb
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\MySql.Data.dll
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\MySql.Data.xml
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Proiect PI.csprojResolveAssemblyReference.cache
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\MainWindow.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\App.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Proiect PI_MarkupCompile.cache
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Proiect PI_MarkupCompile.lref
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\MainWindow.baml
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Proiect PI.g.resources
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Proiect_PI.Properties.Resources.resources
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Proiect PI.csproj.GenerateResource.Cache
