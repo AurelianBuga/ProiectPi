@@ -17,6 +17,7 @@ using System.Data.SqlClient;
 using System.Reflection;
 using System.IO;
 using System.Net;
+using MySql.Data.MySqlClient;
 
 /// <summary>
 /// IDEA: -sa se salveze automat in XML-uri pt a facilita solosirea programului si offline 
@@ -99,7 +100,7 @@ namespace DB
 {
     public class DBConnection
     {
-        public MySql.Data.MySqlClient.MySqlConnection conn;
+        public MySqlConnection conn;
         public bool connStatus;
         
 
@@ -110,7 +111,7 @@ namespace DB
             string strUserID = "root"; 
             string strPassword = "112aurelian"; 
             string strconn = "Server=" + strServer +";Uid="+strUserID+";Pwd="+strPassword+";Database="+strDatabase+";";
-            conn = new MySql.Data.MySqlClient.MySqlConnection(strconn);
+            conn = new MySqlConnection(strconn);
             connStatus = false;
         }
 
@@ -131,7 +132,7 @@ namespace DB
                 }
                 
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 //0: Cannot connect to server.
                 //1045: Invalid user name and/or password.
@@ -157,7 +158,7 @@ namespace DB
                 connStatus = false;
                 return true;
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
                 return false;
@@ -205,9 +206,9 @@ namespace DB
             if (this.OpenConnection() == true)
             {
                 string query = "SELECT * FROM "+ tip +" WHERE USERID = " + UID;
-                MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn);
+                MySqlCommand cmd = new MySqlCommand(query, conn);
                 //Create a data reader and Execute the command
-                MySql.Data.MySqlClient.MySqlDataReader dataReader = cmd.ExecuteReader();
+                MySqlDataReader dataReader = cmd.ExecuteReader();
 
                 //Read the data and store them in the list
                 while (dataReader.Read())
@@ -235,9 +236,9 @@ namespace DB
             if (this.OpenConnection() == true)
             {
                 string query = "SELECT * FROM " + tip + " WHERE USERID = " + UID;
-                MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn);
+                MySqlCommand cmd = new MySqlCommand(query, conn);
                 //Create a data reader and Execute the command
-                MySql.Data.MySqlClient.MySqlDataReader dataReader = cmd.ExecuteReader();
+                MySqlDataReader dataReader = cmd.ExecuteReader();
 
                 //Read the data and store them in the list
                 while (dataReader.Read())
@@ -260,7 +261,7 @@ namespace DB
         {
             if (this.OpenConnection() == true)
             {
-                MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn);
+                MySqlCommand cmd = new MySqlCommand(query, conn);
 
                 cmd.ExecuteNonQuery();
 
@@ -322,7 +323,7 @@ namespace DB
 
             if (this.OpenConnection() == true)
             {
-                MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn);
+                MySqlCommand cmd = new MySqlCommand(query, conn);
 
                 //ExecuteScalar will return one value
                 Count = int.Parse(cmd.ExecuteScalar()+"");
@@ -344,7 +345,7 @@ namespace DB
 
             if(this.OpenConnection() == true)
             {
-                MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn);
+                MySqlCommand cmd = new MySqlCommand(query, conn);
 
                 //ExecuteScalar will return one value
                 Count = int.Parse(cmd.ExecuteScalar() + "");
@@ -369,9 +370,9 @@ namespace DB
             if (this.OpenConnection() == true)
             {
                 string query = "SELECT * FROM users WHERE USERNAME = '" + userName + "' LIMIT 1";
-                MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn);
+                MySqlCommand cmd = new MySqlCommand(query, conn);
 
-                MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
                 {
