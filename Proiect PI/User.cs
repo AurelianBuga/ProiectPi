@@ -60,14 +60,13 @@ namespace UserManager
         public bool Login(string userName , string password)
         {
             // if internet access exists -> login online
-            if (Helper.CheckForInternetConnection())
+            if (DataManager.Helper.CheckForInternetConnection())
             {
-                DB.DBConnection conn = new DB.DBConnection();
-                if (conn.UserExists(userName, password))
+                if (DataManager.DBConnection.UserExists(userName, password))
                 {
                     //se verifica daca User-ul exista in baza de date
                     //se se pun valorile din baza de date
-                    UserInfo userInfo = conn.GetUserInfo(userName, password);
+                    UserInfo userInfo = DataManager.DBConnection.GetUserInfo(userName, password);
                     userInstance.email = userInfo.email;
                     userInstance.fName = userInfo.fName;
                     userInstance.lName = userInfo.lName;
@@ -107,10 +106,9 @@ namespace UserManager
         public void Register(UserInfo userInfo)
         {
             // if internet access exists -> register online
-            if (Helper.CheckForInternetConnection())
+            if (DataManager.Helper.CheckForInternetConnection())
             {
-                DB.DBConnection conn = new DB.DBConnection();
-                conn.AddUser(userInfo);
+                DataManager.DBConnection.AddUser(userInfo);
             }
             //else -> register offline /// va aparea un window care sa intrebe user-ul daca 
             // doreste se se logeze offline
