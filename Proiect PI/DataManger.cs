@@ -71,6 +71,12 @@ namespace DataManager
             }
         }
 
+        public static string Get16CharPassword(string password)
+        {
+            string passwordX2 = password + password;
+            return passwordX2.Substring(0, 16);
+        }
+
 
         /*public static int GetNrOrdine(string type , int uid)
         {
@@ -403,9 +409,8 @@ namespace DataManager
         - a method that update content in XML files ... when a component is updated ( it is updated in XML file and DB)
         - a getter method that returns a List<string>[] for a component type and user
         - a method that count elements in a XML file 
-        - additional : 
-            - a method that make a backup of all files for an user
-            - a method that restore files for an user for backup
+        - additional : \
+            - a method that restore files for an user for XML file
          */
 
         public static DirectoryInfo applicationPath = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"Documents\MyApplication"));
@@ -507,14 +512,13 @@ namespace DataManager
                 write.Close();
 
                 //--------------2-------------------
-                EncryptManager.EncryptFile(tmpUsrFilePath, userFilePath, fileName + fileName + fileName + fileName);
+                EncryptManager.EncryptFile(tmpUsrFilePath, userFilePath, Helper.Get16CharPassword(userInfo.password));
+                File.Delete(tmpUsrFilePath);
 
                 //--------------3-------------------
-                File.Delete(tmpUsrFilePath);
                 write.Close();
             }
         }
-
 
         public static void AddComponent(Components.Link linkElement, string uid)
         {
@@ -532,7 +536,6 @@ namespace DataManager
             EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
             File.Delete(appDataUsrFile.FullName);
         }
-
 
         public static void AddComponent(Components.Note noteElement, string uid)
         {
@@ -566,7 +569,7 @@ namespace DataManager
             //TDO
 
 
-            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
+            EncryptManager.EncryptFile(appDataUsrFile.FullName , encrypfile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
             File.Delete(appDataUsrFile.FullName);
         }
 
@@ -577,14 +580,14 @@ namespace DataManager
             FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
             FileInfo appDataUsrFile = new FileInfo(CreateAppDataUsrFile(uid) + @"\" + uid + ".xml");
 
-            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
+            EncryptManager.DecryptFile(encrypfile.FullName , appDataUsrFile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
             File.Delete(encrypfile.FullName);
 
             XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
             //TDO
 
 
-            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
+            EncryptManager.EncryptFile(appDataUsrFile.FullName , encrypfile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
             File.Delete(appDataUsrFile.FullName);
         }
 
@@ -595,30 +598,59 @@ namespace DataManager
             FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
             FileInfo appDataUsrFile = new FileInfo(CreateAppDataUsrFile(uid) + @"\" + uid + ".xml");
 
-            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
+            EncryptManager.DecryptFile(encrypfile.FullName , appDataUsrFile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
             File.Delete(encrypfile.FullName);
 
             XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
             //TDO
 
 
-            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
+            EncryptManager.EncryptFile(appDataUsrFile.FullName , encrypfile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
             File.Delete(appDataUsrFile.FullName);
         }
 
-        /*public static bool UserExists(string userName, string password)
+        public static bool UserExists(string userName, string password)
         {
             //DirectoryInfo applicationPath = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"Documents\MyApplication"));
             // appDataApplicationPath = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"AppData\Local\MyApplication"));
+
             DirectoryInfo[] userFoldersList = applicationPath.GetDirectories();
+            XName userNamex = "UserName";
             foreach(DirectoryInfo userFolder in userFoldersList)
             {
                 FileInfo[] userFileList = userFolder.GetFiles();
-                //TDO
+                foreach(FileInfo userFile in userFileList)
+                {
+                    string userAppDataApplicationFile = Path.Combine(appDataApplicationPath.ToString(), userFile.Name);
+
+                    EncryptManager.DecryptFile(userFile.FullName, userAppDataApplicationFile, Helper.Get16CharPassword(password));
+
+                    FileStream tmpUserFile = new FileStream(userAppDataApplicationFile, FileMode.Open, FileAccess.Read);
+
+                    XDocument file = XDocument.Load(tmpUserFile);
+                    tmpUserFile.Close();
+                    IEnumerable<XElement> xElements = file.Descendants();
+                    foreach(XElement el in xElements)
+                    {
+                        XAttribute atr = el.Attribute(userNamex);
+                        if(atr != null)
+                        {
+                            if(atr.Value.ToString() == userName)
+                            {
+                                File.Delete(userFile.FullName);
+                                EncryptManager.EncryptFile(userAppDataApplicationFile, userFile.FullName, Helper.Get16CharPassword(password));
+                                File.Delete(userAppDataApplicationFile);
+                                return true;
+                            }
+                        }
+                    }
+                    File.Delete(userAppDataApplicationFile);
+                } 
             }
+            return false;
         }
 
-        public UserManager.UserInfo GetUserInfo(string userName, string password)
+        /*public UserManager.UserInfo GetUserInfo(string userName, string password)
         {
             //TDO
         }*/

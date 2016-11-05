@@ -55,9 +55,8 @@ namespace Components
             //NrOrdine = Helper.GetNrOrdine("reminder" , );
             DateAndTime = DateTime.Now; //TDO : dateAndTime trebuie setat intr-un date and time picker
             DatePreview = DataManager.Helper.GetDatePreview(DateAndTime);
-            UserManager.User user = UserManager.User.UserInstance;
-            user.Login("aquatrick", "parola");
-            /*DB.DBConnection conn = new DB.DBConnection();
+            /*UserManager.User user = UserManager.User.UserInstance;
+            bool val = user.Login("aquatrick", "parola");
             UserManager.UserInfo userInfo = new UserManager.UserInfo();
             userInfo.uId = "5970";
             userInfo.fName = "aurelian";
@@ -65,24 +64,24 @@ namespace Components
             userInfo.userName = "aquatrick";
             userInfo.email = "email@yahoo.com";
             userInfo.password = "parola";
-            conn.AddUser(userInfo);/*
+            DataManager.DBConnection.AddUser(userInfo);
             //List<string>[] list = conn.GetOneTypeComponentList(componentType.reminder, 2);
             //int nr = conn.Count(2, componentType.reminder);
-            //conn.CloseConnection();
+            //conn.CloseConnection();*/
 
-            /*Link link = new Link("link", 1, "www.google.com");
+         
+            UserManager.UserInfo user = new UserManager.UserInfo();
+            user.uId = "1113";
+            user.fName = "aurelian";
+            user.lName = "buga";
+            user.userName = "aquatrick";
+            user.email = "@yahoo.com";
+            user.password = "aqwertyu";
 
-            UserManager.User user = UserManager.User.UserInstance;
-            user.UId = 1113;
-            user.FName = "aurelian";
-            user.LName = "buga";
-            user.UserName = "aquatrick";
-            user.Email = "@yahoo.com";
-            user.LoginType = true;
-            user.Password = "passwd";
-
-            Proiect_PI.XMLManager.CreateUsrXMLFile(user);
-            Proiect_PI.XMLManager.AddComponent(link, 5970);*/
+            UserManager.User usr = UserManager.User.UserInstance;
+            usr.Login(user.userName, user.password);
+            //DataManager.XMLManager.CreateUsrXMLFile(user);
+            //Proiect_PI.XMLManager.AddComponent(link, 5970);
         }
 
         public DateTime DatePreview

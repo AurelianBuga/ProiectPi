@@ -28,7 +28,7 @@ namespace UserManager
         private string lName;
         private string userName;
         private string email;
-        private string password;
+        private string password; // trebuie sa fie minim de 8 caractere
         public bool loginType; // true = online , false = offline
         private static readonly User userInstance = new User();
 
@@ -36,14 +36,6 @@ namespace UserManager
         {
             
         }
-
-        //TDO : trebuie sterse
-        /*public int UId { get { return this.uId; } set { this.uId = value;} }
-        public string FName { get { return this.fName; } set { this.fName = value; } }
-        public string LName { get { return this.lName; } set { this.lName = value;} }
-        public string UserName { get { return this.userName; } set { this.userName = value; } }
-        public string Email { get { return this.email; } set { this.email = value; } }
-        public string Password { get { return this.password; } set { this.password = value;  } }*/
 
         public static  User UserInstance
         {
@@ -85,7 +77,7 @@ namespace UserManager
             // doreste se se logeze offline
             else
             {
-                if (UserExists)
+                if (DataManager.XMLManager.UserExists(userName, password))
                 {
                     //se creeaza obiect User
                     //se verifica daca User-ul exista in XML-uri
