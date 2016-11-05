@@ -81,7 +81,7 @@ namespace DataManager
         {
             if(CheckForInternetConnection())
             {
-
+                
             }
             else
             {
@@ -429,54 +429,37 @@ namespace DataManager
         public static DirectoryInfo appDataApplicationPath = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"AppData\Local\MyApplication"));
 
 
-        public static string CreateApplicationFolder()
+        public static void CreateApplicationFolder()
         {
             /// daca nu exista folder pt aplicatie se va creea 
-            /// retureaza calea catre acest folder
 
-
-            string userProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            string applicationFolderPath = @"Documents\MyApplication";
-            string path = Path.Combine(userProfilePath, applicationFolderPath);
-            DirectoryInfo applicationDirectory = new DirectoryInfo(path);
+            DirectoryInfo applicationDirectory = new DirectoryInfo(applicationPath.ToString());
 
             if (!applicationDirectory.Exists)
             {
                 Directory.CreateDirectory(applicationDirectory.ToString());
             }
-
-            return path;
         }
 
-        public static string CreateUserFolder(string uid)
+        public static void CreateUserFolder(string uid)
         {
             /// daca nu exista folder pt user se va creea 
-            /// returneaza calea catre acest folder
 
-
-            string applicationDirectory = CreateApplicationFolder();
-
-            string folderName = "uid" + uid;
-            string folderPath = applicationDirectory.ToString() + @"\" + folderName;
+            string folderPath = applicationPath.ToString() + @"\" + uid;
             DirectoryInfo userFolderDirectory = new DirectoryInfo(folderPath);
 
             if (!userFolderDirectory.Exists)
             {
                 Directory.CreateDirectory(userFolderDirectory.ToString());
             }
-
-            return folderPath;
         }
 
-        public static string CreateAppDataUsrFile(string uid)
+        public static void CreateAppDataUsrFolder(string uid)
         {
-            string appDataApplicationPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"AppData\Local\MyApplication");
-            DirectoryInfo appDataAppDir = new DirectoryInfo(appDataApplicationPath);
+            DirectoryInfo appDataAppDir = new DirectoryInfo(Path.Combine(appDataApplicationPath.ToString() , uid ));
 
             if (!appDataAppDir.Exists)
-                Directory.CreateDirectory(appDataApplicationPath);
-
-            return appDataApplicationPath;
+                Directory.CreateDirectory(appDataAppDir.ToString());
         }
 
         public static void CreateUsrXMLFile(UserManager.UserInfo userInfo)
@@ -484,8 +467,7 @@ namespace DataManager
             //IDEA : datele din fisier vor fi criptate /// TDO : cauta metoda de criptare a fisierelor
             // Fiecare user va avea un fisier criptat
 
-            string fileName = userInfo.uId.ToString();
-            string userFilePath = Path.Combine(CreateUserFolder(userInfo.uId), fileName + ".xml");
+            string userFilePath = Path.Combine(applicationPath.ToString() + @"\" + userInfo.uId, userInfo.uId + ".xml");
             DirectoryInfo userFileDir = new DirectoryInfo(userFilePath);
 
             if (!userFileDir.Exists)
@@ -517,7 +499,7 @@ namespace DataManager
 
 
 
-                string tmpUsrFilePath = Path.Combine(CreateAppDataUsrFile(userInfo.uId), fileName + ".xml");
+                string tmpUsrFilePath = Path.Combine(Path.Combine(appDataApplicationPath.ToString(), userInfo.uId), userInfo.uId + ".xml");
 
                 FileStream write = new FileStream(tmpUsrFilePath, FileMode.Create, FileAccess.Write);
                 xmlUser.Save(write);
@@ -532,11 +514,19 @@ namespace DataManager
             }
         }
 
+        public static void CreateUserDirsAndFiles(UserManager.UserInfo userInfo)
+        {
+            CreateApplicationFolder();
+            CreateUserFolder(userInfo.uId);
+            CreateAppDataUsrFolder(userInfo.uId);
+            CreateUsrXMLFile(userInfo);
+        }
+
         public static void AddComponent(Components.Link linkElement, string uid)
         {
-            DirectoryInfo userFolder = new DirectoryInfo(CreateUserFolder(uid));
+            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
             FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
-            FileInfo appDataUsrFile = new FileInfo(CreateAppDataUsrFile(uid) + @"\" + uid + ".xml");
+            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid) + @"\" + uid + ".xml");
 
             EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
             File.Delete(encrypfile.FullName);
@@ -552,9 +542,9 @@ namespace DataManager
         public static void AddComponent(Components.Note noteElement, string uid)
         {
             //TDO
-            DirectoryInfo userFolder = new DirectoryInfo(CreateUserFolder(uid));
+            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
             FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
-            FileInfo appDataUsrFile = new FileInfo(CreateAppDataUsrFile(uid) + @"\" + uid + ".xml");
+            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid) + @"\" + uid + ".xml");
 
             EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
             File.Delete(encrypfile.FullName);
@@ -570,9 +560,9 @@ namespace DataManager
         public static void AddComponent(Components.Reminder reminderElement, string uid)
         {
             //TDO
-            DirectoryInfo userFolder = new DirectoryInfo(CreateUserFolder(uid));
+            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
             FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
-            FileInfo appDataUsrFile = new FileInfo(CreateAppDataUsrFile(uid) + @"\" + uid + ".xml");
+            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid) + @"\" + uid + ".xml");
 
             EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
             File.Delete(encrypfile.FullName);
@@ -588,9 +578,9 @@ namespace DataManager
         public static void AddComponent(Components.Timer timerElement, string uid)
         {
             //TDO
-            DirectoryInfo userFolder = new DirectoryInfo(CreateUserFolder(uid));
+            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
             FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
-            FileInfo appDataUsrFile = new FileInfo(CreateAppDataUsrFile(uid) + @"\" + uid + ".xml");
+            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid) + @"\" + uid + ".xml");
 
             EncryptManager.DecryptFile(encrypfile.FullName , appDataUsrFile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
             File.Delete(encrypfile.FullName);
@@ -606,9 +596,9 @@ namespace DataManager
         public static void AddComponent(Components.ToDo toDoElement, string uid)
         {
             //TDO
-            DirectoryInfo userFolder = new DirectoryInfo(CreateUserFolder(uid));
+            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
             FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
-            FileInfo appDataUsrFile = new FileInfo(CreateAppDataUsrFile(uid) + @"\" + uid + ".xml");
+            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid) + @"\" + uid + ".xml");
 
             EncryptManager.DecryptFile(encrypfile.FullName , appDataUsrFile.FullName, uid.ToString() + uid.ToString() + uid.ToString() + uid.ToString());
             File.Delete(encrypfile.FullName);
