@@ -66,6 +66,7 @@ namespace UserManager
                     userInstance.uId = userInfo.uId;
                     userInstance.password = userInfo.password;
                     userInstance.loginType = true;
+
                     return true;
                 }
                 else
@@ -81,8 +82,14 @@ namespace UserManager
                 {
                     //se creeaza obiect User
                     //se verifica daca User-ul exista in XML-uri
-                    //se se pun valorile din baza de date 
-
+                    //se se pun valorile din XML
+                    UserInfo userInfo = DataManager.XMLManager.GetUserInfo(userName, password);
+                    userInstance.email = userInfo.email;
+                    userInstance.fName = userInfo.fName;
+                    userInstance.lName = userInfo.lName;
+                    userInstance.userName = userInfo.userName;
+                    userInstance.uId = userInfo.uId;
+                    userInstance.password = userInfo.password;
                     userInstance.loginType = false;
 
                     return true;
@@ -110,6 +117,4 @@ namespace UserManager
             }
         }
      }
-
-
 }

@@ -391,7 +391,7 @@ namespace DataManager
 
         public static  void UpdateUserInfo()
         {
-
+            //TDO
         }
 
         public static  void Restore()
@@ -611,11 +611,10 @@ namespace DataManager
 
         public static bool UserExists(string userName, string password)
         {
-            //DirectoryInfo applicationPath = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"Documents\MyApplication"));
-            // appDataApplicationPath = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"AppData\Local\MyApplication"));
 
             DirectoryInfo[] userFoldersList = applicationPath.GetDirectories();
             XName userNamex = "UserName";
+
             foreach(DirectoryInfo userFolder in userFoldersList)
             {
                 FileInfo[] userFileList = userFolder.GetFiles();
@@ -650,10 +649,69 @@ namespace DataManager
             return false;
         }
 
-        /*public UserManager.UserInfo GetUserInfo(string userName, string password)
+
+        public static UserManager.UserInfo GetUserInfo(string userName, string password)
         {
-            //TDO
-        }*/
+
+            UserManager.UserInfo user = new UserManager.UserInfo();
+            DirectoryInfo[] userFoldersList = applicationPath.GetDirectories();
+
+
+            foreach (DirectoryInfo userFolder in userFoldersList)
+            {
+                FileInfo[] userFileList = userFolder.GetFiles();
+                foreach (FileInfo userFile in userFileList)
+                {
+                    string userAppDataApplicationFile = Path.Combine(appDataApplicationPath.ToString(), userFile.Name);
+
+                    EncryptManager.DecryptFile(userFile.FullName, userAppDataApplicationFile, Helper.Get16CharPassword(password));
+
+                    FileStream tmpUserFile = new FileStream(userAppDataApplicationFile, FileMode.Open, FileAccess.Read);
+
+                    XDocument file = XDocument.Load(tmpUserFile);
+                    tmpUserFile.Close();
+                    IEnumerable<XElement> xElements = file.Descendants();
+                    foreach (XElement el in xElements)
+                    {
+                        XName userNamex = "UserName";
+                        XAttribute atr = el.Attribute(userNamex);
+                        if (atr != null)
+                        {
+                            if (atr.Value.ToString() == userName)
+                            {
+                                XName uid = "UID";
+                                XName fName = "FName";
+                                XName lName = "LName";
+                                XName email = "Email";
+                                XName pwd = "Password";
+
+                                user.uId = el.Attribute(uid).Value.ToString();
+                                user.userName = el.Attribute(userNamex).Value.ToString();
+                                user.fName = el.Attribute(fName).Value.ToString();
+                                user.lName = el.Attribute(lName).Value.ToString();
+                                user.email = el.Attribute(email).Value.ToString();
+                                user.password = el.Attribute(pwd).Value.ToString();
+
+
+                                File.Delete(userFile.FullName);
+                                EncryptManager.EncryptFile(userAppDataApplicationFile, userFile.FullName, Helper.Get16CharPassword(password));
+                                File.Delete(userAppDataApplicationFile);
+
+                                return user;
+                            }
+                            else
+                            {
+                                return user;
+                            }
+                            
+                        }
+                    }
+                    File.Delete(userAppDataApplicationFile);
+                }
+            }
+
+            return user;
+        }
     }
 
     static class EncryptManager
