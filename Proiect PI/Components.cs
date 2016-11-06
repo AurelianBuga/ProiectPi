@@ -11,12 +11,11 @@ using MySql.Data.Types;
 
 namespace Components
 {
-    public abstract class Component
+    public interface Component
     {
+        void ModifyText(string newText);
 
-        public abstract void ModifyText(string newText); // se modifica si previewText-ul
-
-        public abstract void ModifyDateAndTime(MySqlDateTime newDateAndTime);
+        void ModifyDateAndTime(MySqlDateTime newDateAndTime);
     }
 
     public class Reminder : Component
@@ -24,15 +23,21 @@ namespace Components
         private string datePreview;
         private string text;
         private string previewText;
-        private int nrOrdine;
+        private int nrOrd;
         private MySqlDateTime dateAndTime;
         private int idRem;
         private int idUsr;
 
+        public string Text { get { return text; } }
+        public int NrOrd { get { return nrOrd; } }
+        public MySqlDateTime Date { get { return dateAndTime; } }
+        public int IdREm { get { return idRem; } }
+        public int IdUsr { get { return idUsr; } }
+
         public Reminder(int idRem , int idUsr, string text, MySqlDateTime dateAndTime , int nrOrd)
         {
             this.text = text;
-            this.nrOrdine = nrOrd;
+            this.nrOrd = nrOrd;
             this.dateAndTime = dateAndTime;
             this.idRem = idRem;
             this.idUsr = idUsr;
@@ -40,13 +45,13 @@ namespace Components
             this.previewText = DataManager.Helper.GetPreviewText(text, 30);
         }
 
-        public override void ModifyText(string newText)
+        public void ModifyText(string newText)
         {
             text = newText;
             previewText = DataManager.Helper.GetPreviewText(text, 30);
         }
 
-        public override void ModifyDateAndTime(MySqlDateTime newDateAndTime)
+        public void ModifyDateAndTime(MySqlDateTime newDateAndTime)
         {
             dateAndTime = newDateAndTime;
             datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
@@ -64,6 +69,13 @@ namespace Components
         private int idNote;
         private int idUsr;
         private string title;
+
+        public string Text { get { return text; } }
+        public int NrOrd { get { return nrOrd; } }
+        public MySqlDateTime Date { get { return dateAndTime; } }
+        public int IdNote { get { return idNote; } }
+        public int IdUsr { get { return idUsr; } }
+        public string Title { get { return title; } }
 
         public Note(int idNote , int  idUsr , string text , MySqlDateTime dateAndTime , int nrOrd)
         {
@@ -89,13 +101,13 @@ namespace Components
             this.title = title;
         }
 
-        public override void ModifyText(string newText)
+        public void ModifyText(string newText)
         {
             text = newText;
             previewText = DataManager.Helper.GetPreviewText(text, 30);
         }
 
-        public override void ModifyDateAndTime(MySqlDateTime newDateAndTime)
+        public void ModifyDateAndTime(MySqlDateTime newDateAndTime)
         {
             dateAndTime = newDateAndTime;
             datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
@@ -113,6 +125,13 @@ namespace Components
         private int idUsr;
         private bool statusCheck;
 
+        public string Text { get { return text; } }
+        public int NrOrd { get { return nrOrd; } }
+        public MySqlDateTime Date { get { return dateAndTime; } }
+        public int IdToDo { get { return idToDo; } }
+        public int IdUsr { get { return idUsr; } }
+        public bool StatusCheck { get { return statusCheck; } }
+
         public ToDo(int idToDo , int idUsr,string text , MySqlDateTime dateAndTime, int nrOrd , bool statusCheck)
         {
             this.text = text;
@@ -125,13 +144,13 @@ namespace Components
             this.statusCheck = statusCheck;
         }
 
-        public override void ModifyText(string newText)
+        public void ModifyText(string newText)
         {
             text = newText;
             previewText = DataManager.Helper.GetPreviewText(text, 30);
         }
 
-        public override void ModifyDateAndTime(MySqlDateTime newDateAndTime)
+        public void ModifyDateAndTime(MySqlDateTime newDateAndTime)
         {
             dateAndTime = newDateAndTime;
             datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
@@ -168,6 +187,14 @@ namespace Components
         private int idUsr;
         private string linkText;
 
+        public string Text { get { return text; } }
+        public int NrOrd { get { return nrOrd; } }
+        public MySqlDateTime Date { get { return dateAndTime; } }
+        public int IdLink { get { return idLink; } }
+        public int IdUsr { get { return idUsr; } }
+        public string LinkText { get { return linkText; } }
+
+
         public Link(int idLink , int idUsr,string text , MySqlDateTime dateAndTime , int nrOrd , string linkText)
         {
             this.text = text;
@@ -180,20 +207,20 @@ namespace Components
             this.previewText = DataManager.Helper.GetPreviewText(text, 30);
         }
 
-        public override void ModifyText(string newText)
+        public void ModifyText(string newText)
         {
             text = newText;
             previewText = DataManager.Helper.GetPreviewText(text, 30);
         }
 
-        public override void ModifyDateAndTime(MySqlDateTime newDateAndTime)
+        public void ModifyDateAndTime(MySqlDateTime newDateAndTime)
         {
             dateAndTime = newDateAndTime;
             datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
         }
     }
 
-    public class Timer
+    public sealed class Timer
     {
         private string text { get; set; }
         private int hours { get; set; }
@@ -201,7 +228,7 @@ namespace Components
         private int seconds { get; set; }
         private int uid { get; set; }
         private int timerId { get; set; }
-        private static Timer timerInstance = new Timer();
+        private readonly static Timer timerInstance = new Timer();
 
 
         private Timer()

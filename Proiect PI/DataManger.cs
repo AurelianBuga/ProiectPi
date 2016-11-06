@@ -83,7 +83,7 @@ namespace DataManager
                 do
                 {
                     uidTest = randGen.Next(1000, 9999);
-                } while (DBConnection.UserExists(uidTest));
+                } while (DBManager.UserExists(uidTest));
 
                 return uidTest;
             }
@@ -112,7 +112,7 @@ namespace DataManager
         }
     }
 
-    public static class DBConnection
+    public static class DBManager
     {
         public static MySqlConnection conn = new MySqlConnection("Server=localhost; Uid=root; Pwd=112aurelian; Database=proiect;");
         public static bool connStatus = false;
@@ -289,7 +289,7 @@ namespace DataManager
             }
         }
 
-       /* public Timer GetTimer(int uid)
+        /*public static Timer GetTimer(int uid)
         {
             if (OpenConnection() == true)
             {
@@ -313,45 +313,47 @@ namespace DataManager
             }
         }
 
-        public static void InsertReminder(int UID, int remID, string dateAndTime, string text, int nrOrdine)
+        public static void InsertComponent(Reminder reminder)
         {
             string query = "INSERT INTO reminder (REMINDERID ,  USERID , DATEANDTIME , REMINDERTEXT , NRORD) VALUES( '" +
-                            remID + "' ,'" + UID + "' , '" + dateAndTime + "' , '" + text + "' , '" + nrOrdine + "')";
+                            reminder.IdREm + "' ,'" + reminder.IdUsr + "' , '" + reminder.Date + "' , '" + reminder.Text + "' , '" + reminder.NrOrd + "')";
 
             ExecuteNonQueryCommand(query);
         }
 
-        public static void InsertNote(int UID, int noteID, string dateAndTime, string text, string title, int nrOrdine)
+        public static void InsertComponent(Note note)
         {
             string query = "INSERT INTO note (NOTEID ,  USERID , DATEANDTIME , NOTETEXT , NOTETITLE , NRORD) VALUES( '" +
-                            noteID + "' ,'" + UID + "' , '" + dateAndTime + "' , '" + text + "' , '" + title + "' , '" + nrOrdine + "')";
+                            note.IdNote + "' ,'" + note.IdUsr + "' , '" + note.Date + "' , '" + note.Text + "' , '" + note.Title + "' , '" + note.NrOrd + "')";
 
             ExecuteNonQueryCommand(query);
         }
 
-        public static void InsertToDo(int UID, int toDoID, string dateAndTime, string text, int statusCheck, int nrOrdine)
+        public static void InsertComponent(ToDo toDo)
         {
             string query = "INSERT INTO todo (TODOID ,  USERID , DATEANDTIME , TODOTEXT , STATUSCHECK , NRORD) VALUES( '" +
-                            toDoID + "' ,'" + UID + "' , '" + dateAndTime + "' , '" + text + "' , '" + statusCheck + "' , '" + nrOrdine + "')";
+                            toDo.IdToDo + "' ,'" + toDo.IdUsr + "' , '" + toDo.Date + "' , '" + toDo.Text + "' , '" + toDo.StatusCheck + "' , '" + toDo.NrOrd + "')";
 
             ExecuteNonQueryCommand(query);
         }
 
-        public static void InsertLink(int UID, int linkID, string dateAndTime, string text, string linkText, int nrOrdine)
+        public static void InsertComponent(Link link)
         {
             string query = "INSERT INTO link (LINKID ,  USERID , DATEANDTIME , TEXT , LINKTEXT , NRORD) VALUES( '" +
-                            linkID + "' ,'" + UID + "' , '" + dateAndTime + "' , '" + text + "' , '" + linkText + "' , '" + nrOrdine + "')";
+                            link.IdLink + "' ,'" + link.IdUsr + "' , '" + link.Date + "' , '" + link.Text + "' , '" + link.LinkText + "' , '" + link.NrOrd + "')";
 
             ExecuteNonQueryCommand(query);
         }
 
-        public static void InsertTimer(int UID, int timerID, string text, int hours, int minutes, int seconds)
+        /*public static void InsertComponent(Timer timer)
         {
             string query = "INSERT INTO timer (TIMERID , USERID , TIMERTEXT , HOURS , MINUTES , SECONDS) VALUES( '" +
                             timerID + "' ,'" + UID + "' , '" + text + "' , '" + hours + "' , '" + minutes + "' , '" + seconds + "')";
+            
+            //TDO
 
             ExecuteNonQueryCommand(query);
-        }
+        }*/
 
         public static void DeleteComponent(int componentID, string componentType)
         {
@@ -369,7 +371,6 @@ namespace DataManager
             {
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
-                //ExecuteScalar will return one value
                 Count = int.Parse(cmd.ExecuteScalar() + "");
 
                 CloseConnection();
@@ -485,7 +486,7 @@ namespace DataManager
         }*/
     }
 
-    static class XMLManager
+    public static class XMLManager
     {
         /*TDO:
         - a method that create a folder(for each user) wich contains XML files(one for each type of component) for users (if they don't exists) 
@@ -808,7 +809,7 @@ namespace DataManager
 
     }
 
-    static class EncryptManager
+    public static class EncryptManager
     {
         public static void EncryptFile(string inputFile, string outputFile, string skey)
         {

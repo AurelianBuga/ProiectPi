@@ -31,7 +31,7 @@ namespace Proiect_PI
 
         private void ViewReminderList(object sender, RoutedEventArgs e)
         {
-            DBConnection.GetComponentListOneType(1, 2);
+            DBManager.GetComponentListOneType(1, 2);
         }
 
         private void ViewNoteList(object sender, RoutedEventArgs e)

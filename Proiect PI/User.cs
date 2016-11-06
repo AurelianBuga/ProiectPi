@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataManager;
 
 
 namespace UserManager
@@ -19,7 +20,7 @@ namespace UserManager
     }
 
     /// <summary>
-    /// Clasa User este de tip singleton : o singura instanta poate fi creeata
+    /// Clasa User este de tip singleton
     /// </summary>
     public sealed class User
     {
@@ -52,13 +53,13 @@ namespace UserManager
         public bool Login(string userName , string password)
         {
             // if internet access exists -> login online
-            if (DataManager.Helper.CheckForInternetConnection())
+            if (Helper.CheckForInternetConnection())
             {
-                if (DataManager.DBConnection.UserExists(userName, password))
+                if (DBManager.UserExists(userName, password))
                 {
                     //se verifica daca User-ul exista in baza de date
                     //se se pun valorile din baza de date
-                    UserInfo userInfo = DataManager.DBConnection.GetUserInfo(userName, password);
+                    UserInfo userInfo = DataManager.DBManager.GetUserInfo(userName, password);
                     userInstance.email = userInfo.email;
                     userInstance.fName = userInfo.fName;
                     userInstance.lName = userInfo.lName;
@@ -78,12 +79,12 @@ namespace UserManager
             // doreste se se logeze offline
             else
             {
-                if (DataManager.XMLManager.UserExists(userName, password))
+                if (XMLManager.UserExists(userName, password))
                 {
                     //se creeaza obiect User
                     //se verifica daca User-ul exista in XML-uri
                     //se se pun valorile din XML
-                    UserInfo userInfo = DataManager.XMLManager.GetUserInfo(userName, password);
+                    UserInfo userInfo = XMLManager.GetUserInfo(userName, password);
                     userInstance.email = userInfo.email;
                     userInstance.fName = userInfo.fName;
                     userInstance.lName = userInfo.lName;
@@ -102,18 +103,23 @@ namespace UserManager
             }
         }
 
+        public void LogOut()
+        {
+            //TDO
+        }
+
         public void Register(UserInfo userInfo)
         {
             // if internet access exists -> register online
             if (DataManager.Helper.CheckForInternetConnection())
             {
-                DataManager.DBConnection.AddUser(userInfo);
+                DBManager.AddUser(userInfo);
             }
             //else -> register offline /// va aparea un window care sa intrebe user-ul daca 
             // doreste se se logeze offline
             else
             {
-                DataManager.XMLManager.CreateUserDirsAndFiles(userInfo);
+                XMLManager.CreateUserDirsAndFiles(userInfo);
             }
         }
      }
