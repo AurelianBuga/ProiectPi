@@ -152,6 +152,16 @@ namespace DataManager
             }
         }
 
+
+
+
+        /// <summary>
+        /// -------------------------------------------TDO get component method & implement DataGrid-ul !!!!!
+        /// </summary>
+        /// <param name="comp"></param>
+        /// <param name="UID"></param>
+        /// <returns></returns>
+
         public static List<string>[] GetOneTypeComponentList(Components.Component.componentType comp, int UID)
         {
             List<string>[] list = new List<string>[4];

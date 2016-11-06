@@ -77,8 +77,8 @@
         </Grid>
         <Grid HorizontalAlignment="Left" Height="23" Margin="10,498,0,0" VerticalAlignment="Top" Width="782"/>
         <Grid HorizontalAlignment="Left" Height="425" Margin="210,73,0,0" VerticalAlignment="Top" Width="572">
-            <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" Width="550">
-            </TabControl>
+            <DataGrid x:Name="remindersList" HorizontalAlignment="Left" VerticalAlignment="Top" Height="425" Width="572"/>
+
         </Grid>
         <Grid HorizontalAlignment="Left" Height="13" Margin="10,0,0,0" VerticalAlignment="Top" Width="782"/>
         <Grid HorizontalAlignment="Left" Height="46" Margin="18,13,0,0" VerticalAlignment="Top" Width="764"/>
