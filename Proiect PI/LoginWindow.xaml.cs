@@ -44,6 +44,18 @@ namespace Proiect_PI
                 mn.Show();
                 this.Close();
             }
+            else
+            {
+                MessageBox.Show("Wrong password or username !");
+            }
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            WelcomeWindow ww = new WelcomeWindow();
+            ww.Show();
+            this.Close();
         }
     }
 }

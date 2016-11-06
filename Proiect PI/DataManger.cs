@@ -701,24 +701,31 @@ namespace DataManager
                     EncryptManager.DecryptFile(userFile.FullName, userAppDataApplicationFile, Helper.Get16CharPassword(password));
 
                     FileStream tmpUserFile = new FileStream(userAppDataApplicationFile, FileMode.Open, FileAccess.Read);
-
-                    XDocument file = XDocument.Load(tmpUserFile);
-                    tmpUserFile.Close();
-                    IEnumerable<XElement> xElements = file.Descendants();
-                    foreach(XElement el in xElements)
+                    try
                     {
-                        XAttribute atr = el.Attribute(userNamex);
-                        if(atr != null)
+                        XDocument file = XDocument.Load(tmpUserFile);
+                        tmpUserFile.Close();
+                        IEnumerable<XElement> xElements = file.Descendants();
+                        foreach (XElement el in xElements)
                         {
-                            if(atr.Value.ToString() == userName)
+                            XAttribute atr = el.Attribute(userNamex);
+                            if (atr != null)
                             {
-                                File.Delete(userFile.FullName);
-                                EncryptManager.EncryptFile(userAppDataApplicationFile, userFile.FullName, Helper.Get16CharPassword(password));
-                                File.Delete(userAppDataApplicationFile);
-                                return true;
+                                if (atr.Value.ToString() == userName)
+                                {
+                                    File.Delete(userFile.FullName);
+                                    EncryptManager.EncryptFile(userAppDataApplicationFile, userFile.FullName, Helper.Get16CharPassword(password));
+                                    File.Delete(userAppDataApplicationFile);
+                                    return true;
+                                }
                             }
                         }
                     }
+                    catch
+                    {
+                        tmpUserFile.Close();
+                    }
+                    
                     File.Delete(userAppDataApplicationFile);
                 } 
             }

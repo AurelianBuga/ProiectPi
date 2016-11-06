@@ -54,5 +54,13 @@ namespace Proiect_PI
             mn.Show();
             this.Close();
         }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            WelcomeWindow ww = new WelcomeWindow();
+            ww.Show();
+            this.Close();
+        }
     }
 }
