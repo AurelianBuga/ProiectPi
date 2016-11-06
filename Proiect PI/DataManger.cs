@@ -12,6 +12,8 @@ using System.Net;
 using System.Security;
 using System.Security.Cryptography;
 using System.Runtime.InteropServices;
+using Components;
+using MySql.Data.Types;
 
 
 
@@ -42,10 +44,10 @@ namespace DataManager
             return text;
         }
 
-        public static DateTime GetDatePreview(DateTime dateAndTime)
+        public static string GetDatePreview(MySqlDateTime dateAndTime)
         {
             //TDO
-            return dateAndTime;
+            return dateAndTime.ToString();
         }
 
         public static bool CheckForInternetConnection()
@@ -94,6 +96,19 @@ namespace DataManager
 
                 return uidTest;
             }
+        }
+
+        public static MySqlDateTime ConvertDateAndTime(string dateAndTime)
+        {
+            //TDO
+            MySqlDateTime a = new MySqlDateTime(DateTime.Now);
+            return a;
+        }
+
+        public static string ConvertDateAndTimeMySql(string dateAndTime)
+        {
+            //TDO
+            return dateAndTime;
         }
     }
 
@@ -152,105 +167,139 @@ namespace DataManager
             }
         }
 
-
-
-
-        /// <summary>
-        /// -------------------------------------------TDO get component method & implement DataGrid-ul !!!!!
-        /// </summary>
-        /// <param name="comp"></param>
-        /// <param name="UID"></param>
-        /// <returns></returns>
-
-        public static List<string>[] GetOneTypeComponentList(Components.Component.componentType comp, int UID)
+        public static List<Component> GetComponentListOneType(int type , int uid)
         {
-            List<string>[] list = new List<string>[4];
-            for (int i = 0; i < 4; i++)
-                list[i] = new List<string>();
-
-            switch (comp)
+            switch (type)
             {
-                case Components.Component.componentType.reminder:
-                    list = GetComponentList3("reminder", "NRORD", "REMINDERTEXT", "DATEANDTIME", UID.ToString());
-                    break;
+                case 1:
+                    {
+                        List<Component> list = new List<Component>(Count(uid, "reminder"));
 
-                case Components.Component.componentType.note:
-                    list = GetComponentList4("note", "NRORD", "NOTETITLE", "NOTETEXT", "DATEANDTIME", UID.ToString());
-                    break;
+                        if (OpenConnection() == true)
+                        {
+                            string query = "SELECT * FROM reminder WHERE USERID = " + uid;
+                            MySqlCommand cmd = new MySqlCommand(query, conn);
 
-                case Components.Component.componentType.todo:
-                    list = GetComponentList4("todo", "NRORD", "STATUSCHECK", "TODOTEXT", "DATEANDTIME", UID.ToString());
-                    break;
+                            MySqlDataReader dataReader = cmd.ExecuteReader();
+                            
+                            while (dataReader.Read())
+                            {
+                                Reminder reminder = new Reminder(dataReader.GetInt32("REMINDERID") , dataReader.GetInt32("USERID") , dataReader.GetString("REMINDERTEXT") ,
+                                                                dataReader.GetMySqlDateTime("DATEANDTIME") , dataReader.GetInt32("NRORD")) ;
+                                list.Add(reminder);
+                            }
 
-                case Components.Component.componentType.link:
-                    list = GetComponentList4("link", "NRORD", "TEXT", "LINKTEXT", "DATEANDTIME", UID.ToString());
-                    break;
+                            dataReader.Close();
 
-                case Components.Component.componentType.timer:
-                    list = GetComponentList4("timer", "TIMERTEXT", "HOURS", "MINUTES", "SECONDS", UID.ToString());
-                    break;
+                            CloseConnection();
+
+                            return list;
+                        }
+                        return new List<Component>(); // null
+                    }
+                    
+
+                case 2:
+                    {
+                        List<Component> list = new List<Component>(Count(uid, "note"));
+
+                        if (OpenConnection() == true)
+                        {
+                            string query = "SELECT * FROM note WHERE USERID = " + uid;
+                            MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                            MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                            while (dataReader.Read())
+                            {
+                                Note note = new Note(dataReader.GetInt32("NOTEID"), dataReader.GetInt32("USERID"), dataReader.GetString("NOTETEXT"),
+                                                                dataReader.GetMySqlDateTime("DATEANDTIME"), dataReader.GetInt32("NRORD") , dataReader.GetString("NOTETITLE"));
+                                list.Add(note);
+                            }
+
+                            dataReader.Close();
+
+                            CloseConnection();
+
+                            return list;
+                        }
+                        return new List<Component>(); // null
+                    }
+                    
+
+                case 3:
+                    {
+                        List<Component> list = new List<Component>(Count(uid, "todo"));
+
+                        if (OpenConnection() == true)
+                        {
+                            string query = "SELECT * FROM todo WHERE USERID = " + uid;
+                            MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                            MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                            while (dataReader.Read())
+                            {
+                                ToDo toDo = new ToDo(dataReader.GetInt32("TODOID"), dataReader.GetInt32("USERID"), dataReader.GetString("TODOTEXT"),
+                                                                dataReader.GetMySqlDateTime("DATEANDTIME"), dataReader.GetInt32("NRORD"), dataReader.GetBoolean("STATUSCHECK"));
+                                list.Add(toDo);
+                            }
+
+                            dataReader.Close();
+
+                            CloseConnection();
+
+                            return list;
+                        }
+                        return new List<Component>(); // null
+                    }
+                    
+                case 4:
+                    {
+                        List<Component> list = new List<Component>(Count(uid, "link"));
+
+                        if (OpenConnection() == true)
+                        {
+                            string query = "SELECT * FROM link WHERE USERID = " + uid;
+                            MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                            MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                            while (dataReader.Read())
+                            {
+                                Link link = new Link(dataReader.GetInt32("LINKID"), dataReader.GetInt32("USERID"), dataReader.GetString("TEXT"),
+                                                                dataReader.GetMySqlDateTime("DATEANDTIME"), dataReader.GetInt32("NRORD"), dataReader.GetString("LINKTEXT"));
+                                list.Add(link);
+                            }
+
+                            dataReader.Close();
+
+                            CloseConnection();
+
+                            return list;
+                        }
+                        return new List<Component>(); // null
+                    }
+                default:
+                    {
+                        return new List<Component>(); // null
+                    }
+                    
+                    
             }
-            return list;
         }
 
-        public static List<string>[] GetComponentList4(string tip, string col1, string col2, string col3, string col4, string UID)
+       /* public Timer GetTimer(int uid)
         {
-            List<string>[] list = new List<string>[4];
-
-            for (int i = 0; i < 4; i++)
-                list[i] = new List<string>();
-
             if (OpenConnection() == true)
             {
-                string query = "SELECT * FROM " + tip + " WHERE USERID = " + UID;
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                //Create a data reader and Execute the command
-                MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                //Read the data and store them in the list
-                while (dataReader.Read())
-                {
-                    list[0].Add(dataReader[col1] + "");
-                    list[1].Add(dataReader[col2] + "");
-                    list[2].Add(dataReader[col3] + "");
-                    list[3].Add(dataReader[col4] + "");
-                }
-
-                dataReader.Close();
-
+                
                 CloseConnection();
+
+            ///TDO
             }
-            return list;
-        }
 
-        public static List<string>[] GetComponentList3(string tip, string col1, string col2, string col3, string UID)
-        {
-            List<string>[] list = new List<string>[3];
-
-            for (int i = 0; i < 3; i++)
-                list[i] = new List<string>();
-
-            if (OpenConnection() == true)
-            {
-                string query = "SELECT * FROM " + tip + " WHERE USERID = " + UID;
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                //Create a data reader and Execute the command
-                MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                //Read the data and store them in the list
-                while (dataReader.Read())
-                {
-                    list[0].Add(dataReader[col1] + "");
-                    list[1].Add(dataReader[col2] + "");
-                    list[2].Add(dataReader[col3] + "");
-                }
-
-                dataReader.Close();
-
-                CloseConnection();
-            }
-            return list;
-        }
+        }*/
 
         public static void ExecuteNonQueryCommand(string query)
         {
@@ -311,7 +360,7 @@ namespace DataManager
             ExecuteNonQueryCommand(query);
         }
 
-        public static int Count(int uid, Components.Component.componentType compType)
+        public static int Count(int uid, string compType)
         {
             string query = "SELECT Count(*) FROM " + compType.ToString() + " WHERE USERID = " + uid;
             int Count = -1;
@@ -546,7 +595,7 @@ namespace DataManager
             CreateUsrXMLFile(userInfo);
         }
 
-        public static void AddComponent(Components.Link linkElement, int uid , string password)
+        public static void AddComponent(Link linkElement, int uid , string password)
         {
             DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
             FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
@@ -563,7 +612,7 @@ namespace DataManager
             File.Delete(appDataUsrFile.FullName);
         }
 
-        public static void AddComponent(Components.Note noteElement, int uid, string password)
+        public static void AddComponent(Note noteElement, int uid, string password)
         {
             //TDO
             DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
@@ -581,7 +630,7 @@ namespace DataManager
             File.Delete(appDataUsrFile.FullName);
         }
 
-        public static void AddComponent(Components.Reminder reminderElement, int uid , string password)
+        public static void AddComponent(Reminder reminderElement, int uid , string password)
         {
             //TDO
             DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid.ToString());
@@ -599,7 +648,7 @@ namespace DataManager
             File.Delete(appDataUsrFile.FullName);
         }
 
-        public static void AddComponent(Components.Timer timerElement, int uid, string password)
+        public static void AddComponent(Timer timerElement, int uid, string password)
         {
             //TDO
             DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
@@ -617,7 +666,7 @@ namespace DataManager
             File.Delete(appDataUsrFile.FullName);
         }
 
-        public static void AddComponent(Components.ToDo toDoElement, int uid, string password)
+        public static void AddComponent(ToDo toDoElement, int uid, string password)
         {
             //TDO
             DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
@@ -761,10 +810,6 @@ namespace DataManager
 
     static class EncryptManager
     {
-        // cand se va creea un cont se va creea fisierul xml ( care va avea ca nume UID-ul user-ului)
-        // in acest fisier se vor salva datele user-ului ( la fel ca in DB )
-        // dupa....vor fi criptate... cheia fiind parola ...introdusa de user ....la logare se decripteaza fisierul
-
         public static void EncryptFile(string inputFile, string outputFile, string skey)
         {
             try
@@ -773,8 +818,6 @@ namespace DataManager
                 {
                     byte[] key = ASCIIEncoding.UTF8.GetBytes(skey);
 
-                    /* This is for demostrating purposes only. 
-                     * Ideally you will want the IV key to be different from your key and you should always generate a new one for each encryption in other to achieve maximum security*/
                     byte[] IV = ASCIIEncoding.UTF8.GetBytes(skey);
 
                     using (FileStream fsCrypt = new FileStream(outputFile, FileMode.Create))

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.Types;
 
 /// <summary>
 /// IDEA: - sa adaug contacte (nr de telefon , adrese de email)
@@ -10,170 +11,213 @@ using System.Threading.Tasks;
 
 namespace Components
 {
-
     public abstract class Component
     {
-        private string text;
-        private string previewText;
-        private int nrOrdine;
-        private DateTime dateAndTime;
-        public enum componentType { reminder, note, todo, link, timer }
 
-        public string Text
-        {
-            get { return this.text; }
-            set { this.text = value; }
-        }
+        public abstract void ModifyText(string newText); // se modifica si previewText-ul
 
-        public string PreviewText
-        {
-            get { return this.previewText; }
-            set { this.previewText = value; }
-        }
-
-        public int NrOrdine
-        {
-            get { return this.nrOrdine; }
-            set { if (value > 0) this.nrOrdine = value; } // sa nu se repete/// de facut un API
-        }
-
-        public DateTime DateAndTime
-        {
-            get { return this.dateAndTime; }
-            set { this.dateAndTime = value; }
-        }
+        public abstract void ModifyDateAndTime(MySqlDateTime newDateAndTime);
     }
 
     public class Reminder : Component
     {
-        private DateTime datePreview;
+        private string datePreview;
+        private string text;
+        private string previewText;
+        private int nrOrdine;
+        private MySqlDateTime dateAndTime;
+        private int idRem;
+        private int idUsr;
 
-        public Reminder(string text, DateTime dateAndTime)
+        public Reminder(int idRem , int idUsr, string text, MySqlDateTime dateAndTime , int nrOrd)
         {
-            Text = text;
-            PreviewText = DataManager.Helper.GetPreviewText(text, 30); // cat sa fie afisat /// OP : posibil in functie de dimensiunea window-ului si a textului
-            //NrOrdine = Helper.GetNrOrdine("reminder" , );
-            DateAndTime = DateTime.Now; //TDO : dateAndTime trebuie setat intr-un date and time picker
-            DatePreview = DataManager.Helper.GetDatePreview(DateAndTime);
+            this.text = text;
+            this.nrOrdine = nrOrd;
+            this.dateAndTime = dateAndTime;
+            this.idRem = idRem;
+            this.idUsr = idUsr;
+            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
         }
 
-        public DateTime DatePreview
+        public override void ModifyText(string newText)
         {
-            get { return datePreview; }
-            set { datePreview = value; }
+            text = newText;
+            previewText = DataManager.Helper.GetPreviewText(text, 30);
         }
+
+        public override void ModifyDateAndTime(MySqlDateTime newDateAndTime)
+        {
+            dateAndTime = newDateAndTime;
+            datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
+        }
+
     }
 
     public class Note : Component
     {
+        private string datePreview;
+        private string text;
+        private string previewText;
+        private int nrOrd;
+        private MySqlDateTime dateAndTime;
+        private int idNote;
+        private int idUsr;
         private string title;
 
-        public Note(string text, int nrOrdine)
+        public Note(int idNote , int  idUsr , string text , MySqlDateTime dateAndTime , int nrOrd)
         {
-            Text = text;
-            Title = DataManager.Helper.GetPreviewText(text, 1);   ///// sau se pune preview-ul
-            NrOrdine = nrOrdine;
-            PreviewText = DataManager.Helper.GetFirstWord(text, 30) + "...";// cat sa fie afisat /// OP : posibil in functie de dimensiunea window-ului si a textului
-            DateAndTime = DateTime.Now;
+            this.text = text;
+            this.nrOrd = nrOrd;
+            this.dateAndTime = dateAndTime;
+            this.idNote = idNote;
+            this.idUsr = idUsr;
+            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+            this.title = DataManager.Helper.GetFirstWord(text, 30);   
         }
 
-        public Note(string title, string text, int nrOrdine)
+        public Note(int idNote , int idUsr,string text ,MySqlDateTime dateAndTime , int nrOrd , string title)
         {
-            Title = title;
-            Text = text;
-            PreviewText = text.Substring(0, 40) + "...";
-            NrOrdine = nrOrdine;
-            DateAndTime = DateTime.Now;
+            this.text = text;
+            this.nrOrd = nrOrd;
+            this.dateAndTime = dateAndTime;
+            this.idNote = idNote;
+            this.idUsr = idUsr;
+            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+            this.title = title;
         }
 
-        public string Title
+        public override void ModifyText(string newText)
         {
-            get { return title; }
-            set { title = value; }
+            text = newText;
+            previewText = DataManager.Helper.GetPreviewText(text, 30);
+        }
+
+        public override void ModifyDateAndTime(MySqlDateTime newDateAndTime)
+        {
+            dateAndTime = newDateAndTime;
+            datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
         }
     }
 
     public class ToDo : Component
     {
+        private string datePreview;
+        private string text;
+        private string previewText;
+        private MySqlDateTime dateAndTime;
+        private int nrOrd;
+        private int idToDo;
+        private int idUsr;
         private bool statusCheck;
 
-        public ToDo(string text, DateTime dateAndTime, int nrOrdine)
+        public ToDo(int idToDo , int idUsr,string text , MySqlDateTime dateAndTime, int nrOrd , bool statusCheck)
         {
-            Text = text;
-            PreviewText = DataManager.Helper.GetPreviewText(text, 30);  /// IDEA : preview-ul sa se face in timpul executiei .....nu sa fie in constructor
-            DateAndTime = dateAndTime; // datePicker
-            NrOrdine = nrOrdine;
-            StatusCheck = false;
+            this.text = text;
+            this.nrOrd = nrOrd;
+            this.dateAndTime = dateAndTime;
+            this.idToDo = idToDo;
+            this.idUsr = idUsr;
+            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+            this.statusCheck = statusCheck;
         }
 
-        public bool StatusCheck
+        public override void ModifyText(string newText)
         {
-            get { return statusCheck; }
-            set { statusCheck = value; }
+            text = newText;
+            previewText = DataManager.Helper.GetPreviewText(text, 30);
+        }
+
+        public override void ModifyDateAndTime(MySqlDateTime newDateAndTime)
+        {
+            dateAndTime = newDateAndTime;
+            datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
+        }
+
+        public void ModifyStatusCheck()
+        {
+            statusCheck = (!statusCheck);
+        }
+
+        public void ChangedStatusCheck()
+        {
+            if (statusCheck)
+            {
+                //TDO
+                // declansare event (apelare metoda) pt activare window pt selectarea noii date
+            }
+            else
+            {
+                //TDO
+                // declansare event (apelare metoda) pt activare window de interogare a user-ului daca doreste sa stearga ToDo-ul
+            }
         }
     }
 
     public class Link : Component
     {
+        private string datePreview;
+        private string text;
+        private string previewText;
+        private MySqlDateTime dateAndTime;
+        private int nrOrd;
+        private int idLink;
+        private int idUsr;
         private string linkText;
-        private DateTime datePreview;
 
-        public Link(string text, int nrOrdine, string linkText)
+        public Link(int idLink , int idUsr,string text , MySqlDateTime dateAndTime , int nrOrd , string linkText)
         {
-            Text = text;
-            PreviewText = DataManager.Helper.GetPreviewText(text, 30); // OP : posibil in functie de dimensiunea window-ului si a textului ///IDEA : preview-ul sa se face in timpul executiei .....nu sa fie in constructor
-            NrOrdine = nrOrdine;
-            DateAndTime = DateTime.Now;
-            DatePreview = DataManager.Helper.GetDatePreview(DateAndTime);
+            this.text = text;
+            this.nrOrd = nrOrd;
+            this.dateAndTime = dateAndTime;
+            this.idLink = idLink;
+            this.idUsr = idUsr;
+            this.linkText = linkText;
+            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
         }
 
-        public string LinkText
+        public override void ModifyText(string newText)
         {
-            get { return linkText; }
-            set { linkText = value; }
+            text = newText;
+            previewText = DataManager.Helper.GetPreviewText(text, 30);
         }
 
-        public DateTime DatePreview
+        public override void ModifyDateAndTime(MySqlDateTime newDateAndTime)
         {
-            get { return datePreview; }
-            set { datePreview = value; }
+            dateAndTime = newDateAndTime;
+            datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
         }
-
     }
 
-    public class Timer : Component
+    public class Timer
     {
-        private int hours;
-        private int minutes;
-        private int seconds;
+        private string text { get; set; }
+        private int hours { get; set; }
+        private int minutes { get; set; }
+        private int seconds { get; set; }
+        private int uid { get; set; }
+        private int timerId { get; set; }
+        private static Timer timerInstance = new Timer();
 
-        // TDO : alerta , refresh times 1/sec
 
-        public Timer(string text, int minutes, int seconds)
+        private Timer()
         {
-            Text = text;
-            PreviewText = DataManager.Helper.GetPreviewText(text, 30); // sa aiba o lungime maxima ( text scurt) /// tot la executie nu in constructor
-            DateAndTime = DateTime.Now;
-            Minutes = minutes;
-            Seconds = seconds;
+           
         }
 
-        public int Hours
+        public static Timer TimerInstance
         {
-            get { return hours; }
-            set { hours = value; }
+            get
+            {
+                return timerInstance;
+            }
         }
 
-        public int Minutes
-        {
-            get { return minutes; }
-            set { minutes = value; }
-        }
-
-        public int Seconds
-        {
-            get { return seconds; }
-            set { seconds = value; }
-        }
+        ///TDO : mecanismul de functionare a timer-ului
+        
     }
 }

@@ -17,6 +17,7 @@ using System.Data.SqlClient;
 using System.Reflection;
 using System.IO;
 using System.Net;
+using DataManager;
 
 
 namespace Proiect_PI
@@ -28,7 +29,30 @@ namespace Proiect_PI
             InitializeComponent();
         }
 
+        private void ViewReminderList(object sender, RoutedEventArgs e)
+        {
+            DBConnection.GetComponentListOneType(1, 2);
+        }
 
+        private void ViewNoteList(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ViewToDoList(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ViewLinkList(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ViewTimer(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
 
