@@ -44,3 +44,14 @@ C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\RegisterWindow.g.cs
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\WelcomeWindow.g.cs
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\RegisterWindow.baml
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\WelcomeWindow.baml
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\img\addButton256px.png
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\LinkList.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\NoteList.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\ReminderList.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\TimerPage.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\ToDoList.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\LinkList.baml
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\NoteList.baml
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\ReminderList.baml
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\TimerPage.baml
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\ToDoList.baml

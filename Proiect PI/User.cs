@@ -33,6 +33,31 @@ namespace UserManager
         public bool loginType; // true = online , false = offline
         private static readonly User userInstance = new User();
 
+        public int UID
+        {
+            get { return uId; }
+        }
+
+        public string FName
+        {
+            get { return fName; }
+        }
+
+        public string LName
+        {
+            get { return lName; }
+        }
+
+        public string UserName
+        {
+            get { return UserName; }
+        }
+
+        public string Email
+        {
+            get { return email; }
+        }
+
         private User()
         {
             

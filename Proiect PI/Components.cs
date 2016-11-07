@@ -18,7 +18,7 @@ namespace Components
         void ModifyDateAndTime(MySqlDateTime newDateAndTime);
     }
 
-    public class Reminder : Component
+    public class Reminder : Component 
     {
         private string datePreview;
         private string text;
@@ -28,7 +28,9 @@ namespace Components
         private int idRem;
         private int idUsr;
 
+
         public string Text { get { return text; } }
+        public string PreviewText { get { return previewText; } }
         public int NrOrd { get { return nrOrd; } }
         public MySqlDateTime Date { get { return dateAndTime; } }
         public int IdREm { get { return idRem; } }
@@ -71,6 +73,7 @@ namespace Components
         private string title;
 
         public string Text { get { return text; } }
+        public string PreviewText { get { return previewText; } }
         public int NrOrd { get { return nrOrd; } }
         public MySqlDateTime Date { get { return dateAndTime; } }
         public int IdNote { get { return idNote; } }
@@ -126,6 +129,7 @@ namespace Components
         private bool statusCheck;
 
         public string Text { get { return text; } }
+        public string PreviewText { get { return previewText; } }
         public int NrOrd { get { return nrOrd; } }
         public MySqlDateTime Date { get { return dateAndTime; } }
         public int IdToDo { get { return idToDo; } }
@@ -188,6 +192,7 @@ namespace Components
         private string linkText;
 
         public string Text { get { return text; } }
+        public string PreviewText { get { return previewText; } }
         public int NrOrd { get { return nrOrd; } }
         public MySqlDateTime Date { get { return dateAndTime; } }
         public int IdLink { get { return idLink; } }
