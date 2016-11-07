@@ -355,9 +355,9 @@ namespace DataManager
             ExecuteNonQueryCommand(query);
         }*/
 
-        public static void DeleteComponent(int componentID, string componentType)
+        public static void DeleteComponent(int componentID, string componentType , string componentIdTag)
         {
-            string query = "DELETE FROM " + componentType + " WHERE REMINDERID = " + componentID;
+            string query = "DELETE FROM " + componentType + " WHERE "+ componentIdTag +" = " + componentID;
 
             ExecuteNonQueryCommand(query);
         }
