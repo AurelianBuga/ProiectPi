@@ -295,7 +295,7 @@ namespace DataManager
         public static void InsertComponent(Reminder reminder)
         {
             string query = "INSERT INTO reminder (REMINDERID ,  USERID , DATEANDTIME , REMINDERTEXT , NRORD) VALUES( '" +
-                            reminder.IdREm + "' ,'" + reminder.IdUsr + "' , '" + reminder.Date + "' , '" + reminder.Text + "' , '" + reminder.NrOrd + "')";
+                            reminder.IdComp + "' ,'" + reminder.IdUsr + "' , '" + reminder.Date + "' , '" + reminder.Text + "' , '" + reminder.NrOrd + "')";
 
             ExecuteNonQueryCommand(query);
         }
@@ -303,7 +303,7 @@ namespace DataManager
         public static void InsertComponent(Note note)
         {
             string query = "INSERT INTO note (NOTEID ,  USERID , DATEANDTIME , NOTETEXT , NOTETITLE , NRORD) VALUES( '" +
-                            note.IdNote + "' ,'" + note.IdUsr + "' , '" + note.Date + "' , '" + note.Text + "' , '" + note.Title + "' , '" + note.NrOrd + "')";
+                            note.IdComp + "' ,'" + note.IdUsr + "' , '" + note.Date + "' , '" + note.Text + "' , '" + note.Title + "' , '" + note.NrOrd + "')";
 
             ExecuteNonQueryCommand(query);
         }
@@ -311,7 +311,7 @@ namespace DataManager
         public static void InsertComponent(ToDo toDo)
         {
             string query = "INSERT INTO todo (TODOID ,  USERID , DATEANDTIME , TODOTEXT , STATUSCHECK , NRORD) VALUES( '" +
-                            toDo.IdToDo + "' ,'" + toDo.IdUsr + "' , '" + toDo.Date + "' , '" + toDo.Text + "' , '" + toDo.StatusCheck + "' , '" + toDo.NrOrd + "')";
+                            toDo.IdComp + "' ,'" + toDo.IdUsr + "' , '" + toDo.Date + "' , '" + toDo.Text + "' , '" + toDo.StatusCheck + "' , '" + toDo.NrOrd + "')";
 
             ExecuteNonQueryCommand(query);
         }
@@ -319,7 +319,7 @@ namespace DataManager
         public static void InsertComponent(Link link)
         {
             string query = "INSERT INTO link (LINKID ,  USERID , DATEANDTIME , TEXT , LINKTEXT , NRORD) VALUES( '" +
-                            link.IdLink + "' ,'" + link.IdUsr + "' , '" + link.Date + "' , '" + link.Text + "' , '" + link.LinkText + "' , '" + link.NrOrd + "')";
+                            link.IdComp + "' ,'" + link.IdUsr + "' , '" + link.Date + "' , '" + link.Text + "' , '" + link.LinkText + "' , '" + link.NrOrd + "')";
 
             ExecuteNonQueryCommand(query);
         }
@@ -601,7 +601,7 @@ namespace DataManager
             CreateUsrXMLFile(userInfo);
         }
 
-        /*public static List<Component> GetComponentListOneType(int type , int uid)
+        /*public static List<Reminder> GetComponentList(int uid)
         {
             //TDO
         }
@@ -628,7 +628,7 @@ namespace DataManager
 
             XElement link = new XElement("Link");
             XElement userId = new XElement("UserId", uid);
-            XElement linkId = new XElement("LinkId", linkElement.IdLink);
+            XElement linkId = new XElement("LinkId", linkElement.IdComp);
             XElement linkText = new XElement("LinkText", linkElement.LinkText);
             XElement text = new XElement("Text", linkElement.Text);
             XElement nrOrd = new XElement("NrOrd", NrLink + 1);
@@ -662,7 +662,7 @@ namespace DataManager
 
             XElement note = new XElement("Note");
             XElement userId = new XElement("UserId", uid);
-            XElement noteId = new XElement("NoteId", noteElement.IdNote);
+            XElement noteId = new XElement("NoteId", noteElement.IdComp);
             XElement noteTitle = new XElement("Title", noteElement.Title);
             XElement text = new XElement("Text", noteElement.Text);
             XElement nrOrd = new XElement("NrOrd", NrNote + 1);
@@ -694,7 +694,7 @@ namespace DataManager
 
             XElement reminder = new XElement("Reminder");
             XElement userId = new XElement("UserId", uid);
-            XElement reminderId = new XElement("ReminderId", reminderElement.IdREm);
+            XElement reminderId = new XElement("ReminderId", reminderElement.IdComp);
             XElement text = new XElement("Text", reminderElement.Text);
             XElement nrOrd = new XElement("NrOrd", NrRem + 1);
             XElement date = new XElement("DateAndTime", reminderElement.Date);

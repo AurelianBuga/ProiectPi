@@ -11,46 +11,22 @@ using MySql.Data.Types;
 
 namespace Components
 {
-    public interface Component
+    public class TextComponent
     {
-        void ModifyText(string newText);
+        protected string datePreview;
+        protected string text;
+        protected string previewText;
+        protected int nrOrd;
+        protected MySqlDateTime dateAndTime;
+        protected int idComp;
+        protected int idUsr;
 
-        void ModifyDateAndTime(MySqlDateTime newDateAndTime);
-    }
-
-    public class Reminder : Component 
-    {
-        private string datePreview;
-        private string text;
-        private string previewText;
-        private int nrOrd;
-        private MySqlDateTime dateAndTime;
-        private int idRem;
-        private int idUsr;
-
-
-        public string Text { get { return text; } }
+        public string Text { get { return this.text; } }
         public string PreviewText { get { return previewText; } }
         public int NrOrd { get { return nrOrd; } }
         public MySqlDateTime Date { get { return dateAndTime; } }
-        public int IdREm { get { return idRem; } }
+        public int IdComp { get { return idComp; } }
         public int IdUsr { get { return idUsr; } }
-
-        public Reminder()
-        {
-
-        }
-
-        public Reminder(int idRem , int idUsr, string text, MySqlDateTime dateAndTime , int nrOrd)
-        {
-            this.text = text;
-            this.nrOrd = nrOrd;
-            this.dateAndTime = dateAndTime;
-            this.idRem = idRem;
-            this.idUsr = idUsr;
-            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
-            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
-        }
 
         public void ModifyText(string newText)
         {
@@ -63,26 +39,31 @@ namespace Components
             dateAndTime = newDateAndTime;
             datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
         }
-
     }
 
-    public class Note : Component
+    public class Reminder : TextComponent
     {
-        private string datePreview;
-        private string text;
-        private string previewText;
-        private int nrOrd;
-        private MySqlDateTime dateAndTime;
-        private int idNote;
-        private int idUsr;
+        public Reminder()
+        {
+
+        }
+
+        public Reminder(int idRem , int idUsr, string text, MySqlDateTime dateAndTime , int nrOrd)
+        {
+            this.text = text;
+            this.nrOrd = nrOrd;
+            this.dateAndTime = dateAndTime;
+            this.idComp = idRem;
+            this.idUsr = idUsr;
+            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+        }
+    }
+
+    public class Note : TextComponent
+    {
         private string title;
 
-        public string Text { get { return text; } }
-        public string PreviewText { get { return previewText; } }
-        public int NrOrd { get { return nrOrd; } }
-        public MySqlDateTime Date { get { return dateAndTime; } }
-        public int IdNote { get { return idNote; } }
-        public int IdUsr { get { return idUsr; } }
         public string Title { get { return title; } }
 
         public Note()
@@ -95,7 +76,7 @@ namespace Components
             this.text = text;
             this.nrOrd = nrOrd;
             this.dateAndTime = dateAndTime;
-            this.idNote = idNote;
+            this.idComp = idNote;
             this.idUsr = idUsr;
             this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
             this.previewText = DataManager.Helper.GetPreviewText(text, 30);
@@ -107,43 +88,18 @@ namespace Components
             this.text = text;
             this.nrOrd = nrOrd;
             this.dateAndTime = dateAndTime;
-            this.idNote = idNote;
+            this.idComp = idNote;
             this.idUsr = idUsr;
             this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
             this.previewText = DataManager.Helper.GetPreviewText(text, 30);
             this.title = title;
         }
-
-        public void ModifyText(string newText)
-        {
-            text = newText;
-            previewText = DataManager.Helper.GetPreviewText(text, 30);
-        }
-
-        public void ModifyDateAndTime(MySqlDateTime newDateAndTime)
-        {
-            dateAndTime = newDateAndTime;
-            datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
-        }
     }
 
-    public class ToDo : Component
+    public class ToDo : TextComponent
     {
-        private string datePreview;
-        private string text;
-        private string previewText;
-        private MySqlDateTime dateAndTime;
-        private int nrOrd;
-        private int idToDo;
-        private int idUsr;
         private bool statusCheck;
 
-        public string Text { get { return text; } }
-        public string PreviewText { get { return previewText; } }
-        public int NrOrd { get { return nrOrd; } }
-        public MySqlDateTime Date { get { return dateAndTime; } }
-        public int IdToDo { get { return idToDo; } }
-        public int IdUsr { get { return idUsr; } }
         public bool StatusCheck { get { return statusCheck; } }
 
         public ToDo()
@@ -156,23 +112,11 @@ namespace Components
             this.text = text;
             this.nrOrd = nrOrd;
             this.dateAndTime = dateAndTime;
-            this.idToDo = idToDo;
+            this.idComp = idToDo;
             this.idUsr = idUsr;
             this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
             this.previewText = DataManager.Helper.GetPreviewText(text, 30);
             this.statusCheck = statusCheck;
-        }
-
-        public void ModifyText(string newText)
-        {
-            text = newText;
-            previewText = DataManager.Helper.GetPreviewText(text, 30);
-        }
-
-        public void ModifyDateAndTime(MySqlDateTime newDateAndTime)
-        {
-            dateAndTime = newDateAndTime;
-            datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
         }
 
         public void ModifyStatusCheck()
@@ -195,23 +139,10 @@ namespace Components
         }
     }
 
-    public class Link : Component
+    public class Link : TextComponent
     {
-        private string datePreview;
-        private string text;
-        private string previewText;
-        private MySqlDateTime dateAndTime;
-        private int nrOrd;
-        private int idLink;
-        private int idUsr;
         private string linkText;
 
-        public string Text { get { return text; } }
-        public string PreviewText { get { return previewText; } }
-        public int NrOrd { get { return nrOrd; } }
-        public MySqlDateTime Date { get { return dateAndTime; } }
-        public int IdLink { get { return idLink; } }
-        public int IdUsr { get { return idUsr; } }
         public string LinkText { get { return linkText; } }
 
         public Link()
@@ -224,23 +155,11 @@ namespace Components
             this.text = text;
             this.nrOrd = nrOrd;
             this.dateAndTime = dateAndTime;
-            this.idLink = idLink;
+            this.idComp = idLink;
             this.idUsr = idUsr;
             this.linkText = linkText;
             this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
             this.previewText = DataManager.Helper.GetPreviewText(text, 30);
-        }
-
-        public void ModifyText(string newText)
-        {
-            text = newText;
-            previewText = DataManager.Helper.GetPreviewText(text, 30);
-        }
-
-        public void ModifyDateAndTime(MySqlDateTime newDateAndTime)
-        {
-            dateAndTime = newDateAndTime;
-            datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
         }
     }
 

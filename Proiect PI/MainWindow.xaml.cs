@@ -63,8 +63,11 @@ namespace Proiect_PI
             if(MainFrame.Content is ReminderListView)
             {
                 //apare window pentru introducerea datelor
-                AddReminderInfo remWindow = new AddReminderInfo();
-                remWindow.Show();
+                //AddReminderInfo remWindow = new AddReminderInfo();
+                //remWindow.Show();
+                Reminder rem = new Reminder();
+                rem.ModifyText("casjdfsd");
+                MessageBox.Show(rem.Text);
             }
             else if(MainFrame.Content is NoteListView)
             {
