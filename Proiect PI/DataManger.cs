@@ -396,7 +396,6 @@ namespace DataManager
             {
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
-                //ExecuteScalar will return one value
                 Count = int.Parse(cmd.ExecuteScalar() + "");
 
                 CloseConnection();
@@ -422,7 +421,6 @@ namespace DataManager
             {
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
-                //ExecuteScalar will return one value
                 Count = int.Parse(cmd.ExecuteScalar() + "");
 
                 CloseConnection();
@@ -739,7 +737,7 @@ namespace DataManager
             File.Delete(appDataUsrFile.FullName);
         }
 
-        public static void InsertComponent(ToDo toDoElement, int uid, string password)
+        /*public static void InsertComponent(ToDo toDoElement, int uid, string password)
         {
             DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
             FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
@@ -752,7 +750,7 @@ namespace DataManager
 
             XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
 
-            XElement linksNode = (from xnode in userXML.Descendants("Links") select xnode).FirstOrDefault();
+            XElement toDosNode = (from xnode in userXML.Descendants("") select xnode).FirstOrDefault();
 
             XElement link = new XElement("Link");
             XElement userId = new XElement("UserId", uid);
@@ -769,7 +767,7 @@ namespace DataManager
             EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
             tmpFile.Close();
             File.Delete(appDataUsrFile.FullName);
-        }
+        }*/
 
         public static bool UserExists(string userName, string password)
         {
