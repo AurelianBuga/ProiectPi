@@ -16,31 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `note`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `note`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `note` (
-  `NOTEID` int(11) NOT NULL AUTO_INCREMENT,
-  `USERID` int(11) NOT NULL,
-  `NOTETEXT` varchar(600) DEFAULT NULL,
-  `DATEANDTIME` datetime NOT NULL,
-  `NRORD` int(11) NOT NULL,
-  `NOTETITLE` varchar(40) NOT NULL,
-  PRIMARY KEY (`NOTEID`),
-  UNIQUE KEY `NOTEID_UNIQUE` (`NOTEID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `users` (
+  `UID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `FNAME` varchar(70) NOT NULL,
+  `LNAME` varchar(50) NOT NULL,
+  `USERNAME` varchar(45) NOT NULL,
+  `EMAIL` varchar(70) NOT NULL,
+  `PWD` varchar(45) NOT NULL,
+  PRIMARY KEY (`UID`),
+  UNIQUE KEY `idUsers_UNIQUE` (`UID`),
+  UNIQUE KEY `USERNAME_UNIQUE` (`USERNAME`),
+  UNIQUE KEY `EMAIL_UNIQUE` (`EMAIL`)
+) ENGINE=InnoDB AUTO_INCREMENT=1257 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `note`
+-- Dumping data for table `users`
 --
 
-LOCK TABLES `note` WRITE;
-/*!40000 ALTER TABLE `note` DISABLE KEYS */;
-/*!40000 ALTER TABLE `note` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'fhbdrfhb','dfhdfhb','aurel','sdgsd','12345678'),(1251,'hrhrthrt','hrthrt','aurelian','fwjeflj','12345678'),(1252,'fdgf','dhfhbdf','dfghdf','fbdfb','654345'),(1253,'sdfbsdbvsd','sdbsdb','aquatrick','wgrsgf','12345678'),(1254,'dgsdgbs','sfgdbsd','aurelia','sgdsd','12345678'),(1256,'sgsdgs','dgsdgsdg','a','sdgsdg','11111111');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-03  8:04:02
+-- Dump completed on 2016-11-08 20:21:14

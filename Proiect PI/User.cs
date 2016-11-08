@@ -31,6 +31,7 @@ namespace UserManager
         private string email;
         private string password; // trebuie sa fie minim de 8 caractere
         public bool loginType; // true = online , false = offline
+
         private static readonly User userInstance = new User();
 
         public int UID
@@ -56,6 +57,11 @@ namespace UserManager
         public string Email
         {
             get { return email; }
+        }
+
+        public string Pasword
+        {
+            get { return password; }
         }
 
         private User()
@@ -144,6 +150,7 @@ namespace UserManager
             // doreste se se logeze offline
             else
             {
+                userInfo.uId = DataManager.Helper.GetUID();
                 XMLManager.CreateUserDirsAndFiles(userInfo);
             }
         }

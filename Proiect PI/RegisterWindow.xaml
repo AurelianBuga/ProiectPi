@@ -22,5 +22,9 @@
         <PasswordBox x:Name="passwordConfirm" HorizontalAlignment="Left" Margin="221,379,0,0" VerticalAlignment="Top" Width="173" Height="20"/>
         <Button x:Name="register" Content="Register" HorizontalAlignment="Left" Margin="276,459,0,0" VerticalAlignment="Top" Width="86" Click="Register_Click" Height="25" FontSize="15"/>
         <Button x:Name="Back_Click" Content="Back" HorizontalAlignment="Left" Margin="86,459,0,0" VerticalAlignment="Top" Width="86" Height="25" Click="BackButton_Click"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="221,249,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173"/>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="221,302,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173"/>
+        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="221,352,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173"/>
+        <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="221,404,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173"/>
     </Grid>
 </Window>

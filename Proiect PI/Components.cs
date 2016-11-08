@@ -36,6 +36,11 @@ namespace Components
         public int IdREm { get { return idRem; } }
         public int IdUsr { get { return idUsr; } }
 
+        public Reminder()
+        {
+
+        }
+
         public Reminder(int idRem , int idUsr, string text, MySqlDateTime dateAndTime , int nrOrd)
         {
             this.text = text;
@@ -79,6 +84,11 @@ namespace Components
         public int IdNote { get { return idNote; } }
         public int IdUsr { get { return idUsr; } }
         public string Title { get { return title; } }
+
+        public Note()
+        {
+
+        }
 
         public Note(int idNote , int  idUsr , string text , MySqlDateTime dateAndTime , int nrOrd)
         {
@@ -135,6 +145,11 @@ namespace Components
         public int IdToDo { get { return idToDo; } }
         public int IdUsr { get { return idUsr; } }
         public bool StatusCheck { get { return statusCheck; } }
+
+        public ToDo()
+        {
+
+        }
 
         public ToDo(int idToDo , int idUsr,string text , MySqlDateTime dateAndTime, int nrOrd , bool statusCheck)
         {
@@ -199,6 +214,10 @@ namespace Components
         public int IdUsr { get { return idUsr; } }
         public string LinkText { get { return linkText; } }
 
+        public Link()
+        {
+
+        }
 
         public Link(int idLink , int idUsr,string text , MySqlDateTime dateAndTime , int nrOrd , string linkText)
         {
@@ -227,13 +246,43 @@ namespace Components
 
     public sealed class Timer
     {
-        private string text { get; set; }
-        private int hours { get; set; }
-        private int minutes { get; set; }
-        private int seconds { get; set; }
-        private int uid { get; set; }
-        private int timerId { get; set; }
+        private string text;
+        private int hours;
+        private int minutes;
+        private int seconds;
+        private int uid;
+        private int timerId;
         private readonly static Timer timerInstance = new Timer();
+
+        public string Text
+        {
+            get { return text; }
+        }
+
+        public int Hours
+        {
+            get { return hours; }
+        }
+
+        public int Minutes
+        {
+            get { return minutes; }
+        }
+
+        public int Seconds
+        {
+            get { return seconds; }
+        }
+
+        public int UID
+        {
+            get { return uid; }
+        }
+
+        public int TimerId
+        {
+            get { return timerId; }
+        }
 
 
         private Timer()

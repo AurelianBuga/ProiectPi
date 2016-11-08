@@ -19,6 +19,8 @@ using System.IO;
 using System.Net;
 using DataManager;
 using UserManager;
+using Components;
+using MySql.Data.Types;
 
 
 namespace Proiect_PI
@@ -60,32 +62,28 @@ namespace Proiect_PI
             //TDO ... sa verifice ce page este deschis in frame ... si in funtie de asta se decida e fel de obiect este adaugat in lista
             if(MainFrame.Content is ReminderListView)
             {
-                if (User.UserInstance.loginType)
-                {
-                    //online
-
-                }
-                else
-                {
-                    //offline
-
-                }
+                //apare window pentru introducerea datelor
+                AddReminderInfo remWindow = new AddReminderInfo();
+                remWindow.Show();
             }
             else if(MainFrame.Content is NoteListView)
             {
-
+                //apare window pentru introducerea datelor
+                AddNoteInfo noteWindow = new AddNoteInfo();
             }
             else if(MainFrame.Content is ToDoListView)
             {
-
+                //apare window pentru introducerea datelor
+                
             }
             else if(MainFrame.Content is LinkListView)
             {
-
+                //apare window pentru introducerea datelor
+                
             }
             else if(MainFrame.Content is TimerPage)
             {
-
+                //se inlocuieste page-ul curent cu un page de setare timer    
             }
             else
             {

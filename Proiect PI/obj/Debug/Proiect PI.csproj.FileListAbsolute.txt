@@ -55,3 +55,9 @@ C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\NoteList.baml
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\ReminderList.baml
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\TimerPage.baml
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\ToDoList.baml
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\AddNoteInfo.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\AddReminderInfo.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\AddNoteInfo.baml
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\AddReminderInfo.baml
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\img\down_arrow256px.png
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\img\up_arrow256px.png

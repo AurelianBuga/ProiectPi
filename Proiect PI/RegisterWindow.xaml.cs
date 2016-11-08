@@ -45,9 +45,10 @@ namespace Proiect_PI
             userInfo.lName = lName.Text;
             userInfo.password = passwordBox.Password;
             userInfo.userName = username.Text;
-            userInfo.uId = DataManager.Helper.GetUID();
+            //userInfo.uId = DataManager.Helper.GetUID();
 
             usr.Register(userInfo);
+            usr.Login(userInfo.userName , userInfo.password);
 
             this.Hide();
             MainWindow mn = new MainWindow();

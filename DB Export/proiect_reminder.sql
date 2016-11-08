@@ -39,7 +39,7 @@ CREATE TABLE `reminder` (
 
 LOCK TABLES `reminder` WRITE;
 /*!40000 ALTER TABLE `reminder` DISABLE KEYS */;
-INSERT INTO `reminder` VALUES (1,2,'2016-12-31 23:59:59','text text',4),(2,2,'2016-12-31 23:59:59','text text',4);
+INSERT INTO `reminder` VALUES (1,1251,'2016-12-31 23:59:59','text text',1),(2,1251,'2016-12-31 23:59:59','text bla',2),(3,1251,'2016-12-31 23:59:59','sdgsdg',3),(4,1251,'2016-12-31 23:59:59','sdgsdg',4),(5,1251,'2016-12-31 23:59:59','sdgsdg',5),(6,1251,'2016-12-31 23:59:59','sdgsdg',6),(7,1251,'2016-12-31 23:59:59','sdgsdg',7),(8,1251,'2016-12-31 23:59:59','sdgsdg',8),(9,1251,'2016-12-31 23:59:59','sdgsdg',9),(10,1251,'2016-12-31 23:59:59','5545',10);
 /*!40000 ALTER TABLE `reminder` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-03  8:04:02
+-- Dump completed on 2016-11-08 20:21:14

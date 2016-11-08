@@ -24,16 +24,6 @@ namespace Proiect_PI
             InitializeComponent();
         }
 
-        private void username_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            // TDO : validare input live
-        }
-
-        private void password_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            // TDO : validare input live
-        }
-
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             UserManager.User usr = UserManager.User.UserInstance;
