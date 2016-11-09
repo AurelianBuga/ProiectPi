@@ -71,11 +71,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddLinkInfo.xaml.cs">
+      <DependentUpon>AddLinkInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddNoteInfo.xaml.cs">
       <DependentUpon>AddNoteInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="AddReminderInfo.xaml.cs">
       <DependentUpon>AddReminderInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddToDoInfo.xaml.cs">
+      <DependentUpon>AddToDoInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components.cs" />
     <Compile Include="DataManger.cs" />
@@ -97,6 +103,9 @@
     <Compile Include="TimerPage.xaml.cs">
       <DependentUpon>TimerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TimerSetPage.xaml.cs">
+      <DependentUpon>TimerSetPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ToDoList.xaml.cs">
       <DependentUpon>ToDoList.xaml</DependentUpon>
     </Compile>
@@ -104,11 +113,19 @@
     <Compile Include="WelcomeWindow.xaml.cs">
       <DependentUpon>WelcomeWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddLinkInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddNoteInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddReminderInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddToDoInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -145,6 +162,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TimerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TimerSetPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

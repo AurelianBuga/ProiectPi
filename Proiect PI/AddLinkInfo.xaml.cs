@@ -19,15 +19,15 @@ using MySql.Data.Types;
 namespace Proiect_PI
 {
     /// <summary>
-    /// Interaction logic for AddNoteInfo.xaml
+    /// Interaction logic for AddLinkInfo.xaml
     /// </summary>
-    public partial class AddNoteInfo : Window
+    public partial class AddLinkInfo : Window
     {
         private Frame currentFrame;
 
         public static bool isOpn { get; set; }
 
-        public AddNoteInfo(ref Frame currentFrame)
+        public AddLinkInfo(ref Frame currentFrame)
         {
             InitializeComponent();
             this.currentFrame = currentFrame;
@@ -35,7 +35,7 @@ namespace Proiect_PI
             isOpn = true;
         }
 
-        private void title_TextChanged(object sender, TextChangedEventArgs e)
+        private void alias_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
@@ -50,17 +50,17 @@ namespace Proiect_PI
             if (User.UserInstance.loginType)
             {
                 //se apeleaza metoda InsertComponent(reminder)
-                Note note;
-                if(title.Text == "" || title.Text == "Title...")
+                Link link;
+                if (aliaTextBox.Text == "" || aliaTextBox.Text == "Alias...")
                 {
-                    note = new Note(User.UserInstance.UID, NoteTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count(User.UserInstance.UID, "note"));
+                    link = new Link(User.UserInstance.UID , LinkTextBox.Text , new MySqlDateTime(DateTime.Now) , DBManager.Count(User.UserInstance.UID , "link"));
                 }
                 else
                 {
-                    note = new Note( User.UserInstance.UID, NoteTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count(User.UserInstance.UID, "note") , title.Text);
+                    link = new Link(User.UserInstance.UID, LinkTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count(User.UserInstance.UID, "link") , aliaTextBox.Text);
                 }
-                DBManager.InsertComponent(note);
-                currentFrame.Navigate(new NoteListView());
+                DBManager.InsertComponent(link);
+                currentFrame.Navigate(new LinkListView());
                 isOpn = false;
                 this.Hide();
             }

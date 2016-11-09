@@ -61,3 +61,9 @@ C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\AddNoteInfo.baml
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\AddReminderInfo.baml
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\img\down_arrow256px.png
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\img\up_arrow256px.png
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\AddLinkInfo.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\AddToDoInfo.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\TimerSetPage.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\AddLinkInfo.baml
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\AddToDoInfo.baml
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\TimerSetPage.baml

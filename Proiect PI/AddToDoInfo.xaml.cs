@@ -19,9 +19,9 @@ using MySql.Data.Types;
 namespace Proiect_PI
 {
     /// <summary>
-    /// Interaction logic for AddReminderInfo.xaml
+    /// Interaction logic for AddToDoInfo.xaml
     /// </summary>
-    public partial class AddReminderInfo : Window
+    public partial class AddToDoInfo : Window
     {
         private int hour;
         private int minute;
@@ -29,16 +29,15 @@ namespace Proiect_PI
         private DateTime dateDMY;
         private Frame currentFrame;
 
-        public static  bool isOpn {get; set; }
+        public static bool isOpn { get; set; }
 
-
-        public AddReminderInfo(ref Frame currentFrame)
+        public AddToDoInfo(ref Frame currentFrame)
         {
             hour = DateTime.Now.Hour;
             minute = DateTime.Now.Minute;
             this.currentFrame = currentFrame;
 
-            if(hour > 12)
+            if (hour > 12)
             {
                 AMPM = "PM";
             }
@@ -49,7 +48,6 @@ namespace Proiect_PI
 
             InitializeComponent();
             DataContext = this;
-
             isOpn = true;
         }
 
@@ -65,7 +63,7 @@ namespace Proiect_PI
                 {
                     return hour;
                 }
-                
+
             }
         }
 
@@ -73,7 +71,7 @@ namespace Proiect_PI
         {
             get
             {
-                if(minute == 0)
+                if (minute == 0)
                 {
                     return "00";
                 }
@@ -81,19 +79,13 @@ namespace Proiect_PI
                 {
                     return minute.ToString();
                 }
-                
+
             }
         }
 
         public string AMPMPr
         {
             get { return AMPM; }
-        }
-
-
-        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
 
         private MySqlDateTime GetFullDateMySqlFormat()
@@ -109,7 +101,7 @@ namespace Proiect_PI
             return fullDate;
         }
 
-        private void DatePicker_SelectedDateChanged(object sender,SelectionChangedEventArgs e)
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             var picker = sender as DatePicker;
 
@@ -117,39 +109,41 @@ namespace Proiect_PI
             DateTime? date = picker.SelectedDate;
             if (date == null)
             {
-                
+
             }
             else
             {
                 //MessageBox.Show(date.Value.ToShortDateString());
-                 this.dateDMY = date.Value;
+                this.dateDMY = date.Value;
             }
         }
 
-        private void AddReminder_Click(object sender, RoutedEventArgs e)
+        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void AddToDo_Click(object sender, RoutedEventArgs e)
         {
             if (User.UserInstance.loginType)
             {
                 //se apeleaza metoda InsertComponent(reminder)
-                Reminder reminder = new Reminder(User.UserInstance.UID, ReminderTextBox.Text, GetFullDateMySqlFormat(), DBManager.Count(User.UserInstance.UID, "reminder"));
-                DBManager.InsertComponent(reminder);
-                currentFrame.Navigate(new ReminderListView());
+                ToDo toDo = new ToDo(User.UserInstance.UID , ToDoTextBox.Text , GetFullDateMySqlFormat() , DBManager.Count(User.UserInstance.UID , "todo") , false);
+                DBManager.InsertComponent(toDo);
+                currentFrame.Navigate(new ToDoListView());
                 isOpn = false;
                 this.Hide();
             }
             else
             {
                 //se apeleaza metoda InsertComponent(reminderElement, uid , password)
-                //TDO : generator de Id-uri pt componente 
-                Reminder reminder = new Reminder(533 , User.UserInstance.UID, ReminderTextBox.Text, GetFullDateMySqlFormat(), DBManager.Count(User.UserInstance.UID, "reminder"));
-                XMLManager.InsertComponent(reminder, User.UserInstance.UID, User.UserInstance.Pasword);
+                // XMLManager.InsertComponent(reminder, User.UserInstance.UID, User.UserInstance.Pasword);
             }
         }
 
-        private void ReminderTextClearTextBox(object sender, RoutedEventArgs e)
+        private void ToDoTextClearTextBox(object sender, RoutedEventArgs e)
         {
-            ReminderTextBox.Text = String.Empty;
+            ToDoTextBox.Text = String.Empty;
         }
-
     }
 }

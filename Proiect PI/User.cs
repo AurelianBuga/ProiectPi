@@ -142,7 +142,7 @@ namespace UserManager
         public void Register(UserInfo userInfo)
         {
             // if internet access exists -> register online
-            if (DataManager.Helper.CheckForInternetConnection())
+            if (Helper.CheckForInternetConnection())
             {
                 DBManager.AddUser(userInfo);
             }
@@ -150,7 +150,7 @@ namespace UserManager
             // doreste se se logeze offline
             else
             {
-                userInfo.uId = DataManager.Helper.GetUID();
+                userInfo.uId = Helper.GetUID();
                 XMLManager.CreateUserDirsAndFiles(userInfo);
             }
         }

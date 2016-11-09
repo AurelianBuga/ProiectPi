@@ -55,7 +55,7 @@ namespace Proiect_PI
             }
             else
             {
-                //listRem = XMLManager.GetComponentListOneType(1, User.UserInstance.UID);
+                listRem = XMLManager.GetReminderList(User.UserInstance.UID , User.UserInstance.Pasword , 1);
             }
         }
     }

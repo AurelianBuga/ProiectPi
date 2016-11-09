@@ -63,27 +63,43 @@ namespace Proiect_PI
             if(MainFrame.Content is ReminderListView)
             {
                 //apare window pentru introducerea datelor
-                AddReminderInfo remWindow = new AddReminderInfo();
-                remWindow.Show();
+                if (!AddReminderInfo.isOpn)
+                {
+                    AddReminderInfo remWindow = new AddReminderInfo(ref MainFrame);
+                    remWindow.Show();
+                }  
             }
             else if(MainFrame.Content is NoteListView)
             {
                 //apare window pentru introducerea datelor
-                AddNoteInfo noteWindow = new AddNoteInfo();
+                if (!AddNoteInfo.isOpn)
+                {
+                    AddNoteInfo noteWindow = new AddNoteInfo(ref MainFrame);
+                    noteWindow.Show();
+                }  
             }
             else if(MainFrame.Content is ToDoListView)
             {
                 //apare window pentru introducerea datelor
-                
+                if (!AddToDoInfo.isOpn)
+                {
+                    AddToDoInfo toDoWindow = new AddToDoInfo(ref MainFrame);
+                    toDoWindow.Show();
+                }
             }
             else if(MainFrame.Content is LinkListView)
             {
                 //apare window pentru introducerea datelor
-                
+                if (!AddLinkInfo.isOpn)
+                {
+                    AddLinkInfo linkWindow = new AddLinkInfo(ref MainFrame);
+                    linkWindow.Show();
+                }
             }
             else if(MainFrame.Content is TimerPage)
             {
                 //se inlocuieste page-ul curent cu un page de setare timer    
+                MainFrame.Navigate(new TimerSetPage());
             }
             else
             {

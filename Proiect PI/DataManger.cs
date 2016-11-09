@@ -62,9 +62,17 @@ namespace DataManager
                     }
                 }
             }
-            catch
+            catch(WebException wex)
             {
-                return false;
+                if(wex.Message.ToString() == "The remote server returned an error: (407) Proxy Authentication Required.")
+                {
+                    return true;
+                }else
+                {
+                    return false;
+                }
+                
+                
             }
         }
 
@@ -295,7 +303,7 @@ namespace DataManager
         public static void InsertComponent(Reminder reminder)
         {
             string query = "INSERT INTO reminder (REMINDERID ,  USERID , DATEANDTIME , REMINDERTEXT , NRORD) VALUES( '" +
-                            reminder.IdComp + "' ,'" + reminder.IdUsr + "' , '" + reminder.Date + "' , '" + reminder.Text + "' , '" + reminder.NrOrd + "')";
+                            reminder.IdComp + "' ,'" + reminder.IdUsr + "' , STR_TO_DATE('"+ reminder.Date +"', '%c/%e/%Y %r') , '" + reminder.Text + "' , '" + reminder.NrOrd + "')";
 
             ExecuteNonQueryCommand(query);
         }
@@ -303,7 +311,7 @@ namespace DataManager
         public static void InsertComponent(Note note)
         {
             string query = "INSERT INTO note (NOTEID ,  USERID , DATEANDTIME , NOTETEXT , NOTETITLE , NRORD) VALUES( '" +
-                            note.IdComp + "' ,'" + note.IdUsr + "' , '" + note.Date + "' , '" + note.Text + "' , '" + note.Title + "' , '" + note.NrOrd + "')";
+                            note.IdComp + "' ,'" + note.IdUsr + "' , STR_TO_DATE('" + note.Date + "', '%c/%e/%Y %r') , '" + note.Text + "' , '" + note.Title + "' , '" + note.NrOrd + "')";
 
             ExecuteNonQueryCommand(query);
         }
@@ -311,7 +319,7 @@ namespace DataManager
         public static void InsertComponent(ToDo toDo)
         {
             string query = "INSERT INTO todo (TODOID ,  USERID , DATEANDTIME , TODOTEXT , STATUSCHECK , NRORD) VALUES( '" +
-                            toDo.IdComp + "' ,'" + toDo.IdUsr + "' , '" + toDo.Date + "' , '" + toDo.Text + "' , '" + toDo.StatusCheck + "' , '" + toDo.NrOrd + "')";
+                            toDo.IdComp + "' ,'" + toDo.IdUsr + "' , STR_TO_DATE('" + toDo.Date + "', '%c/%e/%Y %r') , '" + toDo.Text + "' , '" + Convert.ToInt32(toDo.StatusCheck) + "' , '" + toDo.NrOrd + "')";
 
             ExecuteNonQueryCommand(query);
         }
@@ -319,7 +327,7 @@ namespace DataManager
         public static void InsertComponent(Link link)
         {
             string query = "INSERT INTO link (LINKID ,  USERID , DATEANDTIME , TEXT , LINKTEXT , NRORD) VALUES( '" +
-                            link.IdComp + "' ,'" + link.IdUsr + "' , '" + link.Date + "' , '" + link.Text + "' , '" + link.LinkText + "' , '" + link.NrOrd + "')";
+                            link.IdComp + "' ,'" + link.IdUsr + "' , STR_TO_DATE('" + link.Date + "', '%c/%e/%Y %r') , '" + link.Text + "' , '" + link.LinkText + "' , '" + link.NrOrd + "')";
 
             ExecuteNonQueryCommand(query);
         }
@@ -343,7 +351,7 @@ namespace DataManager
 
         public static int Count(int uid, string compType)
         {
-            string query = "SELECT Count(*) FROM " + compType.ToString() + " WHERE USERID = " + uid;
+            string query = "SELECT Count(*) FROM " + compType.ToLower().ToString() + " WHERE USERID = " + uid;
             int Count = -1;
 
             if (OpenConnection() == true)
@@ -601,12 +609,34 @@ namespace DataManager
             CreateUsrXMLFile(userInfo);
         }
 
-        /*public static List<Reminder> GetComponentList(int uid)
+        public static List<Reminder> GetReminderList(int uid , string password , int type)
         {
-            //TDO
+            List<Reminder> list = new List<Reminder>();
+            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
+            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
+            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()) + @"\" + uid + ".xml");
+
+            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
+            File.Delete(encrypfile.FullName);
+            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
+            
+            switch (type)
+            {
+                case 1:
+                    {
+                        XElement remindersNode = (from xnode in userXML.Descendants("Reminders") select xnode).SingleOrDefault();
+                        IEnumerable<XElement> reminders = remindersNode.Descendants();
+                        break;
+                    }
+            }
+
+            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
+            File.Delete(appDataUsrFile.FullName);
+
+            return list;
         }
 
-        public static Timer GetTimer(int uid)
+        /*public static Timer GetTimer(int uid)
         {
             //TDO
         }*/
@@ -619,8 +649,6 @@ namespace DataManager
 
             EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
             File.Delete(encrypfile.FullName);
-
-            
 
             XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
             FileStream tmpFile = new FileStream(appDataUsrFile.FullName, FileMode.Open, FileAccess.ReadWrite);
@@ -652,12 +680,10 @@ namespace DataManager
             FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()) + @"\" + uid + ".xml");
 
             EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
-            File.Delete(encrypfile.FullName);
-
-            FileStream tmpFile = new FileStream(appDataApplicationPath.FullName, FileMode.Open, FileAccess.ReadWrite);
+            File.Delete(encrypfile.FullName); 
 
             XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
-
+            FileStream tmpFile = new FileStream(appDataApplicationPath.FullName, FileMode.Open, FileAccess.ReadWrite);
             XElement notesNode = (from xnode in userXML.Descendants("Notes") select xnode).FirstOrDefault();
 
             XElement note = new XElement("Note");
@@ -686,10 +712,10 @@ namespace DataManager
             EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
             File.Delete(encrypfile.FullName);
 
-            FileStream tmpFile = new FileStream(appDataApplicationPath.FullName, FileMode.Open, FileAccess.ReadWrite);
+            
 
             XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
-
+            FileStream tmpFile = new FileStream(appDataUsrFile.FullName, FileMode.Open, FileAccess.ReadWrite);
             XElement remindersNode = (from xnode in userXML.Descendants("Reminders") select xnode).FirstOrDefault();
 
             XElement reminder = new XElement("Reminder");
@@ -717,10 +743,10 @@ namespace DataManager
             EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
             File.Delete(encrypfile.FullName);
 
-            FileStream tmpFile = new FileStream(appDataApplicationPath.FullName, FileMode.Open, FileAccess.ReadWrite);
+            
 
             XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
-
+            FileStream tmpFile = new FileStream(appDataApplicationPath.FullName, FileMode.Open, FileAccess.ReadWrite);
             XElement timerNode = (from xnode in userXML.Descendants("Timer") select xnode).FirstOrDefault();
 
             XElement hours = new XElement("Hours", timerElement.Hours);
@@ -746,10 +772,10 @@ namespace DataManager
             EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
             File.Delete(encrypfile.FullName);
 
-            FileStream tmpFile = new FileStream(appDataApplicationPath.FullName, FileMode.Open, FileAccess.ReadWrite);
+            
 
             XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
-
+            FileStream tmpFile = new FileStream(appDataApplicationPath.FullName, FileMode.Open, FileAccess.ReadWrite);
             XElement toDosNode = (from xnode in userXML.Descendants("") select xnode).FirstOrDefault();
 
             XElement link = new XElement("Link");

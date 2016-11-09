@@ -43,9 +43,14 @@ namespace Components
 
     public class Reminder : TextComponent
     {
-        public Reminder()
+        public Reminder(int idUsr, string text, MySqlDateTime dateAndTime, int nrOrd)
         {
-
+            this.text = text;
+            this.nrOrd = nrOrd;
+            this.dateAndTime = dateAndTime;
+            this.idUsr = idUsr;
+            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
         }
 
         public Reminder(int idRem , int idUsr, string text, MySqlDateTime dateAndTime , int nrOrd)
@@ -83,6 +88,17 @@ namespace Components
             this.title = DataManager.Helper.GetFirstWord(text, 30);   
         }
 
+        public Note(int idUsr, string text, MySqlDateTime dateAndTime, int nrOrd)
+        {
+            this.text = text;
+            this.nrOrd = nrOrd;
+            this.dateAndTime = dateAndTime;
+            this.idUsr = idUsr;
+            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+            this.title = DataManager.Helper.GetFirstWord(text, 30);
+        }
+
         public Note(int idNote , int idUsr,string text ,MySqlDateTime dateAndTime , int nrOrd , string title)
         {
             this.text = text;
@@ -94,6 +110,19 @@ namespace Components
             this.previewText = DataManager.Helper.GetPreviewText(text, 30);
             this.title = title;
         }
+
+        public Note(int idUsr, string text, MySqlDateTime dateAndTime, int nrOrd, string title)
+        {
+            this.text = text;
+            this.nrOrd = nrOrd;
+            this.dateAndTime = dateAndTime;
+            this.idUsr = idUsr;
+            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+            this.title = title;
+        }
+
+
     }
 
     public class ToDo : TextComponent
@@ -113,6 +142,17 @@ namespace Components
             this.nrOrd = nrOrd;
             this.dateAndTime = dateAndTime;
             this.idComp = idToDo;
+            this.idUsr = idUsr;
+            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+            this.statusCheck = statusCheck;
+        }
+
+        public ToDo(int idUsr, string text, MySqlDateTime dateAndTime, int nrOrd, bool statusCheck)
+        {
+            this.text = text;
+            this.nrOrd = nrOrd;
+            this.dateAndTime = dateAndTime;
             this.idUsr = idUsr;
             this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
             this.previewText = DataManager.Helper.GetPreviewText(text, 30);
@@ -161,6 +201,29 @@ namespace Components
             this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
             this.previewText = DataManager.Helper.GetPreviewText(text, 30);
         }
+
+        public Link(int idUsr, string text, MySqlDateTime dateAndTime, int nrOrd, string linkText)
+        {
+            this.text = text;
+            this.nrOrd = nrOrd;
+            this.dateAndTime = dateAndTime;
+            this.idUsr = idUsr;
+            this.linkText = linkText;
+            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+        }
+
+        public Link(int idUsr, string text, MySqlDateTime dateAndTime, int nrOrd)
+        {
+            this.text = text;
+            this.nrOrd = nrOrd;
+            this.dateAndTime = dateAndTime;
+            this.idUsr = idUsr;
+            this.linkText = linkText;
+            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+        }
+
     }
 
     public sealed class Timer
