@@ -489,10 +489,10 @@ namespace DataManager
         public static DirectoryInfo appDataApplicationPath = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"AppData\Local\MyApplication"));
 
         //valorile vor fi asignate in metoda GetComponentListOneType()
-        private static int NrRem = 0; 
-        private static int NrLink = 0;
-        private static int NrToDo = 0;
-        private static int NrNote = 0;
+        public static int NrRem = 0;
+        public static int NrLink = 0;
+        public static int NrToDo = 0;
+        public static int NrNote = 0;
 
         private static void CreateApplicationFolder()
         {
@@ -636,10 +636,11 @@ namespace DataManager
 
 
             userXML.Save(tmpFile);
+            tmpFile.Close();
 
             EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
 
-            tmpFile.Close();
+            
             File.Delete(appDataUsrFile.FullName);
         }
 
@@ -667,9 +668,10 @@ namespace DataManager
             notesNode.Add(note);
 
             userXML.Save(tmpFile);
+            tmpFile.Close();
 
             EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-            tmpFile.Close();
+            
             File.Delete(appDataUsrFile.FullName);
         }
 
@@ -698,9 +700,10 @@ namespace DataManager
             remindersNode.Add(reminder);
 
             userXML.Save(tmpFile);
+            tmpFile.Close();
 
             EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-            tmpFile.Close();
+
             File.Delete(appDataUsrFile.FullName);
         }
 
@@ -759,9 +762,10 @@ namespace DataManager
             linksNode.Add(link);
 
             userXML.Save(tmpFile);
+            tmpFile.Close();
 
             EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-            tmpFile.Close();
+
             File.Delete(appDataUsrFile.FullName);
         }*/
 

@@ -236,15 +236,15 @@ namespace Components
             this.previewText = DataManager.Helper.GetPreviewText(text, 30);
         }
 
-        public int GetID()
+        public void SetID()
         {
             Random idGen = new Random();
             int id;
-            while(XMLManager.ComponentExists(id = idGen.Next(), 1, User.UserInstance.UID , User.UserInstance.Pasword))
+            while(XMLManager.ComponentExists(id = idGen.Next(), 1, User.UserInstance.UID , User.UserInstance.Pasword) || (id < 1000) || (id > 9999))
             {
                 //nothing
             }
-            return id;
+            this.idComp = id;
         }
 
     }

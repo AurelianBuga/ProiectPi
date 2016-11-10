@@ -54,7 +54,6 @@ namespace Proiect_PI
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Hide();
             WelcomeWindow ww = new WelcomeWindow();
             ww.Show();
             this.Close();

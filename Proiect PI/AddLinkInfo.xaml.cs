@@ -69,14 +69,14 @@ namespace Proiect_PI
             {
                 if (aliaTextBox.Text == "" || aliaTextBox.Text == "Alias...")
                 {
-                    link = new Link(4265,  "ballaur", new MySqlDateTime(DateTime.Now), 5);
-                    link.GetID();
+                    link = new Link(User.UserInstance.UID , LinkTextBox.Text , new MySqlDateTime(DateTime.Now) , XMLManager.NrLink) ;
+                    link.SetID();
                 }
                 else
                 {
-
+                    link = new Link(User.UserInstance.UID, LinkTextBox.Text, new MySqlDateTime(DateTime.Now), XMLManager.NrLink, aliaTextBox.Text);
                 }
-                //XMLManager.InsertComponent(link, User.UserInstance.UID, User.UserInstance.Pasword);
+                XMLManager.InsertComponent(link, User.UserInstance.UID, User.UserInstance.Pasword);
                 currentFrame.Navigate(new LinkListView());
                 isOpn = false;
                 this.Hide();
