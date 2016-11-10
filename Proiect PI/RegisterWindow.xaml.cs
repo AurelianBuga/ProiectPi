@@ -48,7 +48,7 @@ namespace Proiect_PI
             //userInfo.uId = DataManager.Helper.GetUID();
 
             usr.Register(userInfo);
-            usr.Login(userInfo.userName , userInfo.password);
+            usr.Login(userInfo.userName , userInfo.password , true);
 
             this.Hide();
             MainWindow mn = new MainWindow();

@@ -85,6 +85,9 @@
     </Compile>
     <Compile Include="Components.cs" />
     <Compile Include="DataManger.cs" />
+    <Compile Include="ErrInternetConn.xaml.cs">
+      <DependentUpon>ErrInternetConn.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LinkList.xaml.cs">
       <DependentUpon>LinkList.xaml</DependentUpon>
     </Compile>
@@ -110,6 +113,9 @@
       <DependentUpon>ToDoList.xaml</DependentUpon>
     </Compile>
     <Compile Include="User.cs" />
+    <Compile Include="WelcomePage.xaml.cs">
+      <DependentUpon>WelcomePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WelcomeWindow.xaml.cs">
       <DependentUpon>WelcomeWindow.xaml</DependentUpon>
     </Compile>
@@ -126,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddToDoInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ErrInternetConn.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -170,6 +180,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ToDoList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WelcomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

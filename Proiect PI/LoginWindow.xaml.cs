@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DataManager;
 
 namespace Proiect_PI
 {
@@ -27,16 +28,27 @@ namespace Proiect_PI
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             UserManager.User usr = UserManager.User.UserInstance;
-            if(usr.Login(username.Text , passwordBox.Password))
+            //cu internet
+            if (Helper.CheckForInternetConnection())
             {
-                this.Hide();
-                MainWindow mn = new MainWindow();
-                mn.Show();
-                this.Close();
+                if(usr.Login(usr.UserName , usr.Pasword , false) == 1)
+                {
+                    this.Hide();
+                    MainWindow mn = new MainWindow();
+                    mn.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Wrong password or username !");
+                }
+               
             }
-            else
+            else // fara internet
             {
-                MessageBox.Show("Wrong password or username !");
+                //usr.Login(username.Text, passwordBox.Password, true);
+                ErrInternetConn win = new ErrInternetConn(username.Text, passwordBox.Password);
+                win.Show();
             }
         }
 

@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using DataManager;
-
+using Proiect_PI;
 
 namespace UserManager
 {
@@ -51,7 +59,7 @@ namespace UserManager
 
         public string UserName
         {
-            get { return UserName; }
+            get { return userName; }
         }
 
         public string Email
@@ -79,36 +87,14 @@ namespace UserManager
             
         }
 
+        
+
         // Login() method return true if username & password are valid
         // else return false
-        public bool Login(string userName , string password)
+        public int Login(string userName , string password , bool afterOffReg)
         {
-            // if internet access exists -> login online
-            if (Helper.CheckForInternetConnection())
-            {
-                if (DBManager.UserExists(userName, password))
-                {
-                    //se verifica daca User-ul exista in baza de date
-                    //se se pun valorile din baza de date
-                    UserInfo userInfo = DataManager.DBManager.GetUserInfo(userName, password);
-                    userInstance.email = userInfo.email;
-                    userInstance.fName = userInfo.fName;
-                    userInstance.lName = userInfo.lName;
-                    userInstance.userName = userInfo.userName;
-                    userInstance.uId = userInfo.uId;
-                    userInstance.password = userInfo.password;
-                    userInstance.loginType = true;
-
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            //else -> login offline /// va aparea un window care sa intrebe user-ul daca 
-            // doreste se se logeze offline
-            else
+            //daca deja s-a facut inregistrarea userlui offline
+            if (afterOffReg)
             {
                 if (XMLManager.UserExists(userName, password))
                 {
@@ -124,14 +110,63 @@ namespace UserManager
                     userInstance.password = userInfo.password;
                     userInstance.loginType = false;
 
-                    return true;
+                    return 1;
                 }
                 else
                 {
-                    return false;
+                     return 0;
                 }
-                    
             }
+            else 
+            {
+                // if internet access exists -> login online
+                if (Helper.CheckForInternetConnection())
+                {
+                    if (DBManager.UserExists(userName, password))
+                    {
+                        //se verifica daca User-ul exista in baza de date
+                        //se se pun valorile din baza de date
+                        UserInfo userInfo = DBManager.GetUserInfo(userName, password);
+                        userInstance.email = userInfo.email;
+                        userInstance.fName = userInfo.fName;
+                        userInstance.lName = userInfo.lName;
+                        userInstance.userName = userInfo.userName;
+                        userInstance.uId = userInfo.uId;
+                        userInstance.password = userInfo.password;
+                        userInstance.loginType = true;
+
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+                else
+                {
+                    if (XMLManager.UserExists(userName, password))
+                    {
+                        //se creeaza obiect User
+                        //se verifica daca User-ul exista in XML-uri
+                        //se se pun valorile din XML
+                        UserInfo userInfo = XMLManager.GetUserInfo(userName, password);
+                        userInstance.email = userInfo.email;
+                        userInstance.fName = userInfo.fName;
+                        userInstance.lName = userInfo.lName;
+                        userInstance.userName = userInfo.userName;
+                        userInstance.uId = userInfo.uId;
+                        userInstance.password = userInfo.password;
+                        userInstance.loginType = false;
+
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+            
         }
 
         public void LogOut()

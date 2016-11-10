@@ -909,12 +909,7 @@ namespace DataManager
                                 File.Delete(userAppDataApplicationFile);
 
                                 return user;
-                            }
-                            else
-                            {
-                                return user;
-                            }
-                            
+                            }                           
                         }
                     }
                     File.Delete(userAppDataApplicationFile);

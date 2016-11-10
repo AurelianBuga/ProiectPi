@@ -30,6 +30,7 @@ namespace Proiect_PI
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame.Navigate(new WelcomePage());
         }
 
         private void ViewReminderList(object sender, RoutedEventArgs e)
