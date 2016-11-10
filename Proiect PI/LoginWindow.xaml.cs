@@ -33,7 +33,6 @@ namespace Proiect_PI
             {
                 if(usr.Login(usr.UserName , usr.Pasword , false) == 1)
                 {
-                    this.Hide();
                     MainWindow mn = new MainWindow();
                     mn.Show();
                     this.Close();
@@ -49,6 +48,7 @@ namespace Proiect_PI
                 //usr.Login(username.Text, passwordBox.Password, true);
                 ErrInternetConn win = new ErrInternetConn(username.Text, passwordBox.Password);
                 win.Show();
+                this.Close();
             }
         }
 

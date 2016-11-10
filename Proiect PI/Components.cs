@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.Types;
+using DataManager;
+using UserManager;
 
 /// <summary>
 /// IDEA: - sa adaug contacte (nr de telefon , adrese de email)
@@ -202,6 +204,17 @@ namespace Components
             this.previewText = DataManager.Helper.GetPreviewText(text, 30);
         }
 
+        public Link(int idLink, int idUsr, string text, MySqlDateTime dateAndTime, int nrOrd)
+        {
+            this.text = text;
+            this.nrOrd = nrOrd;
+            this.dateAndTime = dateAndTime;
+            this.idComp = idLink;
+            this.idUsr = idUsr;
+            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+        }
+
         public Link(int idUsr, string text, MySqlDateTime dateAndTime, int nrOrd, string linkText)
         {
             this.text = text;
@@ -219,9 +232,19 @@ namespace Components
             this.nrOrd = nrOrd;
             this.dateAndTime = dateAndTime;
             this.idUsr = idUsr;
-            this.linkText = linkText;
             this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
             this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+        }
+
+        public int GetID()
+        {
+            Random idGen = new Random();
+            int id;
+            while(XMLManager.ComponentExists(id = idGen.Next(), 1, User.UserInstance.UID , User.UserInstance.Pasword))
+            {
+                //nothing
+            }
+            return id;
         }
 
     }

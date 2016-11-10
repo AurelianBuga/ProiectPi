@@ -47,10 +47,11 @@ namespace Proiect_PI
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            Link link;
             if (User.UserInstance.loginType)
             {
                 //se apeleaza metoda InsertComponent(reminder)
-                Link link;
+                
                 if (aliaTextBox.Text == "" || aliaTextBox.Text == "Alias...")
                 {
                     link = new Link(User.UserInstance.UID , LinkTextBox.Text , new MySqlDateTime(DateTime.Now) , DBManager.Count(User.UserInstance.UID , "link"));
@@ -66,8 +67,19 @@ namespace Proiect_PI
             }
             else
             {
-                //se apeleaza metoda InsertComponent(reminderElement, uid , password)
-                // XMLManager.InsertComponent(reminder, User.UserInstance.UID, User.UserInstance.Pasword);
+                if (aliaTextBox.Text == "" || aliaTextBox.Text == "Alias...")
+                {
+                    link = new Link(4265,  "ballaur", new MySqlDateTime(DateTime.Now), 5);
+                    link.GetID();
+                }
+                else
+                {
+
+                }
+                //XMLManager.InsertComponent(link, User.UserInstance.UID, User.UserInstance.Pasword);
+                currentFrame.Navigate(new LinkListView());
+                isOpn = false;
+                this.Hide();
             }
         }
     }

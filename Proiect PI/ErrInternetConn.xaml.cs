@@ -33,6 +33,8 @@ namespace Proiect_PI
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
+            LoginWindow win = new LoginWindow();
+            win.Show();
         }
 
         private void Register_Click(object sender, RoutedEventArgs e)
@@ -49,6 +51,11 @@ namespace Proiect_PI
                 MainWindow main = new MainWindow();
                 main.Show();
                 this.Hide();
+            }
+            else
+            {
+                LoginWindow win = new LoginWindow();
+                win.Show();
             }
         }
     }

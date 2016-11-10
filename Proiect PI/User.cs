@@ -185,9 +185,21 @@ namespace UserManager
             // doreste se se logeze offline
             else
             {
-                userInfo.uId = Helper.GetUID();
+                userInfo.uId = GetUID();
                 XMLManager.CreateUserDirsAndFiles(userInfo);
             }
         }
-     }
+
+        public static int GetUID()
+        {
+            Random randGen = new Random();
+            int uidTest = -1;
+            do
+            {
+                uidTest = randGen.Next(1000, 9999);
+            } while (XMLManager.UserExists(uidTest));
+
+            return uidTest;
+        }
+    }
 }

@@ -82,30 +82,6 @@ namespace DataManager
             return passwordX2.Substring(0, 16);
         }
 
-        public static int GetUID()
-        {
-            Random randGen = new Random();
-            int uidTest = -1;
-            if(CheckForInternetConnection())
-            {
-                do
-                {
-                    uidTest = randGen.Next(1000, 9999);
-                } while (DBManager.UserExists(uidTest));
-
-                return uidTest;
-            }
-            else
-            {
-                do
-                {
-                    uidTest = randGen.Next(1000, 9999);
-                } while (XMLManager.UserExists(uidTest));
-
-                return uidTest;
-            }
-        }
-
         public static MySqlDateTime ConvertDateAndTime(string dateAndTime)
         {
             //TDO
@@ -620,15 +596,9 @@ namespace DataManager
             File.Delete(encrypfile.FullName);
             XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
             
-            switch (type)
-            {
-                case 1:
-                    {
-                        XElement remindersNode = (from xnode in userXML.Descendants("Reminders") select xnode).SingleOrDefault();
-                        IEnumerable<XElement> reminders = remindersNode.Descendants();
-                        break;
-                    }
-            }
+            
+            XElement remindersNode = (from xnode in userXML.Descendants("Reminders") select xnode).SingleOrDefault();
+            IEnumerable<XElement> reminders = remindersNode.Descendants();
 
             EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
             File.Delete(appDataUsrFile.FullName);
@@ -923,6 +893,58 @@ namespace DataManager
             }
 
             return user;
+        }
+
+        public static bool ComponentExists(int idComp , int type , int uid , string password)
+        {
+            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
+            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
+            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()) + @"\" + uid + ".xml");
+
+            
+
+            DirectoryInfo[] userFoldersList = applicationPath.GetDirectories();
+
+            foreach (DirectoryInfo usrFolder in userFoldersList)
+            {
+                FileInfo[] userFileList = userFolder.GetFiles();
+                foreach (FileInfo userFile in userFileList)
+                {
+                    if (userFile.Name.Contains(uid.ToString()))
+                    {
+                        EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
+                        File.Delete(encrypfile.FullName);
+
+                        XDocument usrDoc = XDocument.Load(appDataUsrFile.FullName);
+
+                        switch (type)
+                        {
+                            case 1:
+                                {
+                                    XElement RemNode = (from xnode in usrDoc.Descendants("Reminders") select xnode).SingleOrDefault();
+                                    IEnumerable<XElement> rems = RemNode.Descendants("Reminder");
+                                    foreach(XElement rem in rems)
+                                    {
+                                        XElement idNode = (from xnode in rem.Descendants("ReminderId") select xnode).SingleOrDefault();
+                                        String nodeValOnlyDigits = new String(idNode.Value.Where(Char.IsDigit).ToArray());
+                                        if(nodeValOnlyDigits == idComp.ToString())
+                                        {
+                                            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
+                                            File.Delete(appDataUsrFile.FullName);
+                                            return true;
+                                        }
+                                    }
+                                    EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
+                                    File.Delete(appDataUsrFile.FullName);
+                                    return false;
+                                }
+                        }
+                        EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
+                        File.Delete(appDataUsrFile.FullName);
+                    }
+                }
+            }
+            return false;
         }
     }
 

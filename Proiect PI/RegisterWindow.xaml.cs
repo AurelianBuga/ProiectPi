@@ -50,7 +50,6 @@ namespace Proiect_PI
             usr.Register(userInfo);
             usr.Login(userInfo.userName , userInfo.password , true);
 
-            this.Hide();
             MainWindow mn = new MainWindow();
             mn.Show();
             this.Close();

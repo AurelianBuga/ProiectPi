@@ -34,7 +34,6 @@ namespace Proiect_PI
 
         private void GoToRegister(object sender, RoutedEventArgs e)
         {
-            this.Hide();
             RegisterWindow rw = new RegisterWindow();
             rw.Show();
             this.Close();
