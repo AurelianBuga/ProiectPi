@@ -135,14 +135,18 @@ namespace Proiect_PI
                 DBManager.InsertComponent(reminder);
                 currentFrame.Navigate(new ReminderListView());
                 isOpn = false;
-                this.Hide();
+                this.Close();
             }
             else
             {
                 //se apeleaza metoda InsertComponent(reminderElement, uid , password)
                 //TDO : generator de Id-uri pt componente 
-                Reminder reminder = new Reminder(533 , User.UserInstance.UID, ReminderTextBox.Text, GetFullDateMySqlFormat(), DBManager.Count(User.UserInstance.UID, "reminder"));
+                Reminder reminder = new Reminder(User.UserInstance.UID, ReminderTextBox.Text, GetFullDateMySqlFormat(), XMLManager.NrRem);
+                reminder.SetID();
                 XMLManager.InsertComponent(reminder, User.UserInstance.UID, User.UserInstance.Pasword);
+                currentFrame.Navigate(new ReminderListView());
+                isOpn = false;
+                this.Close();
             }
         }
 

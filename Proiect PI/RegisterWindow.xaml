@@ -11,7 +11,7 @@
         <TextBlock x:Name="fNameText" HorizontalAlignment="Left" Margin="86,113,0,0" TextWrapping="Wrap" Text="First Name" VerticalAlignment="Top" FontSize="15"/>
         <TextBlock x:Name="lNameText" HorizontalAlignment="Left" Margin="86,171,0,0" TextWrapping="Wrap" Text="Last Name" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" FontSize="15"/>
         <TextBlock x:Name="usernameText" HorizontalAlignment="Left" Margin="89,224,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" FontSize="15"/>
-        <TextBlock x:Name="emailText" HorizontalAlignment="Left" Margin="86,277,0,0" TextWrapping="Wrap" Text="Email adress" VerticalAlignment="Top" FontSize="15"/>
+        <TextBlock x:Name="emailText" HorizontalAlignment="Left" Margin="86,277,0,0" TextWrapping="Wrap" Text="Email address" VerticalAlignment="Top" FontSize="15"/>
         <TextBlock x:Name="passwordText" HorizontalAlignment="Left" Margin="89,327,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" FontSize="15"/>
         <TextBlock x:Name="passwordConfirmText" HorizontalAlignment="Left" Margin="86,379,0,0" TextWrapping="Wrap" Text="Confirm password" VerticalAlignment="Top" FontSize="15"/>
         <TextBox x:Name="fName" HorizontalAlignment="Left" Height="20" Margin="221,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173"/>

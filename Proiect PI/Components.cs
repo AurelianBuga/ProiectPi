@@ -33,13 +33,13 @@ namespace Components
         public void ModifyText(string newText)
         {
             text = newText;
-            previewText = DataManager.Helper.GetPreviewText(text, 30);
+            previewText = Helper.GetPreviewText(text, 30);
         }
 
         public void ModifyDateAndTime(MySqlDateTime newDateAndTime)
         {
             dateAndTime = newDateAndTime;
-            datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
+            datePreview = Helper.GetDatePreview(this.dateAndTime);
         }
     }
 
@@ -51,8 +51,8 @@ namespace Components
             this.nrOrd = nrOrd;
             this.dateAndTime = dateAndTime;
             this.idUsr = idUsr;
-            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
-            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+            this.datePreview = Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = Helper.GetPreviewText(text, 30);
         }
 
         public Reminder(int idRem , int idUsr, string text, MySqlDateTime dateAndTime , int nrOrd)
@@ -62,9 +62,21 @@ namespace Components
             this.dateAndTime = dateAndTime;
             this.idComp = idRem;
             this.idUsr = idUsr;
-            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
-            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+            this.datePreview = Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = Helper.GetPreviewText(text, 30);
         }
+
+        public void SetID()
+        {
+            Random idGen = new Random();
+            int id;
+            while (XMLManager.ComponentExists(id = idGen.Next(1000, 9999), 1, User.UserInstance.UID, User.UserInstance.Pasword))
+            {
+                //nothing
+            }
+            this.idComp = id;
+        }
+
     }
 
     public class Note : TextComponent
@@ -85,9 +97,9 @@ namespace Components
             this.dateAndTime = dateAndTime;
             this.idComp = idNote;
             this.idUsr = idUsr;
-            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
-            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
-            this.title = DataManager.Helper.GetFirstWord(text, 30);   
+            this.datePreview = Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = Helper.GetPreviewText(text, 30);
+            this.title = Helper.GetFirstWord(text, 30);   
         }
 
         public Note(int idUsr, string text, MySqlDateTime dateAndTime, int nrOrd)
@@ -96,9 +108,9 @@ namespace Components
             this.nrOrd = nrOrd;
             this.dateAndTime = dateAndTime;
             this.idUsr = idUsr;
-            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
-            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
-            this.title = DataManager.Helper.GetFirstWord(text, 30);
+            this.datePreview = Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = Helper.GetPreviewText(text, 30);
+            this.title = Helper.GetFirstWord(text, 30);
         }
 
         public Note(int idNote , int idUsr,string text ,MySqlDateTime dateAndTime , int nrOrd , string title)
@@ -108,8 +120,8 @@ namespace Components
             this.dateAndTime = dateAndTime;
             this.idComp = idNote;
             this.idUsr = idUsr;
-            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
-            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+            this.datePreview = Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = Helper.GetPreviewText(text, 30);
             this.title = title;
         }
 
@@ -119,11 +131,21 @@ namespace Components
             this.nrOrd = nrOrd;
             this.dateAndTime = dateAndTime;
             this.idUsr = idUsr;
-            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
-            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+            this.datePreview = Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = Helper.GetPreviewText(text, 30);
             this.title = title;
         }
 
+        public void SetID()
+        {
+            Random idGen = new Random();
+            int id;
+            while (XMLManager.ComponentExists(id = idGen.Next(1000, 9999), 3, User.UserInstance.UID, User.UserInstance.Pasword))
+            {
+                //nothing
+            }
+            this.idComp = id;
+        }
 
     }
 
@@ -145,8 +167,8 @@ namespace Components
             this.dateAndTime = dateAndTime;
             this.idComp = idToDo;
             this.idUsr = idUsr;
-            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
-            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+            this.datePreview = Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = Helper.GetPreviewText(text, 30);
             this.statusCheck = statusCheck;
         }
 
@@ -156,8 +178,8 @@ namespace Components
             this.nrOrd = nrOrd;
             this.dateAndTime = dateAndTime;
             this.idUsr = idUsr;
-            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
-            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+            this.datePreview = Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = Helper.GetPreviewText(text, 30);
             this.statusCheck = statusCheck;
         }
 
@@ -178,6 +200,17 @@ namespace Components
                 //TDO
                 // declansare event (apelare metoda) pt activare window de interogare a user-ului daca doreste sa stearga ToDo-ul
             }
+        }
+
+        public void SetID()
+        {
+            Random idGen = new Random();
+            int id;
+            while (XMLManager.ComponentExists(id = idGen.Next(1000, 9999), 2, User.UserInstance.UID, User.UserInstance.Pasword))
+            {
+                //nothing
+            }
+            this.idComp = id;
         }
     }
 
@@ -200,8 +233,8 @@ namespace Components
             this.idComp = idLink;
             this.idUsr = idUsr;
             this.linkText = linkText;
-            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
-            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+            this.datePreview = Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = Helper.GetPreviewText(text, 30);
         }
 
         public Link(int idLink, int idUsr, string text, MySqlDateTime dateAndTime, int nrOrd)
@@ -211,8 +244,8 @@ namespace Components
             this.dateAndTime = dateAndTime;
             this.idComp = idLink;
             this.idUsr = idUsr;
-            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
-            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+            this.datePreview = Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = Helper.GetPreviewText(text, 30);
         }
 
         public Link(int idUsr, string text, MySqlDateTime dateAndTime, int nrOrd, string linkText)
@@ -222,8 +255,8 @@ namespace Components
             this.dateAndTime = dateAndTime;
             this.idUsr = idUsr;
             this.linkText = linkText;
-            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
-            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+            this.datePreview = Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = Helper.GetPreviewText(text, 30);
         }
 
         public Link(int idUsr, string text, MySqlDateTime dateAndTime, int nrOrd)
@@ -232,15 +265,15 @@ namespace Components
             this.nrOrd = nrOrd;
             this.dateAndTime = dateAndTime;
             this.idUsr = idUsr;
-            this.datePreview = DataManager.Helper.GetDatePreview(this.dateAndTime);
-            this.previewText = DataManager.Helper.GetPreviewText(text, 30);
+            this.datePreview = Helper.GetDatePreview(this.dateAndTime);
+            this.previewText = Helper.GetPreviewText(text, 30);
         }
 
         public void SetID()
         {
             Random idGen = new Random();
             int id;
-            while(XMLManager.ComponentExists(id = idGen.Next(), 1, User.UserInstance.UID , User.UserInstance.Pasword) || (id < 1000) || (id > 9999))
+            while(XMLManager.ComponentExists(id = idGen.Next(1000, 9999), 4, User.UserInstance.UID, User.UserInstance.Pasword))
             {
                 //nothing
             }

@@ -47,10 +47,11 @@ namespace Proiect_PI
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            Note note;
             if (User.UserInstance.loginType)
             {
                 //se apeleaza metoda InsertComponent(reminder)
-                Note note;
+                
                 if(title.Text == "" || title.Text == "Title...")
                 {
                     note = new Note(User.UserInstance.UID, NoteTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count(User.UserInstance.UID, "note"));
@@ -66,8 +67,20 @@ namespace Proiect_PI
             }
             else
             {
-                //se apeleaza metoda InsertComponent(reminderElement, uid , password)
-                // XMLManager.InsertComponent(reminder, User.UserInstance.UID, User.UserInstance.Pasword);
+                if (title.Text == "" || title.Text == "Title...")
+                {
+                    note = new Note(User.UserInstance.UID, NoteTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count(User.UserInstance.UID, "note"));
+                    note.SetID();
+                }
+                else
+                {
+                    note = new Note(User.UserInstance.UID, NoteTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count(User.UserInstance.UID, "note"), title.Text);
+                    note.SetID();
+                }
+                XMLManager.InsertComponent(note, User.UserInstance.UID, User.UserInstance.Pasword);
+                currentFrame.Navigate(new NoteListView());
+                isOpn = false;
+                this.Close();
             }
         }
     }
