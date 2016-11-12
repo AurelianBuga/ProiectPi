@@ -14,6 +14,7 @@ using System.Security.Cryptography;
 using System.Runtime.InteropServices;
 using Components;
 using MySql.Data.Types;
+using UserManager;
 
 
 
@@ -596,7 +597,7 @@ namespace DataManager
             CreateUsrXMLFile(userInfo);
         }
 
-        public static List<Reminder> GetReminderList(int uid , string password , int type)
+        public static List<Reminder> GetReminderList(int uid , string password)
         {
             List<Reminder> list = new List<Reminder>();
             DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
@@ -605,16 +606,133 @@ namespace DataManager
 
             EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
             File.Delete(encrypfile.FullName);
-            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
-            
+            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);      
             
             XElement remindersNode = (from xnode in userXML.Descendants("Reminders") select xnode).SingleOrDefault();
-            IEnumerable<XElement> reminders = remindersNode.Descendants();
+            IEnumerable<XElement> reminders = remindersNode.Descendants("Reminder");
+            foreach(XElement rem in reminders)
+            {
+                IEnumerable<XElement> reminderComps = rem.Descendants();
+                string ReminderId = (from xnode in rem.Descendants("ReminderId") select xnode).SingleOrDefault().Value;
+                string Text = (from xnode in rem.Descendants("Text") select xnode).SingleOrDefault().Value;
+                string NrOrd = (from xnode in rem.Descendants("NrOrd") select xnode).SingleOrDefault().Value;
+                string date = (from xnode in rem.Descendants("DateAndTime") select xnode).SingleOrDefault().Value;
+                DateTime DateAndTime = Convert.ToDateTime(date);
+                Reminder reminder = new Reminder(Convert.ToInt32(ReminderId), User.UserInstance.UID , Text, new MySqlDateTime(DateAndTime), Convert.ToInt32(NrOrd));
+                list.Add(reminder);
+            }
+            
 
             EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
             File.Delete(appDataUsrFile.FullName);
 
             return list;
+
+        }
+
+        public static List<ToDo> GetToDoList(int uid, string password)
+        {
+            List<ToDo> list = new List<ToDo>();
+
+            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
+            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
+            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()) + @"\" + uid + ".xml");
+
+            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
+            File.Delete(encrypfile.FullName);
+            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
+
+            XElement toDosNode = (from xnode in userXML.Descendants("ToDos") select xnode).SingleOrDefault();
+            IEnumerable<XElement> toDos = toDosNode.Descendants("ToDo");
+            foreach (XElement toDo in toDos)
+            {
+                IEnumerable<XElement> reminderComps = toDo.Descendants();
+                string ReminderId = (from xnode in toDo.Descendants("ToDoId") select xnode).SingleOrDefault().Value;
+                string Text = (from xnode in toDo.Descendants("Text") select xnode).SingleOrDefault().Value;
+                string NrOrd = (from xnode in toDo.Descendants("NrOrd") select xnode).SingleOrDefault().Value;
+                string date = (from xnode in toDo.Descendants("DateAndTime") select xnode).SingleOrDefault().Value;
+                string statusCheck = (from xnode in toDo.Descendants("StatusCheck") select xnode).SingleOrDefault().Value;
+                DateTime DateAndTime = Convert.ToDateTime(date);
+                ToDo todo = new ToDo(Convert.ToInt32(ReminderId) ,  User.UserInstance.UID, Text, new MySqlDateTime(DateAndTime), Convert.ToInt32(NrOrd) , statusCheck == "true");
+                list.Add(todo);
+            }
+
+
+            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
+            File.Delete(appDataUsrFile.FullName);
+
+            return list;
+
+        }
+
+        public static List<Note> GetNoteList(int uid, string password)
+        {
+            List<Note> list = new List<Note>();
+
+            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
+            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
+            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()) + @"\" + uid + ".xml");
+
+            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
+            File.Delete(encrypfile.FullName);
+            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
+
+            XElement toDosNode = (from xnode in userXML.Descendants("Notes") select xnode).SingleOrDefault();
+            IEnumerable<XElement> toDos = toDosNode.Descendants("Note");
+            foreach (XElement toDo in toDos)
+            {
+                IEnumerable<XElement> reminderComps = toDo.Descendants();
+                string NoteId = (from xnode in toDo.Descendants("NoteId") select xnode).SingleOrDefault().Value;
+                string Text = (from xnode in toDo.Descendants("Text") select xnode).SingleOrDefault().Value;
+                string NrOrd = (from xnode in toDo.Descendants("NrOrd") select xnode).SingleOrDefault().Value;
+                string date = (from xnode in toDo.Descendants("DateAndTime") select xnode).SingleOrDefault().Value;
+                string Title = (from xnode in toDo.Descendants("Title") select xnode).SingleOrDefault().Value;
+                DateTime DateAndTime = Convert.ToDateTime(date);
+                Note note = new Note(Convert.ToInt32(NoteId), User.UserInstance.UID, Text, new MySqlDateTime(DateAndTime), Convert.ToInt32(NrOrd), Title);
+                list.Add(note);
+            }
+
+
+            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
+            File.Delete(appDataUsrFile.FullName);
+
+            return list;
+
+        }
+
+        public static List<Link> GetLinkList(int uid, string password)
+        {
+            List<Link> list = new List<Link>();
+
+            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
+            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
+            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()) + @"\" + uid + ".xml");
+
+            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
+            File.Delete(encrypfile.FullName);
+            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
+
+            XElement toDosNode = (from xnode in userXML.Descendants("Links") select xnode).SingleOrDefault();
+            IEnumerable<XElement> toDos = toDosNode.Descendants("Link");
+            foreach (XElement toDo in toDos)
+            {
+                IEnumerable<XElement> reminderComps = toDo.Descendants();
+                string LinkId = (from xnode in toDo.Descendants("LinkId") select xnode).SingleOrDefault().Value;
+                string Text = (from xnode in toDo.Descendants("Text") select xnode).SingleOrDefault().Value;
+                string NrOrd = (from xnode in toDo.Descendants("NrOrd") select xnode).SingleOrDefault().Value;
+                string date = (from xnode in toDo.Descendants("DateAndTime") select xnode).SingleOrDefault().Value;
+                string LinkText = (from xnode in toDo.Descendants("LinkText") select xnode).SingleOrDefault().Value;
+                DateTime DateAndTime = Convert.ToDateTime(date);
+                Link link = new Link(Convert.ToInt32(LinkId), User.UserInstance.UID, Text, new MySqlDateTime(DateAndTime), Convert.ToInt32(NrOrd), LinkText);
+                list.Add(link);
+            }
+
+
+            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
+            File.Delete(appDataUsrFile.FullName);
+
+            return list;
+
         }
 
         /*public static Timer GetTimer(int uid)
@@ -640,7 +758,7 @@ namespace DataManager
             XElement linkId = new XElement("LinkId", linkElement.IdComp);
             XElement linkText = new XElement("LinkText", linkElement.LinkText);
             XElement text = new XElement("Text", linkElement.Text);
-            XElement nrOrd = new XElement("NrOrd", NrLink + 1);
+            XElement nrOrd = new XElement("NrOrd", NrLink++);
             XElement date = new XElement("DateAndTime", linkElement.Date);
             link.Add(linkId, userId, linkText, text, nrOrd, date);
             linksNode.Add(link);
@@ -673,7 +791,7 @@ namespace DataManager
             XElement noteId = new XElement("NoteId", noteElement.IdComp);
             XElement noteTitle = new XElement("Title", noteElement.Title);
             XElement text = new XElement("Text", noteElement.Text);
-            XElement nrOrd = new XElement("NrOrd", NrNote + 1);
+            XElement nrOrd = new XElement("NrOrd", NrNote++);
             XElement date = new XElement("DateAndTime", noteElement.Date);
             note.Add(noteId, userId, noteTitle, text, nrOrd, date);
             notesNode.Add(note);
@@ -705,7 +823,7 @@ namespace DataManager
             XElement userId = new XElement("UserId", uid);
             XElement reminderId = new XElement("ReminderId", reminderElement.IdComp);
             XElement text = new XElement("Text", reminderElement.Text);
-            XElement nrOrd = new XElement("NrOrd", NrRem + 1);
+            XElement nrOrd = new XElement("NrOrd", NrRem++);
             XElement date = new XElement("DateAndTime", reminderElement.Date);
             reminder.Add(reminderId, userId, text, nrOrd, date);
             remindersNode.Add(reminder);
@@ -844,7 +962,7 @@ namespace DataManager
             return false;
         }
 
-        public static UserManager.UserInfo GetUserInfo(string userName, string password)
+        public static UserInfo GetUserInfo(string userName, string password)
         {
 
             UserManager.UserInfo user = new UserManager.UserInfo();

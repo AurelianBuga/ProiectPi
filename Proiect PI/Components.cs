@@ -160,7 +160,7 @@ namespace Components
 
         }
 
-        public ToDo(int idToDo , int idUsr,string text , MySqlDateTime dateAndTime, int nrOrd , bool statusCheck)
+        public ToDo(int idToDo , int idUsr, string text , MySqlDateTime dateAndTime, int nrOrd , bool statusCheck)
         {
             this.text = text;
             this.nrOrd = nrOrd;

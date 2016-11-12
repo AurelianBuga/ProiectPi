@@ -57,7 +57,11 @@ namespace Proiect_PI
             }
             else
             {
-                //listRem = XMLManager.GetComponentListOneType(1, User.UserInstance.UID);
+                linkList = XMLManager.GetLinkList(User.UserInstance.UID, User.UserInstance.Pasword);
+                foreach (Link link in linkList)
+                {
+                    links.Add(link);
+                }
             }
         }
     }

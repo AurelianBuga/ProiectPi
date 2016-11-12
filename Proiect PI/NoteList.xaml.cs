@@ -55,7 +55,11 @@ namespace Proiect_PI
             }
             else
             {
-                //listRem = XMLManager.GetComponentListOneType(1, User.UserInstance.UID);
+                listNote = XMLManager.GetNoteList(User.UserInstance.UID, User.UserInstance.Pasword);
+                foreach (Note note in listNote)
+                {
+                    notes.Add(note);
+                }
             }
         }
     }
