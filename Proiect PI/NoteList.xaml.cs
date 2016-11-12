@@ -55,7 +55,7 @@ namespace Proiect_PI
             }
             else
             {
-                listNote = XMLManager.XMLManagerInstance.GetNoteList(User.UserInstance.UID, User.UserInstance.Pasword);
+                listNote = XMLManager.XMLManagerInstance.GetNoteList();
                 foreach (Note note in listNote)
                 {
                     notes.Add(note);

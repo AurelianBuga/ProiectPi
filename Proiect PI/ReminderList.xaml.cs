@@ -55,7 +55,7 @@ namespace Proiect_PI
             }
             else
             {
-                listRem = XMLManager.XMLManagerInstance.GetReminderList(User.UserInstance.UID , User.UserInstance.Pasword);
+                listRem = XMLManager.XMLManagerInstance.GetReminderList();
                 foreach(Reminder rem in listRem)
                 {
                     reminders.Add(rem);

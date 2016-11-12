@@ -513,6 +513,14 @@ namespace DataManager
         public static int NrToDo = 0;
         public static int NrNote = 0;
 
+        public void GetPaths(int uid)
+        {
+            usrFolderPath = applicationPath.ToString() + @"\" + uid;
+            usrAppDataFolderPath = Path.Combine(appDataApplicationPath.ToString(), uid.ToString());
+            usrFilePath = Path.Combine(applicationPath.ToString() + @"\" + uid, uid + ".xml");
+            usrAppDataFilePath = Path.Combine(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()), uid + ".xml");
+        }
+
         private void CreateApplicationFolder()
         {
             /// daca nu exista folder pt aplicatie se va creea 
@@ -525,11 +533,11 @@ namespace DataManager
             }
         }
 
-        private void CreateUserFolder(int uid)
+        private void CreateUserFolder()
         {
             /// daca nu exista folder pt user se va creea 
 
-            usrFolderPath = applicationPath.ToString() + @"\" + uid;
+            
             DirectoryInfo userFolderDirectory = new DirectoryInfo(usrFolderPath);
 
             if (!userFolderDirectory.Exists)
@@ -538,9 +546,9 @@ namespace DataManager
             }
         }
 
-        private void CreateAppDataUsrFolder(int uid)
+        private void CreateAppDataUsrFolder()
         {
-            usrAppDataFolderPath = Path.Combine(appDataApplicationPath.ToString(), uid.ToString());
+            
             DirectoryInfo appDataAppDir = new DirectoryInfo(usrAppDataFolderPath);
 
             if (!appDataAppDir.Exists)
@@ -552,10 +560,11 @@ namespace DataManager
             //IDEA : datele din fisier vor fi criptate /// TDO : cauta metoda de criptare a fisierelor
             // Fiecare user va avea un fisier criptat
 
-            usrFilePath = Path.Combine(applicationPath.ToString() + @"\" + userInfo.uId, userInfo.uId + ".xml");
+            
             DirectoryInfo userFileDir = new DirectoryInfo(usrFilePath);
+            DirectoryInfo userAppDataFileDir = new DirectoryInfo(usrAppDataFilePath);
 
-            if (!userFileDir.Exists)
+            if (!userAppDataFileDir.Exists)
             {
                 /// se va creea xml-ul user-ului 
                 /// pas : 1. se creaza un fisier temporar in AppData
@@ -580,10 +589,6 @@ namespace DataManager
                 userDoc.Add(new XElement("ToDos", string.Empty));
                 xmlUser.Add(userDoc);
 
-
-
-                usrAppDataFilePath = Path.Combine(Path.Combine(appDataApplicationPath.ToString(), userInfo.uId.ToString()), userInfo.uId + ".xml");
-
                 FileStream write = new FileStream(usrAppDataFilePath, FileMode.Create, FileAccess.Write);
                 xmlUser.Save(write);
                 write.Close();
@@ -600,8 +605,8 @@ namespace DataManager
         public void CreateUserDirsAndFiles(UserInfo userInfo)
         {
             CreateApplicationFolder();
-            CreateUserFolder(userInfo.uId);
-            CreateAppDataUsrFolder(userInfo.uId);
+            CreateUserFolder();
+            CreateAppDataUsrFolder();
             CreateUsrXMLFile(userInfo);
         }
 
@@ -616,7 +621,7 @@ namespace DataManager
             File.Delete(usrAppDataFilePath);
         }
 
-        public List<Reminder> GetReminderList(int uid, string password)
+        public List<Reminder> GetReminderList()
         {
             List<Reminder> list = new List<Reminder>();
 
@@ -639,7 +644,7 @@ namespace DataManager
 
         }
 
-        public List<ToDo> GetToDoList(int uid, string password)
+        public List<ToDo> GetToDoList()
         {
             List<ToDo> list = new List<ToDo>();
 
@@ -662,7 +667,7 @@ namespace DataManager
 
         }
 
-        public List<Note> GetNoteList(int uid, string password)
+        public List<Note> GetNoteList()
         {
             List<Note> list = new List<Note>();
 
@@ -685,7 +690,7 @@ namespace DataManager
 
         }
 
-        public List<Link> GetLinkList(int uid, string password)
+        public List<Link> GetLinkList()
         {
             List<Link> list = new List<Link>();
 
@@ -708,9 +713,10 @@ namespace DataManager
 
         }
 
-        /*public static Timer GetTimer(int uid)
+        /*public Timer GetTimer()
         {
-            //TDO
+            XElement toDosNode = (from xnode in userFile.Descendants("Timer") select xnode).SingleOrDefault();
+
         }*/
 
         public void InsertComponent(Link linkElement, int uid, string password)

@@ -108,7 +108,7 @@ namespace UserManager
                     userInstance.password = userInfo.password;
                     userInstance.loginType = false;
 
-                    XMLManager.XMLManagerInstance.CreateUserDirsAndFiles(userInfo);
+                    XMLManager.XMLManagerInstance.GetPaths(userInfo.uId);
                     XMLManager.XMLManagerInstance.LoadUsrXMLFile(userInfo.password);
 
                     return 1;
