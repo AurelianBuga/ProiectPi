@@ -562,9 +562,8 @@ namespace DataManager
 
             
             DirectoryInfo userFileDir = new DirectoryInfo(usrFilePath);
-            DirectoryInfo userAppDataFileDir = new DirectoryInfo(usrAppDataFilePath);
 
-            if (!userAppDataFileDir.Exists)
+            if (!userFileDir.Exists)
             {
                 /// se va creea xml-ul user-ului 
                 /// pas : 1. se creaza un fisier temporar in AppData
