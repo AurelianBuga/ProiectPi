@@ -284,7 +284,7 @@ namespace Components
 
     public sealed class Timer
     {
-        private string text;
+        private int selection;
         private int hours;
         private int minutes;
         private int seconds;
@@ -292,34 +292,40 @@ namespace Components
         private int timerId;
         private readonly static Timer timerInstance = new Timer();
 
-        public string Text
+        public int Selection
         {
-            get { return text; }
+            get { return selection; }
+            set { selection = value; }
         }
 
         public int Hours
         {
             get { return hours; }
+            set { hours = value; }
         }
 
         public int Minutes
         {
             get { return minutes; }
+            set { minutes = value; }
         }
 
         public int Seconds
         {
             get { return seconds; }
+            set { seconds = value; }
         }
 
         public int UID
         {
             get { return uid; }
+            set { uid = value; }
         }
 
         public int TimerId
         {
             get { return timerId; }
+            set { timerId = value; }
         }
 
 

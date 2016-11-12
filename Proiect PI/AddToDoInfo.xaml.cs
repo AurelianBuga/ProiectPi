@@ -139,7 +139,7 @@ namespace Proiect_PI
                 //se apeleaza metoda InsertComponent(reminderElement, uid , password)
                 ToDo toDo = new ToDo(User.UserInstance.UID, ToDoTextBox.Text, GetFullDateMySqlFormat(), XMLManager.NrToDo , false);
                 toDo.SetID();
-                XMLManager.XMLManagerInstance.InsertComponent(toDo, User.UserInstance.UID, User.UserInstance.Pasword);
+                XMLManager.XMLManagerInstance.InsertComponent(toDo);
                 currentFrame.Navigate(new ReminderListView());
                 isOpn = false;
                 this.Close();

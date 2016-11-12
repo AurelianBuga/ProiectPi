@@ -77,7 +77,7 @@ namespace Proiect_PI
                     link = new Link(User.UserInstance.UID, LinkTextBox.Text, new MySqlDateTime(DateTime.Now), XMLManager.NrLink, aliaTextBox.Text);
                     link.SetID();
                 }
-                XMLManager.XMLManagerInstance.InsertComponent(link, User.UserInstance.UID, User.UserInstance.Pasword);
+                XMLManager.XMLManagerInstance.InsertComponent(link);
                 currentFrame.Navigate(new LinkListView());
                 isOpn = false;
                 this.Close();

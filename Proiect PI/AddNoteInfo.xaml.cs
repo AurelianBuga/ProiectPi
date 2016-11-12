@@ -77,7 +77,7 @@ namespace Proiect_PI
                     note = new Note(User.UserInstance.UID, NoteTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count(User.UserInstance.UID, "note"), title.Text);
                     note.SetID();
                 }
-                XMLManager.XMLManagerInstance.InsertComponent(note, User.UserInstance.UID, User.UserInstance.Pasword);
+                XMLManager.XMLManagerInstance.InsertComponent(note);
                 currentFrame.Navigate(new NoteListView());
                 isOpn = false;
                 this.Close();

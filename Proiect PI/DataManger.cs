@@ -322,8 +322,8 @@ namespace DataManager
 
         /*public static void InsertComponent(Timer timer)
         {
-            string query = "INSERT INTO timer (TIMERID , USERID , TIMERTEXT , HOURS , MINUTES , SECONDS) VALUES( '" +
-                            timerID + "' ,'" + UID + "' , '" + text + "' , '" + hours + "' , '" + minutes + "' , '" + seconds + "')";
+            string query = "INSERT INTO timer (TIMERID , USERID , SELECTALERT , HOURS , MINUTES , SECONDS) VALUES( '" +
+                            timerID + "' ,'" + UID + "' , '" + selection + "' , '" + hours + "' , '" + minutes + "' , '" + seconds + "')";
             
             //TDO
 
@@ -626,17 +626,21 @@ namespace DataManager
 
             //se ia din fisierul temporar
             XElement remindersNode = (from xnode in userFile.Descendants("Reminders") select xnode).SingleOrDefault();
-            IEnumerable<XElement> reminders = remindersNode.Descendants("Reminder");
-            foreach (XElement rem in reminders)
+
+            if(remindersNode.Descendants("Reminder").Count() != 0)
             {
-                IEnumerable<XElement> reminderComps = rem.Descendants();
-                string ReminderId = (from xnode in rem.Descendants("ReminderId") select xnode).SingleOrDefault().Value;
-                string Text = (from xnode in rem.Descendants("Text") select xnode).SingleOrDefault().Value;
-                string NrOrd = (from xnode in rem.Descendants("NrOrd") select xnode).SingleOrDefault().Value;
-                string date = (from xnode in rem.Descendants("DateAndTime") select xnode).SingleOrDefault().Value;
-                DateTime DateAndTime = Convert.ToDateTime(date);
-                Reminder reminder = new Reminder(Convert.ToInt32(ReminderId), User.UserInstance.UID, Text, new MySqlDateTime(DateAndTime), Convert.ToInt32(NrOrd));
-                list.Add(reminder);
+                IEnumerable<XElement> reminders = remindersNode.Descendants("Reminder");
+                foreach (XElement rem in reminders)
+                {
+                    IEnumerable<XElement> reminderComps = rem.Descendants();
+                    string ReminderId = (from xnode in rem.Descendants("ReminderId") select xnode).SingleOrDefault().Value;
+                    string Text = (from xnode in rem.Descendants("Text") select xnode).SingleOrDefault().Value;
+                    string NrOrd = (from xnode in rem.Descendants("NrOrd") select xnode).SingleOrDefault().Value;
+                    string date = (from xnode in rem.Descendants("DateAndTime") select xnode).SingleOrDefault().Value;
+                    DateTime DateAndTime = Convert.ToDateTime(date);
+                    Reminder reminder = new Reminder(Convert.ToInt32(ReminderId), User.UserInstance.UID, Text, new MySqlDateTime(DateAndTime), Convert.ToInt32(NrOrd));
+                    list.Add(reminder);
+                }
             }
 
             return list;
@@ -648,18 +652,22 @@ namespace DataManager
             List<ToDo> list = new List<ToDo>();
 
             XElement toDosNode = (from xnode in userFile.Descendants("ToDos") select xnode).SingleOrDefault();
-            IEnumerable<XElement> toDos = toDosNode.Descendants("ToDo");
-            foreach (XElement toDo in toDos)
+
+            if(toDosNode.Descendants("ToDo").Count() != 0)
             {
-                IEnumerable<XElement> reminderComps = toDo.Descendants();
-                string ReminderId = (from xnode in toDo.Descendants("ToDoId") select xnode).SingleOrDefault().Value;
-                string Text = (from xnode in toDo.Descendants("Text") select xnode).SingleOrDefault().Value;
-                string NrOrd = (from xnode in toDo.Descendants("NrOrd") select xnode).SingleOrDefault().Value;
-                string date = (from xnode in toDo.Descendants("DateAndTime") select xnode).SingleOrDefault().Value;
-                string statusCheck = (from xnode in toDo.Descendants("StatusCheck") select xnode).SingleOrDefault().Value;
-                DateTime DateAndTime = Convert.ToDateTime(date);
-                ToDo todo = new ToDo(Convert.ToInt32(ReminderId), User.UserInstance.UID, Text, new MySqlDateTime(DateAndTime), Convert.ToInt32(NrOrd), statusCheck == "true");
-                list.Add(todo);
+                IEnumerable<XElement> toDos = toDosNode.Descendants("ToDo");
+                foreach (XElement toDo in toDos)
+                {
+                    IEnumerable<XElement> reminderComps = toDo.Descendants();
+                    string ReminderId = (from xnode in toDo.Descendants("ToDoId") select xnode).SingleOrDefault().Value;
+                    string Text = (from xnode in toDo.Descendants("Text") select xnode).SingleOrDefault().Value;
+                    string NrOrd = (from xnode in toDo.Descendants("NrOrd") select xnode).SingleOrDefault().Value;
+                    string date = (from xnode in toDo.Descendants("DateAndTime") select xnode).SingleOrDefault().Value;
+                    string statusCheck = (from xnode in toDo.Descendants("StatusCheck") select xnode).SingleOrDefault().Value;
+                    DateTime DateAndTime = Convert.ToDateTime(date);
+                    ToDo todo = new ToDo(Convert.ToInt32(ReminderId), User.UserInstance.UID, Text, new MySqlDateTime(DateAndTime), Convert.ToInt32(NrOrd), statusCheck == "true");
+                    list.Add(todo);
+                }
             }
 
             return list;
@@ -670,20 +678,25 @@ namespace DataManager
         {
             List<Note> list = new List<Note>();
 
-            XElement toDosNode = (from xnode in userFile.Descendants("Notes") select xnode).SingleOrDefault();
-            IEnumerable<XElement> toDos = toDosNode.Descendants("Note");
-            foreach (XElement toDo in toDos)
+            XElement notesNode = (from xnode in userFile.Descendants("Notes") select xnode).SingleOrDefault();
+
+            if(notesNode.Descendants("Note").Count() != 0)
             {
-                IEnumerable<XElement> reminderComps = toDo.Descendants();
-                string NoteId = (from xnode in toDo.Descendants("NoteId") select xnode).SingleOrDefault().Value;
-                string Text = (from xnode in toDo.Descendants("Text") select xnode).SingleOrDefault().Value;
-                string NrOrd = (from xnode in toDo.Descendants("NrOrd") select xnode).SingleOrDefault().Value;
-                string date = (from xnode in toDo.Descendants("DateAndTime") select xnode).SingleOrDefault().Value;
-                string Title = (from xnode in toDo.Descendants("Title") select xnode).SingleOrDefault().Value;
-                DateTime DateAndTime = Convert.ToDateTime(date);
-                Note note = new Note(Convert.ToInt32(NoteId), User.UserInstance.UID, Text, new MySqlDateTime(DateAndTime), Convert.ToInt32(NrOrd), Title);
-                list.Add(note);
+                IEnumerable<XElement> toDos = notesNode.Descendants("Note");
+                foreach (XElement toDo in toDos)
+                {
+                    IEnumerable<XElement> reminderComps = toDo.Descendants();
+                    string NoteId = (from xnode in toDo.Descendants("NoteId") select xnode).SingleOrDefault().Value;
+                    string Text = (from xnode in toDo.Descendants("Text") select xnode).SingleOrDefault().Value;
+                    string NrOrd = (from xnode in toDo.Descendants("NrOrd") select xnode).SingleOrDefault().Value;
+                    string date = (from xnode in toDo.Descendants("DateAndTime") select xnode).SingleOrDefault().Value;
+                    string Title = (from xnode in toDo.Descendants("Title") select xnode).SingleOrDefault().Value;
+                    DateTime DateAndTime = Convert.ToDateTime(date);
+                    Note note = new Note(Convert.ToInt32(NoteId), User.UserInstance.UID, Text, new MySqlDateTime(DateAndTime), Convert.ToInt32(NrOrd), Title);
+                    list.Add(note);
+                }
             }
+            
 
             return list;
 
@@ -693,35 +706,53 @@ namespace DataManager
         {
             List<Link> list = new List<Link>();
 
-            XElement toDosNode = (from xnode in userFile.Descendants("Links") select xnode).SingleOrDefault();
-            IEnumerable<XElement> toDos = toDosNode.Descendants("Link");
-            foreach (XElement toDo in toDos)
-            {
-                IEnumerable<XElement> reminderComps = toDo.Descendants();
-                string LinkId = (from xnode in toDo.Descendants("LinkId") select xnode).SingleOrDefault().Value;
-                string Text = (from xnode in toDo.Descendants("Text") select xnode).SingleOrDefault().Value;
-                string NrOrd = (from xnode in toDo.Descendants("NrOrd") select xnode).SingleOrDefault().Value;
-                string date = (from xnode in toDo.Descendants("DateAndTime") select xnode).SingleOrDefault().Value;
-                string LinkText = (from xnode in toDo.Descendants("LinkText") select xnode).SingleOrDefault().Value;
-                DateTime DateAndTime = Convert.ToDateTime(date);
-                Link link = new Link(Convert.ToInt32(LinkId), User.UserInstance.UID, Text, new MySqlDateTime(DateAndTime), Convert.ToInt32(NrOrd), LinkText);
-                list.Add(link);
-            }
+            XElement linksNode = (from xnode in userFile.Descendants("Links") select xnode).SingleOrDefault();
 
+            if(linksNode.Descendants("Link").Count() != 0)
+            {
+                IEnumerable<XElement> toDos = linksNode.Descendants("Link");
+                foreach (XElement toDo in toDos)
+                {
+                    IEnumerable<XElement> reminderComps = toDo.Descendants();
+                    string LinkId = (from xnode in toDo.Descendants("LinkId") select xnode).SingleOrDefault().Value;
+                    string Text = (from xnode in toDo.Descendants("Text") select xnode).SingleOrDefault().Value;
+                    string NrOrd = (from xnode in toDo.Descendants("NrOrd") select xnode).SingleOrDefault().Value;
+                    string date = (from xnode in toDo.Descendants("DateAndTime") select xnode).SingleOrDefault().Value;
+                    string LinkText = (from xnode in toDo.Descendants("LinkText") select xnode).SingleOrDefault().Value;
+                    DateTime DateAndTime = Convert.ToDateTime(date);
+                    Link link = new Link(Convert.ToInt32(LinkId), User.UserInstance.UID, Text, new MySqlDateTime(DateAndTime), Convert.ToInt32(NrOrd), LinkText);
+                    list.Add(link);
+                }
+            }
+            
             return list;
 
         }
 
-        /*public Timer GetTimer()
+        public void GetTimer()
         {
-            XElement toDosNode = (from xnode in userFile.Descendants("Timer") select xnode).SingleOrDefault();
+            XElement timerNode = (from xnode in userFile.Descendants("Timer") select xnode).SingleOrDefault();
+            if(timerNode.Descendants().Count() != 0)
+            {
+                int Hours = Convert.ToInt32((from xnode in timerNode.Descendants("Hours") select xnode).SingleOrDefault().Value);
+                int Minutes = Convert.ToInt32((from xnode in timerNode.Descendants("Minutes") select xnode).SingleOrDefault().Value);
+                int Seconds = Convert.ToInt32((from xnode in timerNode.Descendants("Seconds") select xnode).SingleOrDefault().Value);
+                int Selection = Convert.ToInt32((from xnode in timerNode.Descendants("Selection") select xnode).SingleOrDefault().Value);
+                int TimerId = Convert.ToInt32((from xnode in timerNode.Descendants("TimerId") select xnode).SingleOrDefault().Value);
 
-        }*/
+                Timer.TimerInstance.Hours = Hours;
+                Timer.TimerInstance.Minutes = Minutes;
+                Timer.TimerInstance.Seconds = Seconds;
+                Timer.TimerInstance.Selection = Selection;
+                Timer.TimerInstance.TimerId = TimerId;
 
-        public void InsertComponent(Link linkElement, int uid, string password)
+            }
+        }
+
+        public void InsertComponent(Link linkElement)
         {
 
-            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(password));
+            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(User.UserInstance.Pasword));
             File.Delete(usrFilePath);
 
             XDocument userXML = XDocument.Load(usrAppDataFilePath);
@@ -729,7 +760,7 @@ namespace DataManager
             XElement linksNode = (from xnode in userXML.Descendants("Links") select xnode).FirstOrDefault();
 
             XElement link = new XElement("Link");
-            XElement userId = new XElement("UserId", uid);
+            XElement userId = new XElement("UserId", User.UserInstance.UID);
             XElement linkId = new XElement("LinkId", linkElement.IdComp);
             XElement linkText = new XElement("LinkText", linkElement.LinkText);
             XElement text = new XElement("Text", linkElement.Text);
@@ -742,16 +773,16 @@ namespace DataManager
             userXML.Save(tmpFile);
             tmpFile.Close();
 
-            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(User.UserInstance.Pasword));
 
-            LoadUsrXMLFile(password);
+            LoadUsrXMLFile(User.UserInstance.Pasword);
 
             File.Delete(usrAppDataFilePath);
         }
 
-        public void InsertComponent(Note noteElement, int uid, string password)
+        public void InsertComponent(Note noteElement)
         {
-            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(password));
+            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(User.UserInstance.Pasword));
             File.Delete(usrFilePath);
 
             XDocument userXML = XDocument.Load(usrAppDataFilePath);
@@ -759,7 +790,7 @@ namespace DataManager
             XElement notesNode = (from xnode in userXML.Descendants("Notes") select xnode).FirstOrDefault();
 
             XElement note = new XElement("Note");
-            XElement userId = new XElement("UserId", uid);
+            XElement userId = new XElement("UserId", User.UserInstance.UID);
             XElement noteId = new XElement("NoteId", noteElement.IdComp);
             XElement noteTitle = new XElement("Title", noteElement.Title);
             XElement text = new XElement("Text", noteElement.Text);
@@ -771,17 +802,17 @@ namespace DataManager
             userXML.Save(tmpFile);
             tmpFile.Close();
 
-            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(User.UserInstance.Pasword));
 
-            LoadUsrXMLFile(password);
+            LoadUsrXMLFile(User.UserInstance.Pasword);
 
             File.Delete(usrAppDataFilePath);
         }
 
-        public void InsertComponent(Reminder reminderElement, int uid, string password)
+        public void InsertComponent(Reminder reminderElement)
         {
 
-            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(password));
+            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(User.UserInstance.Pasword));
             File.Delete(usrFilePath);
 
             XDocument userXML = XDocument.Load(usrAppDataFilePath);
@@ -789,7 +820,7 @@ namespace DataManager
             XElement remindersNode = (from xnode in userXML.Descendants("Reminders") select xnode).FirstOrDefault();
 
             XElement reminder = new XElement("Reminder");
-            XElement userId = new XElement("UserId", uid);
+            XElement userId = new XElement("UserId", User.UserInstance.UID);
             XElement reminderId = new XElement("ReminderId", reminderElement.IdComp);
             XElement text = new XElement("Text", reminderElement.Text);
             XElement nrOrd = new XElement("NrOrd", NrRem++);
@@ -800,16 +831,16 @@ namespace DataManager
             userXML.Save(tmpFile);
             tmpFile.Close();
 
-            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(User.UserInstance.Pasword));
 
-            LoadUsrXMLFile(password);
+            LoadUsrXMLFile(User.UserInstance.Pasword);
 
             File.Delete(usrAppDataFilePath);
         }
 
-        public void InsertComponent(ToDo toDoElement, int uid, string password)
+        public void InsertComponent(ToDo toDoElement)
         {
-            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(password));
+            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(User.UserInstance.Pasword));
             File.Delete(usrFilePath);
 
             XDocument userXML = XDocument.Load(usrAppDataFilePath);
@@ -817,7 +848,7 @@ namespace DataManager
             XElement toDosNode = (from xnode in userXML.Descendants("ToDos") select xnode).FirstOrDefault();
 
             XElement toDo = new XElement("ToDo");
-            XElement userId = new XElement("UserId", uid);
+            XElement userId = new XElement("UserId", User.UserInstance.UID);
             XElement toDoId = new XElement("ToDoId", toDoElement.IdComp);
             XElement statusCheck = new XElement("StatusCheck", toDoElement.StatusCheck);
             XElement text = new XElement("Text", toDoElement.Text);
@@ -829,37 +860,36 @@ namespace DataManager
             userXML.Save(tmpFile);
             tmpFile.Close();
 
-            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(User.UserInstance.Pasword));
 
-            LoadUsrXMLFile(password);
+            LoadUsrXMLFile(User.UserInstance.Pasword);
 
             File.Delete(usrAppDataFilePath);
         }
 
-        public void InsertComponent(Timer timerElement, int uid, string password)
+        public void InsertComponent(Timer timerElement)
         {
-            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(password));
+            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(User.UserInstance.Pasword));
             File.Delete(usrFilePath);
-
-
 
             XDocument userXML = XDocument.Load(usrAppDataFilePath);
             FileStream tmpFile = new FileStream(usrAppDataFilePath, FileMode.Open, FileAccess.ReadWrite);
             XElement timerNode = (from xnode in userXML.Descendants("Timer") select xnode).FirstOrDefault();
 
             XElement hours = new XElement("Hours", timerElement.Hours);
+            XElement selection = new XElement("Selection", timerElement.Selection); // 20-20 rule or classic
             XElement minutes = new XElement("Minutes", timerElement.Minutes);
             XElement seconds = new XElement("Seconds", timerElement.Seconds);
             XElement timerId = new XElement("TimerId", timerElement.TimerId);
 
-            timerNode.Add(hours, minutes, seconds, timerId);
+            timerNode.Add(hours, selection ,  minutes, seconds, timerId);
 
             userXML.Save(tmpFile);
             tmpFile.Close();
 
-            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(User.UserInstance.Pasword));
 
-            LoadUsrXMLFile(password);
+            LoadUsrXMLFile(User.UserInstance.Pasword);
 
             File.Delete(usrAppDataFilePath);
         }
