@@ -15,19 +15,22 @@ using UserManager;
 using DataManager;
 using Components;
 using MySql.Data.Types;
+using System.ComponentModel;
 
 namespace Proiect_PI
 {
     /// <summary>
     /// Interaction logic for AddToDoInfo.xaml
     /// </summary>
-    public partial class AddToDoInfo : Window
+    public partial class AddToDoInfo : Window , INotifyPropertyChanged
     {
         private int hour;
         private int minute;
         private string AMPM;
         private DateTime dateDMY;
         private Frame currentFrame;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public static bool isOpn { get; set; }
 
@@ -65,21 +68,33 @@ namespace Proiect_PI
                 }
 
             }
+            set
+            {
+                if(value > 0)
+                {
+                    hour = value;
+                }
+                
+                OnPropertyChanged("CurrentHour");
+            }
         }
 
-        public string CurrentMinute
+
+        public int CurrentMinute
         {
             get
             {
-                if (minute == 0)
+                if(minute >= 60)
                 {
-                    return "00";
-                }
-                else
-                {
-                    return minute.ToString();
+                    minute = minute - 60;
                 }
 
+                return minute;
+            }
+            set
+            {
+                minute = value;
+                OnPropertyChanged("CurrentMinute");
             }
         }
 
@@ -149,6 +164,30 @@ namespace Proiect_PI
         private void ToDoTextClearTextBox(object sender, RoutedEventArgs e)
         {
             ToDoTextBox.Text = String.Empty;
+        }
+
+        private void Increase_Hours(object sender, RoutedEventArgs e)
+        {
+            CurrentHour++;
+        }
+
+        private void Decrease_Hours(object sender, RoutedEventArgs e)
+        {
+            CurrentHour--;
+        }
+
+        protected void OnPropertyChanged(string property)
+        {
+
+            PropertyChangedEventHandler handler = PropertyChanged;
+
+            if (handler != null)
+            {
+
+                handler(this, new PropertyChangedEventArgs(property));
+
+            }
+
         }
     }
 }

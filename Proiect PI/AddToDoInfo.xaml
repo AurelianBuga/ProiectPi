@@ -11,10 +11,22 @@
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="To Do Text" VerticalAlignment="Top" GotFocus="ToDoTextClearTextBox"/>
         <TextBox x:Name="ToDoTextBox" HorizontalAlignment="Left" Height="85" Margin="10,36,0,0" TextWrapping="Wrap" Text="Write your text here ..." VerticalAlignment="Top" Width="257" TextChanged="textBox_TextChanged" GotFocus="ToDoTextClearTextBox"/>
         <DatePicker HorizontalAlignment="Left" Margin="252,156,0,0" VerticalAlignment="Top" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
-        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="49,164,0,0" Text="{Binding Path=CurrentHour}" VerticalAlignment="Top" FontSize="40"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="49,164,0,0" Text="{Binding Path=CurrentHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" FontSize="40"/>
+        <Button Click="Increase_Hours" HorizontalAlignment="Right" Width="45" Margin="0,132,299,96">
+            <Button.Template>
+                <ControlTemplate>
+                    <Image x:Name="upArrowHours" HorizontalAlignment="Left" Height="44" VerticalAlignment="Top" Width="47" Source="pack://siteoforigin:,,,/img/up_arrow256px.png"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Click="Decrease_Hours" HorizontalAlignment="Right" Width="45" Margin="0,207,299,21">
+            <Button.Template>
+                <ControlTemplate>
+                    <Image x:Name="downArrowHours" HorizontalAlignment="Left" Height="46" VerticalAlignment="Top" Width="47" Source="pack://siteoforigin:,,,/img/down_arrow256px.png" Margin="0,0,-2,-2"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
         <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="88,164,0,0" Text="{Binding Path=CurrentMinute}" VerticalAlignment="Top" FontSize="40"/>
-        <Image x:Name="upArrowHours" HorizontalAlignment="Left" Height="44" Margin="36,132,0,0" VerticalAlignment="Top" Width="47" Source="pack://siteoforigin:,,,/img/up_arrow256px.png" />
-        <Image x:Name="downArrowHours" HorizontalAlignment="Left" Height="44" Margin="36,207,0,0" VerticalAlignment="Top" Width="47" Source="pack://siteoforigin:,,,/img/down_arrow256px.png"/>
         <Image x:Name="upArrowMinutes" HorizontalAlignment="Left" Height="44" Margin="90,132,0,0" VerticalAlignment="Top" Width="47" Source="pack://siteoforigin:,,,/img/up_arrow256px.png"/>
         <Image x:Name="downArrowMinutes" HorizontalAlignment="Left" Height="44" Margin="90,207,0,0" VerticalAlignment="Top" Width="47" Source="pack://siteoforigin:,,,/img/down_arrow256px.png"/>
         <Image x:Name="downArrowAMPM" HorizontalAlignment="Left" Height="44" Margin="192,196,0,0" VerticalAlignment="Top" Width="47" Source="pack://siteoforigin:,,,/img/down_arrow256px.png"/>
