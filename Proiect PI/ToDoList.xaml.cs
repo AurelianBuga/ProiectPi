@@ -57,7 +57,7 @@ namespace Proiect_PI
             }
             else
             {
-                listToDo = XMLManager.GetToDoList(User.UserInstance.UID, User.UserInstance.Pasword);
+                listToDo = XMLManager.XMLManagerInstance.GetToDoList(User.UserInstance.UID, User.UserInstance.Pasword);
                 foreach (ToDo toDo in listToDo)
                 {
                     toDos.Add(toDo);

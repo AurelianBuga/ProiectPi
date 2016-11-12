@@ -484,29 +484,36 @@ namespace DataManager
         }*/
     }
 
-    public static class XMLManager
+    public sealed class XMLManager
     {
-        /*TDO:
-        - a method that create a folder(for each user) wich contains XML files(one for each type of component) for users (if they don't exists) 
-        - a method that add content to XML files created for that user and component type .....when that component is created ( it is saved in xml file and DB ) 
-        - a method that  clear content in XML files ... when a component is deleted ( it is deleted form XML file and DB)
-        - a method that update content in XML files ... when a component is updated ( it is updated in XML file and DB)
-        - a getter method that returns a List<string>[] for a component type and user
-        - a method that count elements in a XML file 
-        - additional : \
-            - a method that restore files for an user for XML file
-         */
+        private XDocument userFile;
+
+        private static readonly XMLManager xmlManagerInstance = new XMLManager();
+
+        private XMLManager()
+        {
+
+        }
+
+        public static XMLManager XMLManagerInstance
+        {
+            get { return xmlManagerInstance; }
+        }
+
+        private string usrFolderPath;
+        private string usrAppDataFolderPath;
+        private string usrFilePath;
+        private string usrAppDataFilePath;
 
         public static DirectoryInfo applicationPath = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"Documents\MyApplication"));
         public static DirectoryInfo appDataApplicationPath = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"AppData\Local\MyApplication"));
 
-        //valorile vor fi asignate in metoda GetComponentListOneType()
         public static int NrRem = 0;
         public static int NrLink = 0;
         public static int NrToDo = 0;
         public static int NrNote = 0;
 
-        private static void CreateApplicationFolder()
+        private void CreateApplicationFolder()
         {
             /// daca nu exista folder pt aplicatie se va creea 
 
@@ -518,12 +525,12 @@ namespace DataManager
             }
         }
 
-        private static void CreateUserFolder(int uid)
+        private void CreateUserFolder(int uid)
         {
             /// daca nu exista folder pt user se va creea 
 
-            string folderPath = applicationPath.ToString() + @"\" + uid;
-            DirectoryInfo userFolderDirectory = new DirectoryInfo(folderPath);
+            usrFolderPath = applicationPath.ToString() + @"\" + uid;
+            DirectoryInfo userFolderDirectory = new DirectoryInfo(usrFolderPath);
 
             if (!userFolderDirectory.Exists)
             {
@@ -531,21 +538,22 @@ namespace DataManager
             }
         }
 
-        private static void CreateAppDataUsrFolder(int uid)
+        private void CreateAppDataUsrFolder(int uid)
         {
-            DirectoryInfo appDataAppDir = new DirectoryInfo(Path.Combine(appDataApplicationPath.ToString() , uid.ToString() ));
+            usrAppDataFolderPath = Path.Combine(appDataApplicationPath.ToString(), uid.ToString());
+            DirectoryInfo appDataAppDir = new DirectoryInfo(usrAppDataFolderPath);
 
             if (!appDataAppDir.Exists)
                 Directory.CreateDirectory(appDataAppDir.ToString());
         }
 
-        private static void CreateUsrXMLFile(UserManager.UserInfo userInfo)
+        private void CreateUsrXMLFile(UserInfo userInfo)
         {
             //IDEA : datele din fisier vor fi criptate /// TDO : cauta metoda de criptare a fisierelor
             // Fiecare user va avea un fisier criptat
 
-            string userFilePath = Path.Combine(applicationPath.ToString() + @"\" + userInfo.uId, userInfo.uId + ".xml");
-            DirectoryInfo userFileDir = new DirectoryInfo(userFilePath);
+            usrFilePath = Path.Combine(applicationPath.ToString() + @"\" + userInfo.uId, userInfo.uId + ".xml");
+            DirectoryInfo userFileDir = new DirectoryInfo(usrFilePath);
 
             if (!userFileDir.Exists)
             {
@@ -574,22 +582,22 @@ namespace DataManager
 
 
 
-                string tmpUsrFilePath = Path.Combine(Path.Combine(appDataApplicationPath.ToString(), userInfo.uId.ToString()), userInfo.uId + ".xml");
+                usrAppDataFilePath = Path.Combine(Path.Combine(appDataApplicationPath.ToString(), userInfo.uId.ToString()), userInfo.uId + ".xml");
 
-                FileStream write = new FileStream(tmpUsrFilePath, FileMode.Create, FileAccess.Write);
+                FileStream write = new FileStream(usrAppDataFilePath, FileMode.Create, FileAccess.Write);
                 xmlUser.Save(write);
                 write.Close();
 
                 //--------------2-------------------
-                EncryptManager.EncryptFile(tmpUsrFilePath, userFilePath, Helper.Get16CharPassword(userInfo.password));
-                File.Delete(tmpUsrFilePath);
+                EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(userInfo.password));
+                File.Delete(usrAppDataFilePath);
 
                 //--------------3-------------------
                 write.Close();
             }
         }
 
-        public static void CreateUserDirsAndFiles(UserManager.UserInfo userInfo)
+        public void CreateUserDirsAndFiles(UserInfo userInfo)
         {
             CreateApplicationFolder();
             CreateUserFolder(userInfo.uId);
@@ -597,20 +605,25 @@ namespace DataManager
             CreateUsrXMLFile(userInfo);
         }
 
-        public static List<Reminder> GetReminderList(int uid , string password)
+        public void LoadUsrXMLFile(string password)
+        {
+            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(password));
+            File.Delete(usrFilePath);
+
+            userFile = XDocument.Load(usrAppDataFilePath);
+
+            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+            File.Delete(usrAppDataFilePath);
+        }
+
+        public List<Reminder> GetReminderList(int uid, string password)
         {
             List<Reminder> list = new List<Reminder>();
-            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
-            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
-            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()) + @"\" + uid + ".xml");
 
-            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
-            File.Delete(encrypfile.FullName);
-            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);      
-            
-            XElement remindersNode = (from xnode in userXML.Descendants("Reminders") select xnode).SingleOrDefault();
+            //se ia din fisierul temporar
+            XElement remindersNode = (from xnode in userFile.Descendants("Reminders") select xnode).SingleOrDefault();
             IEnumerable<XElement> reminders = remindersNode.Descendants("Reminder");
-            foreach(XElement rem in reminders)
+            foreach (XElement rem in reminders)
             {
                 IEnumerable<XElement> reminderComps = rem.Descendants();
                 string ReminderId = (from xnode in rem.Descendants("ReminderId") select xnode).SingleOrDefault().Value;
@@ -618,31 +631,19 @@ namespace DataManager
                 string NrOrd = (from xnode in rem.Descendants("NrOrd") select xnode).SingleOrDefault().Value;
                 string date = (from xnode in rem.Descendants("DateAndTime") select xnode).SingleOrDefault().Value;
                 DateTime DateAndTime = Convert.ToDateTime(date);
-                Reminder reminder = new Reminder(Convert.ToInt32(ReminderId), User.UserInstance.UID , Text, new MySqlDateTime(DateAndTime), Convert.ToInt32(NrOrd));
+                Reminder reminder = new Reminder(Convert.ToInt32(ReminderId), User.UserInstance.UID, Text, new MySqlDateTime(DateAndTime), Convert.ToInt32(NrOrd));
                 list.Add(reminder);
             }
-            
-
-            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-            File.Delete(appDataUsrFile.FullName);
 
             return list;
 
         }
 
-        public static List<ToDo> GetToDoList(int uid, string password)
+        public List<ToDo> GetToDoList(int uid, string password)
         {
             List<ToDo> list = new List<ToDo>();
 
-            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
-            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
-            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()) + @"\" + uid + ".xml");
-
-            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
-            File.Delete(encrypfile.FullName);
-            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
-
-            XElement toDosNode = (from xnode in userXML.Descendants("ToDos") select xnode).SingleOrDefault();
+            XElement toDosNode = (from xnode in userFile.Descendants("ToDos") select xnode).SingleOrDefault();
             IEnumerable<XElement> toDos = toDosNode.Descendants("ToDo");
             foreach (XElement toDo in toDos)
             {
@@ -653,31 +654,19 @@ namespace DataManager
                 string date = (from xnode in toDo.Descendants("DateAndTime") select xnode).SingleOrDefault().Value;
                 string statusCheck = (from xnode in toDo.Descendants("StatusCheck") select xnode).SingleOrDefault().Value;
                 DateTime DateAndTime = Convert.ToDateTime(date);
-                ToDo todo = new ToDo(Convert.ToInt32(ReminderId) ,  User.UserInstance.UID, Text, new MySqlDateTime(DateAndTime), Convert.ToInt32(NrOrd) , statusCheck == "true");
+                ToDo todo = new ToDo(Convert.ToInt32(ReminderId), User.UserInstance.UID, Text, new MySqlDateTime(DateAndTime), Convert.ToInt32(NrOrd), statusCheck == "true");
                 list.Add(todo);
             }
-
-
-            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-            File.Delete(appDataUsrFile.FullName);
 
             return list;
 
         }
 
-        public static List<Note> GetNoteList(int uid, string password)
+        public List<Note> GetNoteList(int uid, string password)
         {
             List<Note> list = new List<Note>();
 
-            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
-            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
-            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()) + @"\" + uid + ".xml");
-
-            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
-            File.Delete(encrypfile.FullName);
-            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
-
-            XElement toDosNode = (from xnode in userXML.Descendants("Notes") select xnode).SingleOrDefault();
+            XElement toDosNode = (from xnode in userFile.Descendants("Notes") select xnode).SingleOrDefault();
             IEnumerable<XElement> toDos = toDosNode.Descendants("Note");
             foreach (XElement toDo in toDos)
             {
@@ -692,27 +681,15 @@ namespace DataManager
                 list.Add(note);
             }
 
-
-            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-            File.Delete(appDataUsrFile.FullName);
-
             return list;
 
         }
 
-        public static List<Link> GetLinkList(int uid, string password)
+        public List<Link> GetLinkList(int uid, string password)
         {
             List<Link> list = new List<Link>();
 
-            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
-            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
-            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()) + @"\" + uid + ".xml");
-
-            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
-            File.Delete(encrypfile.FullName);
-            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
-
-            XElement toDosNode = (from xnode in userXML.Descendants("Links") select xnode).SingleOrDefault();
+            XElement toDosNode = (from xnode in userFile.Descendants("Links") select xnode).SingleOrDefault();
             IEnumerable<XElement> toDos = toDosNode.Descendants("Link");
             foreach (XElement toDo in toDos)
             {
@@ -727,10 +704,6 @@ namespace DataManager
                 list.Add(link);
             }
 
-
-            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-            File.Delete(appDataUsrFile.FullName);
-
             return list;
 
         }
@@ -740,17 +713,14 @@ namespace DataManager
             //TDO
         }*/
 
-        public static void InsertComponent(Link linkElement, int uid , string password)
+        public void InsertComponent(Link linkElement, int uid, string password)
         {
-            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
-            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
-            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()) + @"\" + uid + ".xml");
 
-            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
-            File.Delete(encrypfile.FullName);
+            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(password));
+            File.Delete(usrFilePath);
 
-            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
-            FileStream tmpFile = new FileStream(appDataUsrFile.FullName, FileMode.Open, FileAccess.ReadWrite);
+            XDocument userXML = XDocument.Load(usrAppDataFilePath);
+            FileStream tmpFile = new FileStream(usrAppDataFilePath, FileMode.Open, FileAccess.ReadWrite);
             XElement linksNode = (from xnode in userXML.Descendants("Links") select xnode).FirstOrDefault();
 
             XElement link = new XElement("Link");
@@ -767,23 +737,20 @@ namespace DataManager
             userXML.Save(tmpFile);
             tmpFile.Close();
 
-            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
+            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
 
-            
-            File.Delete(appDataUsrFile.FullName);
+            LoadUsrXMLFile(password);
+
+            File.Delete(usrAppDataFilePath);
         }
 
-        public static void InsertComponent(Note noteElement, int uid, string password)
+        public void InsertComponent(Note noteElement, int uid, string password)
         {
-            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
-            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
-            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()) + @"\" + uid + ".xml");
+            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(password));
+            File.Delete(usrFilePath);
 
-            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
-            File.Delete(encrypfile.FullName); 
-
-            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
-            FileStream tmpFile = new FileStream(appDataUsrFile.FullName, FileMode.Open, FileAccess.ReadWrite);
+            XDocument userXML = XDocument.Load(usrAppDataFilePath);
+            FileStream tmpFile = new FileStream(usrAppDataFilePath, FileMode.Open, FileAccess.ReadWrite);
             XElement notesNode = (from xnode in userXML.Descendants("Notes") select xnode).FirstOrDefault();
 
             XElement note = new XElement("Note");
@@ -799,24 +766,21 @@ namespace DataManager
             userXML.Save(tmpFile);
             tmpFile.Close();
 
-            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-            
-            File.Delete(appDataUsrFile.FullName);
+            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+
+            LoadUsrXMLFile(password);
+
+            File.Delete(usrAppDataFilePath);
         }
 
-        public static void InsertComponent(Reminder reminderElement, int uid , string password)
+        public void InsertComponent(Reminder reminderElement, int uid, string password)
         {
-            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
-            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
-            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()) + @"\" + uid + ".xml");
 
-            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
-            File.Delete(encrypfile.FullName);
+            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(password));
+            File.Delete(usrFilePath);
 
-            
-
-            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
-            FileStream tmpFile = new FileStream(appDataUsrFile.FullName, FileMode.Open, FileAccess.ReadWrite);
+            XDocument userXML = XDocument.Load(usrAppDataFilePath);
+            FileStream tmpFile = new FileStream(usrAppDataFilePath, FileMode.Open, FileAccess.ReadWrite);
             XElement remindersNode = (from xnode in userXML.Descendants("Reminders") select xnode).FirstOrDefault();
 
             XElement reminder = new XElement("Reminder");
@@ -831,53 +795,20 @@ namespace DataManager
             userXML.Save(tmpFile);
             tmpFile.Close();
 
-            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
+            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
 
-            File.Delete(appDataUsrFile.FullName);
+            LoadUsrXMLFile(password);
+
+            File.Delete(usrAppDataFilePath);
         }
 
-        public static void InsertComponent(Timer timerElement, int uid, string password)
+        public void InsertComponent(ToDo toDoElement, int uid, string password)
         {
-            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
-            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
-            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()) + @"\" + uid + ".xml");
+            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(password));
+            File.Delete(usrFilePath);
 
-            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
-            File.Delete(encrypfile.FullName);
-
-            
-
-            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
-            FileStream tmpFile = new FileStream(appDataUsrFile.FullName, FileMode.Open, FileAccess.ReadWrite);
-            XElement timerNode = (from xnode in userXML.Descendants("Timer") select xnode).FirstOrDefault();
-
-            XElement hours = new XElement("Hours", timerElement.Hours);
-            XElement minutes = new XElement("Minutes", timerElement.Minutes);
-            XElement seconds = new XElement("Seconds", timerElement.Seconds);
-            XElement timerId = new XElement("TimerId", timerElement.TimerId);
-
-            timerNode.Add(hours , minutes , seconds , timerId);
-
-            userXML.Save(tmpFile);
-
-            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-            tmpFile.Close();
-            File.Delete(appDataUsrFile.FullName);
-        }
-
-        public static void InsertComponent(ToDo toDoElement, int uid, string password)
-        {
-            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
-            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
-            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()) + @"\" + uid + ".xml");
-
-            EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
-            File.Delete(encrypfile.FullName);
-
-            
-
-            XDocument userXML = XDocument.Load(appDataUsrFile.FullName);
-            FileStream tmpFile = new FileStream(appDataUsrFile.FullName, FileMode.Open, FileAccess.ReadWrite);
+            XDocument userXML = XDocument.Load(usrAppDataFilePath);
+            FileStream tmpFile = new FileStream(usrAppDataFilePath, FileMode.Open, FileAccess.ReadWrite);
             XElement toDosNode = (from xnode in userXML.Descendants("ToDos") select xnode).FirstOrDefault();
 
             XElement toDo = new XElement("ToDo");
@@ -893,9 +824,39 @@ namespace DataManager
             userXML.Save(tmpFile);
             tmpFile.Close();
 
-            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
+            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
 
-            File.Delete(appDataUsrFile.FullName);
+            LoadUsrXMLFile(password);
+
+            File.Delete(usrAppDataFilePath);
+        }
+
+        public void InsertComponent(Timer timerElement, int uid, string password)
+        {
+            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(password));
+            File.Delete(usrFilePath);
+
+
+
+            XDocument userXML = XDocument.Load(usrAppDataFilePath);
+            FileStream tmpFile = new FileStream(usrAppDataFilePath, FileMode.Open, FileAccess.ReadWrite);
+            XElement timerNode = (from xnode in userXML.Descendants("Timer") select xnode).FirstOrDefault();
+
+            XElement hours = new XElement("Hours", timerElement.Hours);
+            XElement minutes = new XElement("Minutes", timerElement.Minutes);
+            XElement seconds = new XElement("Seconds", timerElement.Seconds);
+            XElement timerId = new XElement("TimerId", timerElement.TimerId);
+
+            timerNode.Add(hours, minutes, seconds, timerId);
+
+            userXML.Save(tmpFile);
+            tmpFile.Close();
+
+            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+
+            LoadUsrXMLFile(password);
+
+            File.Delete(usrAppDataFilePath);
         }
 
         public static bool UserExists(string userName, string password)
@@ -904,10 +865,10 @@ namespace DataManager
             DirectoryInfo[] userFoldersList = applicationPath.GetDirectories();
             XName userNamex = "UserName";
 
-            foreach(DirectoryInfo userFolder in userFoldersList)
+            foreach (DirectoryInfo userFolder in userFoldersList)
             {
                 FileInfo[] userFileList = userFolder.GetFiles();
-                foreach(FileInfo userFile in userFileList)
+                foreach (FileInfo userFile in userFileList)
                 {
                     string userAppDataApplicationFile = Path.Combine(appDataApplicationPath.ToString(), userFile.Name);
 
@@ -936,9 +897,9 @@ namespace DataManager
                     {
                         tmpUserFile.Close();
                     }
-                    
+
                     File.Delete(userAppDataApplicationFile);
-                } 
+                }
             }
             return false;
         }
@@ -965,7 +926,7 @@ namespace DataManager
         public static UserInfo GetUserInfo(string userName, string password)
         {
 
-            UserManager.UserInfo user = new UserManager.UserInfo();
+            UserInfo user = new UserManager.UserInfo();
             DirectoryInfo[] userFoldersList = applicationPath.GetDirectories();
 
 
@@ -974,7 +935,7 @@ namespace DataManager
                 FileInfo[] userFileList = userFolder.GetFiles();
                 foreach (FileInfo userFile in userFileList)
                 {
-                    string userAppDataApplicationFile = Path.Combine(appDataApplicationPath.ToString() + @"\"+ userFile.Name.Substring(0 , userFile.Name.IndexOf('.')), userFile.Name);
+                    string userAppDataApplicationFile = Path.Combine(appDataApplicationPath.ToString() + @"\" + userFile.Name.Substring(0, userFile.Name.IndexOf('.')), userFile.Name);
 
                     EncryptManager.DecryptFile(userFile.FullName, userAppDataApplicationFile, Helper.Get16CharPassword(password));
 
@@ -982,162 +943,144 @@ namespace DataManager
 
                     try
                     {
-                    XDocument file = XDocument.Load(tmpUserFile);
-                    tmpUserFile.Close();
-                    IEnumerable<XElement> xElements = file.Descendants();
-                    foreach (XElement el in xElements)
-                    {
-                        XName userNamex = "UserName";
-                        XAttribute atr = el.Attribute(userNamex);
-                        if (atr != null)
+                        XDocument file = XDocument.Load(tmpUserFile);
+                        tmpUserFile.Close();
+                        IEnumerable<XElement> xElements = file.Descendants();
+                        foreach (XElement el in xElements)
                         {
-                            if (atr.Value.ToString() == userName)
+                            XName userNamex = "UserName";
+                            XAttribute atr = el.Attribute(userNamex);
+                            if (atr != null)
                             {
-                                XName uid = "UID";
-                                XName fName = "FName";
-                                XName lName = "LName";
-                                XName email = "Email";
-                                XName pwd = "Password";
+                                if (atr.Value.ToString() == userName)
+                                {
+                                    XName uid = "UID";
+                                    XName fName = "FName";
+                                    XName lName = "LName";
+                                    XName email = "Email";
+                                    XName pwd = "Password";
 
-                                user.uId = Convert.ToInt32(el.Attribute(uid).Value);
-                                user.userName = el.Attribute(userNamex).Value.ToString();
-                                user.fName = el.Attribute(fName).Value.ToString();
-                                user.lName = el.Attribute(lName).Value.ToString();
-                                user.email = el.Attribute(email).Value.ToString();
-                                user.password = el.Attribute(pwd).Value.ToString();
+                                    user.uId = Convert.ToInt32(el.Attribute(uid).Value);
+                                    user.userName = el.Attribute(userNamex).Value.ToString();
+                                    user.fName = el.Attribute(fName).Value.ToString();
+                                    user.lName = el.Attribute(lName).Value.ToString();
+                                    user.email = el.Attribute(email).Value.ToString();
+                                    user.password = el.Attribute(pwd).Value.ToString();
 
 
-                                File.Delete(userFile.FullName);
-                                EncryptManager.EncryptFile(userAppDataApplicationFile, userFile.FullName, Helper.Get16CharPassword(password));
-                                File.Delete(userAppDataApplicationFile);
+                                    File.Delete(userFile.FullName);
+                                    EncryptManager.EncryptFile(userAppDataApplicationFile, userFile.FullName, Helper.Get16CharPassword(password));
+                                    File.Delete(userAppDataApplicationFile);
 
-                                return user;
-                            }                           
+                                    return user;
+                                }
+                            }
                         }
-                    }
-                    File.Delete(userAppDataApplicationFile);
+                        File.Delete(userAppDataApplicationFile);
                     }
                     catch
                     {
 
                     }
-                    
+
                 }
             }
 
             return user;
         }
 
-        public static bool ComponentExists(int idComp , int type , int uid , string password)
+        public bool ComponentExists(int idComp, int type, int uid, string password)
         {
-            DirectoryInfo userFolder = new DirectoryInfo(applicationPath.ToString() + @"\" + uid);
-            FileInfo encrypfile = userFolder.GetFiles(uid + ".xml").FirstOrDefault();
-            FileInfo appDataUsrFile = new FileInfo(Path.Combine(appDataApplicationPath.ToString(), uid.ToString()) + @"\" + uid + ".xml");
+            EncryptManager.DecryptFile(usrFilePath, usrAppDataFilePath, Helper.Get16CharPassword(password));
+            File.Delete(usrFilePath);
 
-            
+            XDocument usrDoc = XDocument.Load(usrAppDataFilePath);
 
-            DirectoryInfo[] userFoldersList = applicationPath.GetDirectories();
-
-            foreach (DirectoryInfo usrFolder in userFoldersList)
+            switch (type)
             {
-                FileInfo[] userFileList = userFolder.GetFiles();
-                foreach (FileInfo userFile in userFileList)
-                {
-                    if (userFile.Name.Contains(uid.ToString()))
+                //reminder
+                case 1:
                     {
-                        EncryptManager.DecryptFile(encrypfile.FullName, appDataUsrFile.FullName, Helper.Get16CharPassword(password));
-                        File.Delete(encrypfile.FullName);
-
-                        XDocument usrDoc = XDocument.Load(appDataUsrFile.FullName);
-
-                        switch (type)
+                        XElement RemNode = (from xnode in usrDoc.Descendants("Reminders") select xnode).SingleOrDefault();
+                        IEnumerable<XElement> rems = RemNode.Descendants("Reminder");
+                        foreach (XElement rem in rems)
                         {
-                            //reminder
-                            case 1:
-                                {
-                                    XElement RemNode = (from xnode in usrDoc.Descendants("Reminders") select xnode).SingleOrDefault();
-                                    IEnumerable<XElement> rems = RemNode.Descendants("Reminder");
-                                    foreach(XElement rem in rems)
-                                    {
-                                        XElement idNode = (from xnode in rem.Descendants("ReminderId") select xnode).SingleOrDefault();
-                                        String nodeValOnlyDigits = new String(idNode.Value.Where(Char.IsDigit).ToArray());
-                                        if(nodeValOnlyDigits == idComp.ToString())
-                                        {
-                                            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-                                            File.Delete(appDataUsrFile.FullName);
-                                            return true;
-                                        }
-                                    }
-                                    EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-                                    File.Delete(appDataUsrFile.FullName);
-                                    return false;
-                                }
-                            //toDo
-                            case 2:
-                                {
-                                    XElement RemNode = (from xnode in usrDoc.Descendants("ToDos") select xnode).SingleOrDefault();
-                                    IEnumerable<XElement> rems = RemNode.Descendants("ToDo");
-                                    foreach (XElement rem in rems)
-                                    {
-                                        XElement idNode = (from xnode in rem.Descendants("ToDoId") select xnode).SingleOrDefault();
-                                        String nodeValOnlyDigits = new String(idNode.Value.Where(Char.IsDigit).ToArray());
-                                        if (nodeValOnlyDigits == idComp.ToString())
-                                        {
-                                            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-                                            File.Delete(appDataUsrFile.FullName);
-                                            return true;
-                                        }
-                                    }
-                                    EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-                                    File.Delete(appDataUsrFile.FullName);
-                                    return false;
-                                }
-                            //Note
-                            case 3:
-                                {
-                                    XElement RemNode = (from xnode in usrDoc.Descendants("Notes") select xnode).SingleOrDefault();
-                                    IEnumerable<XElement> rems = RemNode.Descendants("Note");
-                                    foreach (XElement rem in rems)
-                                    {
-                                        XElement idNode = (from xnode in rem.Descendants("NoteId") select xnode).SingleOrDefault();
-                                        String nodeValOnlyDigits = new String(idNode.Value.Where(Char.IsDigit).ToArray());
-                                        if (nodeValOnlyDigits == idComp.ToString())
-                                        {
-                                            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-                                            File.Delete(appDataUsrFile.FullName);
-                                            return true;
-                                        }
-                                    }
-                                    EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-                                    File.Delete(appDataUsrFile.FullName);
-                                    return false;
-                                }
-                            //Link
-                            case 4:
-                                {
-                                    XElement RemNode = (from xnode in usrDoc.Descendants("Links") select xnode).SingleOrDefault();
-                                    IEnumerable<XElement> rems = RemNode.Descendants("Link");
-                                    foreach (XElement rem in rems)
-                                    {
-                                        XElement idNode = (from xnode in rem.Descendants("LinkId") select xnode).SingleOrDefault();
-                                        String nodeValOnlyDigits = new String(idNode.Value.Where(Char.IsDigit).ToArray());
-                                        if (nodeValOnlyDigits == idComp.ToString())
-                                        {
-                                            EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-                                            File.Delete(appDataUsrFile.FullName);
-                                            return true;
-                                        }
-                                    }
-                                    EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-                                    File.Delete(appDataUsrFile.FullName);
-                                    return false;
-                                }
+                            XElement idNode = (from xnode in rem.Descendants("ReminderId") select xnode).SingleOrDefault();
+                            String nodeValOnlyDigits = new String(idNode.Value.Where(Char.IsDigit).ToArray());
+                            if (nodeValOnlyDigits == idComp.ToString())
+                            {
+                                EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+                                File.Delete(usrAppDataFilePath);
+                                return true;
+                            }
                         }
-                        EncryptManager.EncryptFile(appDataUsrFile.FullName, encrypfile.FullName, Helper.Get16CharPassword(password));
-                        File.Delete(appDataUsrFile.FullName);
+                        EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+                        File.Delete(usrAppDataFilePath);
+                        return false;
                     }
-                }
+                //toDo
+                case 2:
+                    {
+                        XElement RemNode = (from xnode in usrDoc.Descendants("ToDos") select xnode).SingleOrDefault();
+                        IEnumerable<XElement> rems = RemNode.Descendants("ToDo");
+                        foreach (XElement rem in rems)
+                        {
+                            XElement idNode = (from xnode in rem.Descendants("ToDoId") select xnode).SingleOrDefault();
+                            String nodeValOnlyDigits = new String(idNode.Value.Where(Char.IsDigit).ToArray());
+                            if (nodeValOnlyDigits == idComp.ToString())
+                            {
+                                EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+                                File.Delete(usrAppDataFilePath);
+                                return true;
+                            }
+                        }
+                        EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+                        File.Delete(usrAppDataFilePath);
+                        return false;
+                    }
+                //Note
+                case 3:
+                    {
+                        XElement RemNode = (from xnode in usrDoc.Descendants("Notes") select xnode).SingleOrDefault();
+                        IEnumerable<XElement> rems = RemNode.Descendants("Note");
+                        foreach (XElement rem in rems)
+                        {
+                            XElement idNode = (from xnode in rem.Descendants("NoteId") select xnode).SingleOrDefault();
+                            String nodeValOnlyDigits = new String(idNode.Value.Where(Char.IsDigit).ToArray());
+                            if (nodeValOnlyDigits == idComp.ToString())
+                            {
+                                EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+                                File.Delete(usrAppDataFilePath);
+                                return true;
+                            }
+                        }
+                        EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+                        File.Delete(usrAppDataFilePath);
+                        return false;
+                    }
+                //Link
+                case 4:
+                    {
+                        XElement RemNode = (from xnode in usrDoc.Descendants("Links") select xnode).SingleOrDefault();
+                        IEnumerable<XElement> rems = RemNode.Descendants("Link");
+                        foreach (XElement rem in rems)
+                        {
+                            XElement idNode = (from xnode in rem.Descendants("LinkId") select xnode).SingleOrDefault();
+                            String nodeValOnlyDigits = new String(idNode.Value.Where(Char.IsDigit).ToArray());
+                            if (nodeValOnlyDigits == idComp.ToString())
+                            {
+                                EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+                                File.Delete(usrAppDataFilePath);
+                                return true;
+                            }
+                        }
+                        EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+                        File.Delete(usrAppDataFilePath);
+                        return false;
+                    }
             }
+            EncryptManager.EncryptFile(usrAppDataFilePath, usrFilePath, Helper.Get16CharPassword(password));
+            File.Delete(usrAppDataFilePath);
             return false;
         }
     }

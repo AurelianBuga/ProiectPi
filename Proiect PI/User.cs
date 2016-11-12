@@ -87,8 +87,6 @@ namespace UserManager
             
         }
 
-        
-
         // Login() method return true if username & password are valid
         // else return false
         public int Login(string userName , string password , bool afterOffReg)
@@ -109,6 +107,9 @@ namespace UserManager
                     userInstance.uId = userInfo.uId;
                     userInstance.password = userInfo.password;
                     userInstance.loginType = false;
+
+                    XMLManager.XMLManagerInstance.CreateUserDirsAndFiles(userInfo);
+                    XMLManager.XMLManagerInstance.LoadUsrXMLFile(userInfo.password);
 
                     return 1;
                 }
@@ -158,6 +159,9 @@ namespace UserManager
                         userInstance.password = userInfo.password;
                         userInstance.loginType = false;
 
+                        XMLManager.XMLManagerInstance.CreateUserDirsAndFiles(userInfo);
+                        XMLManager.XMLManagerInstance.LoadUsrXMLFile(userInfo.password);
+
                         return 1;
                     }
                     else
@@ -186,7 +190,7 @@ namespace UserManager
             else
             {
                 userInfo.uId = GetUID();
-                XMLManager.CreateUserDirsAndFiles(userInfo);
+                XMLManager.XMLManagerInstance.CreateUserDirsAndFiles(userInfo);
             }
         }
 

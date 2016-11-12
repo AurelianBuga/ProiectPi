@@ -57,7 +57,7 @@ namespace Proiect_PI
             }
             else
             {
-                linkList = XMLManager.GetLinkList(User.UserInstance.UID, User.UserInstance.Pasword);
+                linkList = XMLManager.XMLManagerInstance.GetLinkList(User.UserInstance.UID, User.UserInstance.Pasword);
                 foreach (Link link in linkList)
                 {
                     links.Add(link);

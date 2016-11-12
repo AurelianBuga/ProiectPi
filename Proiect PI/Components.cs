@@ -70,7 +70,7 @@ namespace Components
         {
             Random idGen = new Random();
             int id;
-            while (XMLManager.ComponentExists(id = idGen.Next(1000, 9999), 1, User.UserInstance.UID, User.UserInstance.Pasword))
+            while (XMLManager.XMLManagerInstance.ComponentExists(id = idGen.Next(1000, 9999), 1, User.UserInstance.UID, User.UserInstance.Pasword))
             {
                 //nothing
             }
@@ -140,7 +140,7 @@ namespace Components
         {
             Random idGen = new Random();
             int id;
-            while (XMLManager.ComponentExists(id = idGen.Next(1000, 9999), 3, User.UserInstance.UID, User.UserInstance.Pasword))
+            while (XMLManager.XMLManagerInstance.ComponentExists(id = idGen.Next(1000, 9999), 3, User.UserInstance.UID, User.UserInstance.Pasword))
             {
                 //nothing
             }
@@ -206,7 +206,7 @@ namespace Components
         {
             Random idGen = new Random();
             int id;
-            while (XMLManager.ComponentExists(id = idGen.Next(1000, 9999), 2, User.UserInstance.UID, User.UserInstance.Pasword))
+            while (XMLManager.XMLManagerInstance.ComponentExists(id = idGen.Next(1000, 9999), 2, User.UserInstance.UID, User.UserInstance.Pasword))
             {
                 //nothing
             }
@@ -273,7 +273,7 @@ namespace Components
         {
             Random idGen = new Random();
             int id;
-            while(XMLManager.ComponentExists(id = idGen.Next(1000, 9999), 4, User.UserInstance.UID, User.UserInstance.Pasword))
+            while(XMLManager.XMLManagerInstance.ComponentExists(id = idGen.Next(1000, 9999), 4, User.UserInstance.UID, User.UserInstance.Pasword))
             {
                 //nothing
             }
