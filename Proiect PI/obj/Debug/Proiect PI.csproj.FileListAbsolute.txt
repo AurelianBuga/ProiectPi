@@ -71,5 +71,3 @@ C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\ErrInternetConn.g.cs
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\WelcomePage.g.cs
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\ErrInternetConn.baml
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\WelcomePage.baml
-C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\LoadingWindow.g.cs
-C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\LoadingWindow.baml

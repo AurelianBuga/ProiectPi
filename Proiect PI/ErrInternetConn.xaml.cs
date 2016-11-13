@@ -32,14 +32,14 @@ namespace Proiect_PI
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Hide();
+            this.Close();
             LoginWindow win = new LoginWindow();
             win.Show();
         }
 
         private void Register_Click(object sender, RoutedEventArgs e)
         {
-            this.Hide();
+            this.Close();
             RegisterWindow winReg = new RegisterWindow();
             winReg.Show();
         }

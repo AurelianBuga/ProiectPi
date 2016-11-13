@@ -26,7 +26,6 @@ namespace Proiect_PI
 
         private void goToLogin(object sender, RoutedEventArgs e)
         {
-            this.Hide();
             LoginWindow lw = new LoginWindow();
             lw.Show();
             this.Close();

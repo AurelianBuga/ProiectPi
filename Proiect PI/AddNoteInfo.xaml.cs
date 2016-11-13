@@ -15,6 +15,7 @@ using UserManager;
 using DataManager;
 using Components;
 using MySql.Data.Types;
+using System.ComponentModel;
 
 namespace Proiect_PI
 {
@@ -63,7 +64,7 @@ namespace Proiect_PI
                 DBManager.InsertComponent(note);
                 currentFrame.Navigate(new NoteListView());
                 isOpn = false;
-                this.Hide();
+                this.Close();
             }
             else
             {
@@ -82,6 +83,13 @@ namespace Proiect_PI
                 isOpn = false;
                 this.Close();
             }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            isOpn = false;
+
+            base.OnClosing(e);
         }
 
         private void title_GotFocus(object sender, RoutedEventArgs e)

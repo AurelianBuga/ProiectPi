@@ -148,7 +148,7 @@ namespace Proiect_PI
                 DBManager.InsertComponent(toDo);
                 currentFrame.Navigate(new ToDoListView());
                 isOpn = false;
-                this.Hide();
+                this.Close();
             }
             else
             {
@@ -160,6 +160,13 @@ namespace Proiect_PI
                 isOpn = false;
                 this.Close();
             }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            isOpn = false;
+
+            base.OnClosing(e);
         }
 
         private void ToDoTextClearTextBox(object sender, RoutedEventArgs e)

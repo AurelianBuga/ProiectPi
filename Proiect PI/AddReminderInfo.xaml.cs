@@ -31,7 +31,6 @@ namespace Proiect_PI
         private DateTime dateDMY;
         private Frame currentFrame;
 
-        
 
         public static  bool isOpn {get; set; }
 
@@ -164,6 +163,13 @@ namespace Proiect_PI
                 isOpn = false;
                 this.Close();
             }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            isOpn = false;
+
+            base.OnClosing(e);
         }
 
         private void ReminderTextClearTextBox(object sender, RoutedEventArgs e)
