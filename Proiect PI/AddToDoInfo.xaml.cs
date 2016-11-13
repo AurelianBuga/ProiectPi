@@ -31,7 +31,7 @@ namespace Proiect_PI
         private DateTime dateDMY;
         private Frame currentFrame;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        
 
         public static bool isOpn { get; set; }
 
@@ -199,6 +199,9 @@ namespace Proiect_PI
             }
         }
 
+        #region
+        public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged(string property)
         {
 
@@ -212,5 +215,6 @@ namespace Proiect_PI
             }
 
         }
+        #endregion
     }
 }

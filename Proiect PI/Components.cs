@@ -153,7 +153,11 @@ namespace Components
     {
         private bool statusCheck;
 
-        public bool StatusCheck { get { return statusCheck; } }
+        public bool StatusCheck
+        {
+            get { return statusCheck; }
+            set { statusCheck = value; }
+        }
 
         public ToDo()
         {

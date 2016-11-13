@@ -80,7 +80,7 @@
             <Frame x:Name="MainFrame" Content="" HorizontalAlignment="Left" Height="425" VerticalAlignment="Top" Width="572" NavigationUIVisibility="Hidden"/>
 
         </Grid>
-        <Grid HorizontalAlignment="Left" Height="13" Margin="10,0,0,0" VerticalAlignment="Top" Width="782"/>
+        <Grid HorizontalAlignment="Left" Height="13" VerticalAlignment="Top" Width="792"/>
         <Grid HorizontalAlignment="Left" Height="55" Margin="10,13,0,0" VerticalAlignment="Top" Width="764">
             <Grid HorizontalAlignment="Left" Height="45" VerticalAlignment="Top" Width="49">
                 <Button Click="AddButton_Click" Margin="0,0,0,0">

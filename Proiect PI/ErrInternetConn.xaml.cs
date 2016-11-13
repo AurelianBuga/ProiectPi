@@ -50,7 +50,7 @@ namespace Proiect_PI
             {
                 MainWindow main = new MainWindow();
                 main.Show();
-                this.Hide();
+                this.Close();
             }
             else
             {
