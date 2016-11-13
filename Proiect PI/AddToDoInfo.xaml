@@ -27,10 +27,34 @@
             </Button.Template>
         </Button>
         <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="88,164,0,0" Text="{Binding Path=CurrentMinute}" VerticalAlignment="Top" FontSize="40"/>
-        <Image x:Name="upArrowMinutes" HorizontalAlignment="Left" Height="44" Margin="90,132,0,0" VerticalAlignment="Top" Width="47" Source="pack://siteoforigin:,,,/img/up_arrow256px.png"/>
-        <Image x:Name="downArrowMinutes" HorizontalAlignment="Left" Height="44" Margin="90,207,0,0" VerticalAlignment="Top" Width="47" Source="pack://siteoforigin:,,,/img/down_arrow256px.png"/>
-        <Image x:Name="downArrowAMPM" HorizontalAlignment="Left" Height="44" Margin="192,196,0,0" VerticalAlignment="Top" Width="47" Source="pack://siteoforigin:,,,/img/down_arrow256px.png"/>
-        <Image x:Name="upArrowAMPM" HorizontalAlignment="Left" Height="44" Margin="192,152,0,0" VerticalAlignment="Top" Width="47" Source="pack://siteoforigin:,,,/img/up_arrow256px.png"/>
+        <Button Click="Increase_Minutes" HorizontalAlignment="Right" Width="45" Margin="0,132,244,96">
+            <Button.Template>
+                <ControlTemplate>
+                    <Image x:Name="upArrowMinutes" HorizontalAlignment="Left" Height="44" VerticalAlignment="Top" Width="47" Source="pack://siteoforigin:,,,/img/up_arrow256px.png"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Click="Decrease_Minutes" HorizontalAlignment="Right" Width="45" Margin="0,207,244,21">
+            <Button.Template>
+                <ControlTemplate>
+                    <Image x:Name="downArrowMinutes" HorizontalAlignment="Left" Height="44" VerticalAlignment="Top" Width="47" Source="pack://siteoforigin:,,,/img/down_arrow256px.png"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Click="Switch_AMPM" HorizontalAlignment="Right" Width="45" Margin="0,207,194,21">
+            <Button.Template>
+                <ControlTemplate>
+                    <Image x:Name="downArrowAMPM" HorizontalAlignment="Left" Height="44" VerticalAlignment="Top" Width="47" Source="pack://siteoforigin:,,,/img/down_arrow256px.png"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Click="Switch_AMPM" HorizontalAlignment="Right" Width="45" Margin="0,132,194,96">
+            <Button.Template>
+                <ControlTemplate>
+                    <Image x:Name="upArrowAMPM" HorizontalAlignment="Left" Height="44" VerticalAlignment="Top" Width="47" Source="pack://siteoforigin:,,,/img/up_arrow256px.png"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
         <Button x:Name="AddToDo" Content="Add" HorizontalAlignment="Left" Margin="287,59,0,0" VerticalAlignment="Top" Width="67" Height="42" Click="AddToDo_Click"/>
         <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="74,160,0,0" TextWrapping="Wrap" Text=":" VerticalAlignment="Top" FontSize="40" Height="57"/>
         <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="137,164,0,0" TextWrapping="Wrap" Text="{Binding Path=AMPMPr}" VerticalAlignment="Top" FontSize="40"/>

@@ -15,19 +15,23 @@ using UserManager;
 using DataManager;
 using Components;
 using MySql.Data.Types;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace Proiect_PI
 {
     /// <summary>
     /// Interaction logic for AddReminderInfo.xaml
     /// </summary>
-    public partial class AddReminderInfo : Window
+    public partial class AddReminderInfo : Window , INotifyPropertyChanged
     {
         private int hour;
         private int minute;
         private string AMPM;
         private DateTime dateDMY;
         private Frame currentFrame;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public static  bool isOpn {get; set; }
 
@@ -37,15 +41,7 @@ namespace Proiect_PI
             hour = DateTime.Now.Hour;
             minute = DateTime.Now.Minute;
             this.currentFrame = currentFrame;
-
-            if(hour > 12)
-            {
-                AMPM = "PM";
-            }
-            else
-            {
-                AMPM = "AM";
-            }
+            AMPM = DateTime.Now.ToString("tt", CultureInfo.InvariantCulture);
 
             InitializeComponent();
             DataContext = this;
@@ -65,29 +61,49 @@ namespace Proiect_PI
                 {
                     return hour;
                 }
-                
+
+            }
+            set
+            {
+                if (value > 0)
+                {
+                    hour = value;
+                }
+
+                OnPropertyChanged("CurrentHour");
             }
         }
 
-        public string CurrentMinute
+        public int CurrentMinute
         {
             get
             {
-                if(minute == 0)
+                if (minute >= 60)
                 {
-                    return "00";
+                    minute = minute - 60;
                 }
-                else
+
+                return minute;
+            }
+            set
+            {
+                if (value >= 0)
                 {
-                    return minute.ToString();
+                    minute = value;
                 }
-                
+
+                OnPropertyChanged("CurrentMinute");
             }
         }
 
         public string AMPMPr
         {
             get { return AMPM; }
+            set
+            {
+                AMPM = value;
+                OnPropertyChanged("AMPMPr");
+            }
         }
 
 
@@ -153,6 +169,52 @@ namespace Proiect_PI
         private void ReminderTextClearTextBox(object sender, RoutedEventArgs e)
         {
             ReminderTextBox.Text = String.Empty;
+        }
+
+        private void Increase_Hours(object sender, RoutedEventArgs e)
+        {
+            CurrentHour++;
+        }
+
+        private void Decrease_Hours(object sender, RoutedEventArgs e)
+        {
+            CurrentHour--;
+        }
+
+        private void Increase_Minutes(object sender, RoutedEventArgs e)
+        {
+            CurrentMinute++;
+        }
+
+        private void Decrease_Minutes(object sender, RoutedEventArgs e)
+        {
+            CurrentMinute--;
+        }
+
+        private void Switch_AMPM(object sender, RoutedEventArgs e)
+        {
+            if (AMPMPr == "AM")
+            {
+                AMPMPr = "PM";
+            }
+            else
+            {
+                AMPMPr = "AM";
+            }
+        }
+
+        protected void OnPropertyChanged(string property)
+        {
+
+            PropertyChangedEventHandler handler = PropertyChanged;
+
+            if (handler != null)
+            {
+
+                handler(this, new PropertyChangedEventArgs(property));
+
+            }
+
         }
 
     }

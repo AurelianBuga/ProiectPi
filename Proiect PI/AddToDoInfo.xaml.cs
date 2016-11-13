@@ -16,6 +16,7 @@ using DataManager;
 using Components;
 using MySql.Data.Types;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace Proiect_PI
 {
@@ -39,16 +40,7 @@ namespace Proiect_PI
             hour = DateTime.Now.Hour;
             minute = DateTime.Now.Minute;
             this.currentFrame = currentFrame;
-
-            if (hour > 12)
-            {
-                AMPM = "PM";
-            }
-            else
-            {
-                AMPM = "AM";
-            }
-
+            AMPM = DateTime.Now.ToString("tt", CultureInfo.InvariantCulture);
             InitializeComponent();
             DataContext = this;
             isOpn = true;
@@ -93,7 +85,11 @@ namespace Proiect_PI
             }
             set
             {
-                minute = value;
+                if(value >= 0)
+                {
+                    minute = value;
+                }
+               
                 OnPropertyChanged("CurrentMinute");
             }
         }
@@ -101,6 +97,11 @@ namespace Proiect_PI
         public string AMPMPr
         {
             get { return AMPM; }
+            set
+            {
+                AMPM = value;
+                OnPropertyChanged("AMPMPr");
+            }
         }
 
         private MySqlDateTime GetFullDateMySqlFormat()
@@ -174,6 +175,28 @@ namespace Proiect_PI
         private void Decrease_Hours(object sender, RoutedEventArgs e)
         {
             CurrentHour--;
+        }
+
+        private void Increase_Minutes(object sender, RoutedEventArgs e)
+        {
+            CurrentMinute++;
+        }
+
+        private void Decrease_Minutes(object sender, RoutedEventArgs e)
+        {
+            CurrentMinute--;
+        }
+
+        private void Switch_AMPM(object sender, RoutedEventArgs e)
+        {
+            if(AMPMPr == "AM")
+            {
+                AMPMPr = "PM";
+            }
+            else
+            {
+                AMPMPr = "AM";
+            }
         }
 
         protected void OnPropertyChanged(string property)
