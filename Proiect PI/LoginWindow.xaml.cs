@@ -31,7 +31,7 @@ namespace Proiect_PI
             //cu internet
             if (Helper.CheckForInternetConnection())
             {
-                if(usr.Login(usr.UserName , usr.Pasword , false) == 1)
+                if(usr.Login(username.Text, passwordBox.Password, false) == 1)
                 {
                     MainWindow mn = new MainWindow();
                     mn.Show();

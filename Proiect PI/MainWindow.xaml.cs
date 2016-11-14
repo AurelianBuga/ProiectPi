@@ -55,7 +55,7 @@ namespace Proiect_PI
 
         private void ViewTimer(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new TimerPage());
+            MainFrame.Navigate(new TimerSetPage(ref MainFrame));
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -100,7 +100,7 @@ namespace Proiect_PI
             else if(MainFrame.Content is TimerPage)
             {
                 //se inlocuieste page-ul curent cu un page de setare timer    
-                MainFrame.Navigate(new TimerSetPage());
+                MainFrame.Navigate(new TimerSetPage(ref MainFrame));
             }
             else
             {

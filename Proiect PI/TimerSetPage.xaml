@@ -12,5 +12,13 @@
       ShowsNavigationUI = "False"
       DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
-    <Grid/>
+    <Grid  Width="572" Height="424"  Margin="0,0,0,0">
+        <Button x:Name="Rule2020Button" Content="20-20 Mode" HorizontalAlignment="Left" Margin="179,8,0,0" VerticalAlignment="Top" Width="226" Height="59" FontSize="40" Click="Rule2020Button_Click"/>
+        <Grid HorizontalAlignment="Left" Height="275" Margin="57,72,0,0" VerticalAlignment="Top" Width="481" >
+            <Viewbox Stretch="Uniform" Width="379" Height="160">
+                <TextBox x:Name="Expr" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" TextAlignment="Center" FontSize="120"/>
+            </Viewbox>
+            <Button x:Name="SetButton" Content="Set" HorizontalAlignment="Left" Margin="186,222,0,0" VerticalAlignment="Top" Width="128" Height="53" FontSize="30" Click="SetButton_Click"/>
+        </Grid>
+    </Grid>
 </Page>

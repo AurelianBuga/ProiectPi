@@ -9,8 +9,8 @@
     <Grid>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="112,70,0,0" TextWrapping="Wrap" Text="Login Page" VerticalAlignment="Top" Height="44" Width="156" FontSize="30"/>
         <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="112,163,0,0" TextWrapping="Wrap" Text="Please enter your username " VerticalAlignment="Top"/>
-        <TextBox x:Name="username" HorizontalAlignment="Left" Height="23" Margin="101,184,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="175"/>
-        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="101,254,0,0" VerticalAlignment="Top" Width="175" Height="23"/>
+        <TextBox x:Name="username" HorizontalAlignment="Left" Height="18" Margin="101,184,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="175"/>
+        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="101,254,0,0" VerticalAlignment="Top" Width="175" Height="18"/>
         <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="112,233,0,0" TextWrapping="Wrap" Text="Please enter your password" VerticalAlignment="Top"/>
         <Button x:Name="Login" Content="Login" HorizontalAlignment="Left" Margin="134,303,0,0" VerticalAlignment="Top" Width="103" Height="27" Click="Login_Click"/>
         <Button x:Name="button" Content="Back" HorizontalAlignment="Left" Margin="39,368,0,0" VerticalAlignment="Top" Width="51" Click="BackButton_Click"/>

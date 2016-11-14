@@ -332,7 +332,6 @@ namespace Components
             set { timerId = value; }
         }
 
-
         private Timer()
         {
            
@@ -345,22 +344,6 @@ namespace Components
                 return timerInstance;
             }
         }
-
-        public bool TimeLapse()
-        {
-            
-            if(hours == 0 && minutes == 0 && seconds == 0)
-            {
-                return false; // alerata activata
-            }
-            else
-            {
-                //TDO
-                return true;
-            }
-        }
-
-        ///TDO : mecanismul de functionare a timer-ului
         
     }
 }

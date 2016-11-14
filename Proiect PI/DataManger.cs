@@ -264,17 +264,25 @@ namespace DataManager
             return list;
         }
 
-        /*public static Timer GetTimer(int uid)
+        public static void GetTimer(int uid)
         {
             if (OpenConnection() == true)
             {
-                
+                string query = "SELECT * FROM timer WHERE USERID = " + uid;
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                dataReader.Read();
+                Timer.TimerInstance.TimerId = dataReader.GetInt32("TIMERID");
+                Timer.TimerInstance.UID = uid;
+                Timer.TimerInstance.Selection = dataReader.GetInt32("SELECTALERT");
+                Timer.TimerInstance.Hours = dataReader.GetInt32("HOURS");
+                Timer.TimerInstance.Minutes = dataReader.GetInt32("MINUTES");
+                Timer.TimerInstance.Seconds = dataReader.GetInt32("SECONDS");
+
+                dataReader.Close();
                 CloseConnection();
-
-            ///TDO
             }
-
-        }*/
+        }
 
         public static void ExecuteNonQueryCommand(string query)
         {
@@ -320,15 +328,21 @@ namespace DataManager
             ExecuteNonQueryCommand(query);
         }
 
-        /*public static void InsertComponent(Timer timer)
+        public static void InsertComponent(Timer timer)
         {
-            string query = "INSERT INTO timer (TIMERID , USERID , SELECTALERT , HOURS , MINUTES , SECONDS) VALUES( '" +
-                            timerID + "' ,'" + UID + "' , '" + selection + "' , '" + hours + "' , '" + minutes + "' , '" + seconds + "')";
-            
-            //TDO
-
+            string query;
+            if(Timer.TimerInstance == null)
+            {
+                 query = "INSERT INTO timer (TIMERID , USERID , SELECTALERT , HOURS , MINUTES , SECONDS) VALUES( '" +
+                            timer.TimerId + "' ,'" + timer.UID + "' , '" + timer.Selection + "' , '" + timer.Hours + "' , '" + timer.Minutes + "' , '" + timer.Seconds + "')";
+            }
+            else
+            {
+                 query = "INSERT INTO timer (TIMERID , USERID , SELECTALERT , HOURS , MINUTES , SECONDS) VALUES( '" +
+                 Timer.TimerInstance.TimerId + "' ,'" + timer.UID + "' , '" + timer.Selection + "' , '" + timer.Hours + "' , '" + timer.Minutes + "' , '" + timer.Seconds + "')";
+            }
             ExecuteNonQueryCommand(query);
-        }*/
+        }
 
         public static void DeleteComponent(int componentID, string componentType , string componentIdTag)
         {
@@ -432,7 +446,7 @@ namespace DataManager
             }
         }
 
-        public static UserManager.UserInfo GetUserInfo(string userName, string password)
+        public static UserInfo GetUserInfo(string userName, string password)
         {
             UserManager.UserInfo userInfo = new UserManager.UserInfo();
             if (OpenConnection() == true)
@@ -745,7 +759,6 @@ namespace DataManager
                 Timer.TimerInstance.Seconds = Seconds;
                 Timer.TimerInstance.Selection = Selection;
                 Timer.TimerInstance.TimerId = TimerId;
-
             }
         }
 
