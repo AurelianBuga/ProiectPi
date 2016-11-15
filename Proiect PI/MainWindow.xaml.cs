@@ -35,27 +35,42 @@ namespace Proiect_PI
 
         private void ViewReminderList(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new ReminderListView());
+            if(!(MainFrame.Content is ReminderListView))
+            {
+                MainFrame.Navigate(new ReminderListView());
+            }     
         }
 
         private void ViewNoteList(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new NoteListView());
+            if (!(MainFrame.Content is NoteListView))
+            {
+                MainFrame.Navigate(new NoteListView());
+            }
         }
 
         private void ViewToDoList(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new ToDoListView());
+            if (!(MainFrame.Content is ToDoListView))
+            {
+                MainFrame.Navigate(new ToDoListView());
+            }
         }
 
         private void ViewLinkList(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new LinkListView());
+            if (!(MainFrame.Content is LinkListView))
+            {
+                MainFrame.Navigate(new LinkListView());
+            }
         }
 
         private void ViewTimer(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new TimerSetPage(ref MainFrame));
+            if ((!(MainFrame.Content is TimerSetPage)) && (!(MainFrame.Content is TimerPage)) && (!(MainFrame.Content is MessageCountDown2020Rule)) && (!(MainFrame.Content is Rule2020TimerPage)))
+            {
+                MainFrame.Navigate(new TimerSetPage(ref MainFrame));
+            }
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -107,6 +122,12 @@ namespace Proiect_PI
                 MessageBox.Show("Please click on one element type in the left column.");
             }
         }
+
+        private void RefreshTimerPage(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new TimerSetPage(ref MainFrame));
+        }
+        
     }
 }
 

@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Timers;
 using System.ComponentModel;
+using System.Windows.Threading;
 
 namespace Proiect_PI
 {
@@ -22,7 +23,7 @@ namespace Proiect_PI
     /// </summary>
     public partial class TimerPage : Page , INotifyPropertyChanged
     {
-        private Timer aTimer;
+        private DispatcherTimer timer;
         private int hours;
         private int minutes;
         private int seconds;
@@ -62,16 +63,13 @@ namespace Proiect_PI
 
         private void SetTimer()
         {
-            // interval 1 sec
-            aTimer = new Timer(1000);
-            // Hook up the Elapsed event for the timer.
-            aTimer.Start();
-            aTimer.Elapsed += OnTimedEvent;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += new EventHandler(dispatcherTimer_Tick);
+            timer.Start();
         }
 
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             if(Seconds == 0)
             {
@@ -80,7 +78,8 @@ namespace Proiect_PI
                     if(Hours == 0)
                     {
                         //END ---> ALARM
-                        aTimer.Stop();
+                        timer.Stop();
+                        System.Media.SystemSounds.Asterisk.Play();
                         MessageBox.Show("ALERT");
                     }
                     else
@@ -132,14 +131,14 @@ namespace Proiect_PI
 
         private void pauseButton_Click(object sender, RoutedEventArgs e)
         {
-            aTimer.Stop();
+            timer.Stop();
             pauseButton.Visibility = Visibility.Hidden;
             resumeButton.Visibility = Visibility.Visible;
         }
 
         private void resumeButton_Click(object sender, RoutedEventArgs e)
         {
-            aTimer.Start();
+            timer.Start();
             resumeButton.Visibility = Visibility.Hidden;
             pauseButton.Visibility = Visibility.Visible;
         }
@@ -147,7 +146,11 @@ namespace Proiect_PI
         private void Rule2020Button_Click(object sender, RoutedEventArgs e)
         {
             mainFrame.Navigate(new Rule2020TimerPage(ref mainFrame));
+        }
 
+        private void EditTimer(object sender, RoutedEventArgs e)
+        {
+            mainFrame.Navigate(new TimerSetPage(ref mainFrame));
         }
     }
 }

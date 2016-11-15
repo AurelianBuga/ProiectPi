@@ -19,33 +19,20 @@ using System.Windows.Threading;
 namespace Proiect_PI
 {
     /// <summary>
-    /// Interaction logic for Rule2020TimerPage.xaml
+    /// Interaction logic for MessageCountDown2020Rule.xaml
     /// </summary>
-    public partial class Rule2020TimerPage : Page , INotifyPropertyChanged
+    public partial class MessageCountDown2020Rule : Page, INotifyPropertyChanged
     {
+        private int seconds;
         private Frame mainFrame;
         private DispatcherTimer timer;
-        private int minutes;
-        private int seconds;
 
-        public Rule2020TimerPage(ref Frame mainFrame)
+        public MessageCountDown2020Rule(ref Frame mainFrame)
         {
-            this.minutes = 20;
-            this.seconds = 0;
-            this.mainFrame = mainFrame;
-
+            this.seconds = 20;
             InitializeComponent();
             SetTimer();
-        }
-
-        public int Minutes
-        {
-            get { return minutes; }
-            set
-            {
-                minutes = value;
-                OnPropertyChanged("Minutes");
-            }
+            this.mainFrame = mainFrame;
         }
 
         public int Seconds
@@ -70,18 +57,8 @@ namespace Proiect_PI
         {
             if (Seconds == 0)
             {
-                if (Minutes == 0)
-                {
-                    //END ---> ALARM
-                    timer.Stop();
-                    System.Media.SystemSounds.Asterisk.Play();
-                    mainFrame.Navigate(new MessageCountDown2020Rule(ref mainFrame));
-                }
-                else
-                {
-                    Minutes--;
-                    Seconds = 59;
-                }
+                System.Media.SystemSounds.Asterisk.Play();
+                mainFrame.Navigate(new Rule2020TimerPage(ref mainFrame));
             }
             else
             {
@@ -103,11 +80,6 @@ namespace Proiect_PI
             pauseButton.Visibility = Visibility.Visible;
         }
 
-        private void ClassicModeButton_Click(object sender, RoutedEventArgs e)
-        {
-            mainFrame.Navigate(new TimerPage(0, 20, 0 , ref mainFrame));
-        }
-
         #region
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -124,5 +96,6 @@ namespace Proiect_PI
             }
         }
         #endregion
+
     }
 }

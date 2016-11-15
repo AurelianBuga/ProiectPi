@@ -65,7 +65,7 @@
                 </Grid>
                 <Grid Height="67" Width="172">
                     <Image x:Name="image5" HorizontalAlignment="Left" Height="67" VerticalAlignment="Top" Width="64" Source="pack://siteoforigin:,,,/img/timer512.png"/>
-                    <Button Click="ViewTimer" Margin="-6,0,5,-4">
+                    <Button Click="ViewTimer" MouseDoubleClick="RefreshTimerPage" Margin="-6,0,5,-4">
                         <Button.Template>
                             <ControlTemplate>
                                 <TextBlock x:Name="reminderTextSideBar" HorizontalAlignment="Left" Margin="91,19,0,0" TextWrapping="Wrap" Text="Timer" VerticalAlignment="Top" Height="28" Width="47" Grid.Column="1" FontSize="17"/>

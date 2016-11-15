@@ -73,3 +73,6 @@ C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\ErrInternetConn.baml
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\WelcomePage.baml
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Rule2020TimerPage.g.cs
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Rule2020TimerPage.baml
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\MessageCountDown2020Rule.g.cs
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\MessageCountDown2020Rule.baml
+C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\img\Rule202020_Infographic.png

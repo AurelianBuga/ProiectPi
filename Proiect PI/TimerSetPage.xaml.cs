@@ -121,6 +121,10 @@ namespace Proiect_PI
                 Hours = Convert.ToInt32(expression.Substring(0, expression.IndexOf("h")));
                 expression = expression.Substring(expression.IndexOf("h") + 1);
             }
+            else
+            {
+                Hours = 0;
+            }
 
             //-----------------------------------------------------------------------------------minutes
 
@@ -165,6 +169,10 @@ namespace Proiect_PI
                 Minutes = Convert.ToInt32(expression.Substring(0, expression.IndexOf("m")));
                 expression = expression.Substring(expression.IndexOf("m") + 1);
             }
+            else
+            {
+                Minutes = 0;
+            }
 
             //----------------------------------------------------------------------------------seconds
 
@@ -208,6 +216,10 @@ namespace Proiect_PI
             {
                 Seconds = Convert.ToInt32(expression.Substring(0, expression.IndexOf("s")));
                 expression = expression.Substring(expression.IndexOf("s") + 1);
+            }
+            else
+            {
+                Seconds = 0;
             }
         }
 

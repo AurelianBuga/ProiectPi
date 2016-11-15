@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\App.xaml
-17723396552
-9511367382
-281039546458
+18359374699
+10-1155663752
+29-1577054165
 14-37733517
-AddLinkInfo.xaml;AddNoteInfo.xaml;AddReminderInfo.xaml;AddToDoInfo.xaml;ErrInternetConn.xaml;LinkList.xaml;LoginWindow.xaml;MainWindow.xaml;NoteList.xaml;RegisterWindow.xaml;ReminderList.xaml;Rule2020TimerPage.xaml;TimerPage.xaml;TimerSetPage.xaml;ToDoList.xaml;WelcomePage.xaml;WelcomeWindow.xaml;
+AddLinkInfo.xaml;AddNoteInfo.xaml;AddReminderInfo.xaml;AddToDoInfo.xaml;ErrInternetConn.xaml;LinkList.xaml;LoginWindow.xaml;MainWindow.xaml;MessageCountDown2020Rule.xaml;NoteList.xaml;RegisterWindow.xaml;ReminderList.xaml;Rule2020TimerPage.xaml;TimerPage.xaml;TimerSetPage.xaml;ToDoList.xaml;WelcomePage.xaml;WelcomeWindow.xaml;
 
-True
+False
 
