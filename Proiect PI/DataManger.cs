@@ -82,9 +82,7 @@ namespace DataManager
                 }else
                 {
                     return false;
-                }
-                
-                
+                }  
             }
         }
 

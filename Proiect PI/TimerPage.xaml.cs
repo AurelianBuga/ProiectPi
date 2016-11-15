@@ -26,6 +26,7 @@ namespace Proiect_PI
         private int hours;
         private int minutes;
         private int seconds;
+        private Frame mainFrame;
 
         
 
@@ -100,11 +101,12 @@ namespace Proiect_PI
             }
         }
 
-        public TimerPage(int hours , int minutes , int seconds)
+        public TimerPage(int hours , int minutes , int seconds , ref Frame mainFrame)
         {
             this.hours = hours;
             this.minutes = minutes;
             this.seconds = seconds;
+            this.mainFrame = mainFrame;
             
             InitializeComponent();
             SetTimer();
@@ -140,6 +142,12 @@ namespace Proiect_PI
             aTimer.Start();
             resumeButton.Visibility = Visibility.Hidden;
             pauseButton.Visibility = Visibility.Visible;
+        }
+
+        private void Rule2020Button_Click(object sender, RoutedEventArgs e)
+        {
+            mainFrame.Navigate(new Rule2020TimerPage(ref mainFrame));
+
         }
     }
 }

@@ -45,7 +45,6 @@ namespace Proiect_PI
             set { Timer.TimerInstance.Seconds = value; }
         }
 
-        
         public TimerSetPage(ref Frame mainFrame)
         {
             
@@ -215,13 +214,14 @@ namespace Proiect_PI
         private void SetButton_Click(object sender, RoutedEventArgs e)
         {
             EvalExp();
-            TimerPage timerP = new TimerPage(Hours, Minutes, Seconds);
+            TimerPage timerP = new TimerPage(Hours, Minutes, Seconds , ref mainFrame);
             mainFrame.Navigate(timerP);
         }
 
         private void Rule2020Button_Click(object sender, RoutedEventArgs e)
         {
-
+            mainFrame.Navigate(new Rule2020TimerPage(ref mainFrame));
+            
         }
     }
 }
