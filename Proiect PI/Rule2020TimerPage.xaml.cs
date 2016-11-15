@@ -24,5 +24,15 @@ namespace Proiect_PI
         {
             InitializeComponent();
         }
+
+        private void pauseButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void resumeButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
