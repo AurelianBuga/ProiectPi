@@ -46,7 +46,7 @@ namespace Proiect_PI
             {
                 if (DBManager.OpenConnection())
                 {
-                    listRem = DBManager.GetRemList( User.UserInstance.UID);
+                    listRem = DBManager.GetRemList();
                     foreach(Reminder rem in listRem)
                     {
                         reminders.Add(rem);

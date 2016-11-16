@@ -55,11 +55,11 @@ namespace Proiect_PI
                 
                 if(title.Text == "" || title.Text == "Title...")
                 {
-                    note = new Note(User.UserInstance.UID, NoteTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count(User.UserInstance.UID, "note"));
+                    note = new Note(User.UserInstance.UID, NoteTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count( "note"));
                 }
                 else
                 {
-                    note = new Note( User.UserInstance.UID, NoteTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count(User.UserInstance.UID, "note") , title.Text);
+                    note = new Note( User.UserInstance.UID, NoteTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count( "note") , title.Text);
                 }
                 DBManager.InsertComponent(note);
                 currentFrame.Navigate(new NoteListView());
@@ -70,12 +70,12 @@ namespace Proiect_PI
             {
                 if (title.Text == "" || title.Text == "Title...")
                 {
-                    note = new Note(User.UserInstance.UID, NoteTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count(User.UserInstance.UID, "note"));
+                    note = new Note(User.UserInstance.UID, NoteTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count("note"));
                     note.SetID();
                 }
                 else
                 {
-                    note = new Note(User.UserInstance.UID, NoteTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count(User.UserInstance.UID, "note"), title.Text);
+                    note = new Note(User.UserInstance.UID, NoteTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count("note"), title.Text);
                     note.SetID();
                 }
                 XMLManager.XMLManagerInstance.InsertComponent(note);

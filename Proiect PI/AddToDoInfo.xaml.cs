@@ -144,7 +144,7 @@ namespace Proiect_PI
             if (User.UserInstance.loginType)
             {
                 //se apeleaza metoda InsertComponent(reminder)
-                ToDo toDo = new ToDo(User.UserInstance.UID , ToDoTextBox.Text , GetFullDateMySqlFormat() , DBManager.Count(User.UserInstance.UID , "todo") , false);
+                ToDo toDo = new ToDo(User.UserInstance.UID , ToDoTextBox.Text , GetFullDateMySqlFormat() , DBManager.Count( "todo") , false);
                 DBManager.InsertComponent(toDo);
                 currentFrame.Navigate(new ToDoListView());
                 isOpn = false;

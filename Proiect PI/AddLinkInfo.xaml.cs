@@ -55,11 +55,11 @@ namespace Proiect_PI
                 
                 if (aliaTextBox.Text == "" || aliaTextBox.Text == "Alias...")
                 {
-                    link = new Link(User.UserInstance.UID , LinkTextBox.Text , new MySqlDateTime(DateTime.Now) , DBManager.Count(User.UserInstance.UID , "link"));
+                    link = new Link(User.UserInstance.UID , LinkTextBox.Text , new MySqlDateTime(DateTime.Now) , DBManager.Count( "link"));
                 }
                 else
                 {
-                    link = new Link(User.UserInstance.UID, LinkTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count(User.UserInstance.UID, "link") , aliaTextBox.Text);
+                    link = new Link(User.UserInstance.UID, LinkTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count( "link") , aliaTextBox.Text);
                 }
                 DBManager.InsertComponent(link);
                 currentFrame.Navigate(new LinkListView());

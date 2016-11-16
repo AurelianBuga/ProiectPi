@@ -58,7 +58,7 @@ namespace Proiect_PI
             if (User.UserInstance.loginType)
             {
                 //online
-                DBManager.GetTimer(User.UserInstance.UID);
+                DBManager.GetTimer();
             }
             else
             {

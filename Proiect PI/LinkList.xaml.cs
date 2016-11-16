@@ -48,7 +48,7 @@ namespace Proiect_PI
             {
                 if (DBManager.OpenConnection())
                 {
-                    linkList = DBManager.GetLinkList(User.UserInstance.UID);
+                    linkList = DBManager.GetLinkList();
                     foreach (Link link in linkList)
                     {
                         links.Add(link);

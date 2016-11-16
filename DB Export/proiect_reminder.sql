@@ -23,14 +23,14 @@ DROP TABLE IF EXISTS `reminder`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `reminder` (
-  `REMINDERID` int(10) unsigned NOT NULL,
+  `REMINDERID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `USERID` int(10) unsigned NOT NULL,
   `DATEANDTIME` datetime NOT NULL,
   `REMINDERTEXT` varchar(150) NOT NULL,
   `NRORD` int(10) unsigned NOT NULL,
   PRIMARY KEY (`REMINDERID`),
   UNIQUE KEY `REMINDERID_UNIQUE` (`REMINDERID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `reminder` (
 
 LOCK TABLES `reminder` WRITE;
 /*!40000 ALTER TABLE `reminder` DISABLE KEYS */;
-INSERT INTO `reminder` VALUES (1,1251,'2016-12-31 23:59:59','text text',1),(2,1251,'2016-12-31 23:59:59','text bla',2),(3,1251,'2016-12-31 23:59:59','sdgsdg',3),(4,1251,'2016-12-31 23:59:59','sdgsdg',4),(5,1251,'2016-12-31 23:59:59','sdgsdg',5),(6,1251,'2016-12-31 23:59:59','sdgsdg',6),(7,1251,'2016-12-31 23:59:59','sdgsdg',7),(8,1251,'2016-12-31 23:59:59','sdgsdg',8),(9,1251,'2016-12-31 23:59:59','sdgsdg',9),(10,1251,'2016-12-31 23:59:59','5545',10);
+INSERT INTO `reminder` VALUES (1,1251,'2016-11-11 08:28:00','sdfsdgsd',0),(2,1251,'2016-11-14 08:28:00','sdfsdsdddddd',1);
 /*!40000 ALTER TABLE `reminder` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-08 20:21:14
+-- Dump completed on 2016-11-16  8:29:57

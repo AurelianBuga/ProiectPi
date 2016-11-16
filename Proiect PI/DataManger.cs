@@ -161,13 +161,13 @@ namespace DataManager
             }
         }
 
-        public static List<Reminder> GetRemList(int uid)
+        public static List<Reminder> GetRemList()
         {
-            List<Reminder> list = new List<Reminder>(Count(uid, "reminder"));
+            List<Reminder> list = new List<Reminder>(Count( "reminder"));
 
             if (OpenConnection() == true)
             {
-                string query = "SELECT * FROM reminder WHERE USERID = " + uid;
+                string query = "SELECT * FROM reminder WHERE USERID = " + User.UserInstance.UID;
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
                 MySqlDataReader dataReader = cmd.ExecuteReader();
@@ -187,13 +187,13 @@ namespace DataManager
             return list;
         }
 
-        public static List<Note> GetNoteList(int uid)
+        public static List<Note> GetNoteList()
         {
-            List<Note> list = new List<Note>(Count(uid, "note"));
+            List<Note> list = new List<Note>(Count( "note"));
 
             if (OpenConnection() == true)
             {
-                string query = "SELECT * FROM note WHERE USERID = " + uid;
+                string query = "SELECT * FROM note WHERE USERID = " + User.UserInstance.UID;
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
                 MySqlDataReader dataReader = cmd.ExecuteReader();
@@ -212,13 +212,13 @@ namespace DataManager
             return list;
         }
 
-        public static List<ToDo> GetToDoList(int uid)
+        public static List<ToDo> GetToDoList()
         {
-            List<ToDo> list = new List<ToDo>(Count(uid, "todo"));
+            List<ToDo> list = new List<ToDo>(Count( "todo"));
 
             if (OpenConnection() == true)
             {
-                string query = "SELECT * FROM todo WHERE USERID = " + uid;
+                string query = "SELECT * FROM todo WHERE USERID = " + User.UserInstance.UID;
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
                 MySqlDataReader dataReader = cmd.ExecuteReader();
@@ -237,13 +237,13 @@ namespace DataManager
             return list;
         }
 
-        public static List<Link> GetLinkList(int uid)
+        public static List<Link> GetLinkList()
         {
-            List<Link> list = new List<Link>(Count(uid, "link"));
+            List<Link> list = new List<Link>(Count("link"));
 
             if (OpenConnection() == true)
             {
-                string query = "SELECT * FROM link WHERE USERID = " + uid;
+                string query = "SELECT * FROM link WHERE USERID = " + User.UserInstance.UID;
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
                 MySqlDataReader dataReader = cmd.ExecuteReader();
@@ -262,16 +262,16 @@ namespace DataManager
             return list;
         }
 
-        public static void GetTimer(int uid)
+        public static void GetTimer()
         {
             if (OpenConnection() == true)
             {
-                string query = "SELECT * FROM timer WHERE USERID = " + uid;
+                string query = "SELECT * FROM timer WHERE USERID = " + User.UserInstance.UID;
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
                 dataReader.Read();
                 Timer.TimerInstance.TimerId = dataReader.GetInt32("TIMERID");
-                Timer.TimerInstance.UID = uid;
+                Timer.TimerInstance.UID = User.UserInstance.UID;
                 Timer.TimerInstance.Selection = dataReader.GetInt32("SELECTALERT");
                 Timer.TimerInstance.Hours = dataReader.GetInt32("HOURS");
                 Timer.TimerInstance.Minutes = dataReader.GetInt32("MINUTES");
@@ -349,9 +349,9 @@ namespace DataManager
             ExecuteNonQueryCommand(query);
         }
 
-        public static int Count(int uid, string compType)
+        public static int Count( string compType)
         {
-            string query = "SELECT Count(*) FROM " + compType.ToLower().ToString() + " WHERE USERID = " + uid;
+            string query = "SELECT Count(*) FROM " + compType.ToLower().ToString() + " WHERE USERID = " + User.UserInstance.UID;
             int Count = -1;
 
             if (OpenConnection() == true)

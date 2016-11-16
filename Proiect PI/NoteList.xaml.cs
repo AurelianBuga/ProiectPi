@@ -46,7 +46,7 @@ namespace Proiect_PI
             {
                 if (DBManager.OpenConnection())
                 {
-                    listNote = DBManager.GetNoteList(User.UserInstance.UID);
+                    listNote = DBManager.GetNoteList();
                     foreach (Note note in listNote)
                     {
                         notes.Add(note);

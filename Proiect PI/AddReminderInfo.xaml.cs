@@ -146,7 +146,7 @@ namespace Proiect_PI
             if (User.UserInstance.loginType)
             {
                 //se apeleaza metoda InsertComponent(reminder)
-                Reminder reminder = new Reminder(User.UserInstance.UID, ReminderTextBox.Text, GetFullDateMySqlFormat(), DBManager.Count(User.UserInstance.UID, "reminder"));
+                Reminder reminder = new Reminder(User.UserInstance.UID, ReminderTextBox.Text, GetFullDateMySqlFormat(), DBManager.Count( "reminder"));
                 DBManager.InsertComponent(reminder);
                 currentFrame.Navigate(new ReminderListView());
                 isOpn = false;

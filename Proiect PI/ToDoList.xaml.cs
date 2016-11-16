@@ -48,7 +48,7 @@ namespace Proiect_PI
             {
                 if (DBManager.OpenConnection())
                 {
-                    listToDo = DBManager.GetToDoList(User.UserInstance.UID);
+                    listToDo = DBManager.GetToDoList();
                     foreach (ToDo toDo in listToDo)
                     {
                         toDos.Add(toDo);
