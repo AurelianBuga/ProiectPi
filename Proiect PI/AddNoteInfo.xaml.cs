@@ -70,7 +70,7 @@ namespace Proiect_PI
             {
                 if (title.Text == "" || title.Text == "Title...")
                 {
-                    note = new Note(User.UserInstance.UID, NoteTextBox.Text, new MySqlDateTime(DateTime.Now), DBManager.Count("note"));
+                    note = new Note(User.UserInstance.UID, NoteTextBox.Text, new MySqlDateTime(DateTime.Now), XMLManager.XMLManagerInstance.Count(XMLManager.compType.note));
                     note.SetID();
                 }
                 else

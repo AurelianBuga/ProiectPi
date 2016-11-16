@@ -349,7 +349,7 @@ namespace DataManager
             ExecuteNonQueryCommand(query);
         }
 
-        public static int Count( string compType)
+        public static int Count(string compType)
         {
             string query = "SELECT Count(*) FROM " + compType.ToLower().ToString() + " WHERE USERID = " + User.UserInstance.UID;
             int Count = -1;
@@ -463,10 +463,8 @@ namespace DataManager
                     userInfo.email = reader["EMAIL"].ToString();
                     userInfo.password = reader["PWD"].ToString();
                 }
-
                 CloseConnection();
             }
-
             return userInfo;
         }
 
@@ -501,6 +499,8 @@ namespace DataManager
         private XDocument userFile;
 
         private static readonly XMLManager xmlManagerInstance = new XMLManager();
+
+        public enum compType { reminder , todo , note , link , timer}
 
         private XMLManager()
         {
@@ -760,6 +760,33 @@ namespace DataManager
             }
         }
 
+        public int Count(compType type)
+        {
+            switch (type)
+            {
+                case compType.reminder:
+                    {
+                        return GetReminderList().Count;
+                    }
+                case compType.note:
+                    {
+                        return GetNoteList().Count;
+                    }
+                case compType.todo:
+                    {
+                        return GetToDoList().Count;
+                    }
+                case compType.link:
+                    {
+                        return GetLinkList().Count;
+                    }
+                default:
+                    {
+                        return -1;
+                    }
+            }
+        }
+
         public void InsertComponent(Link linkElement)
         {
 
@@ -775,7 +802,7 @@ namespace DataManager
             XElement linkId = new XElement("LinkId", linkElement.IdComp);
             XElement linkText = new XElement("LinkText", linkElement.LinkText);
             XElement text = new XElement("Text", linkElement.Text);
-            XElement nrOrd = new XElement("NrOrd", NrLink++);
+            XElement nrOrd = new XElement("NrOrd", linkElement.NrOrd);
             XElement date = new XElement("DateAndTime", linkElement.Date);
             link.Add(linkId, userId, linkText, text, nrOrd, date);
             linksNode.Add(link);
@@ -805,7 +832,7 @@ namespace DataManager
             XElement noteId = new XElement("NoteId", noteElement.IdComp);
             XElement noteTitle = new XElement("Title", noteElement.Title);
             XElement text = new XElement("Text", noteElement.Text);
-            XElement nrOrd = new XElement("NrOrd", NrNote++);
+            XElement nrOrd = new XElement("NrOrd", noteElement.NrOrd);
             XElement date = new XElement("DateAndTime", noteElement.Date);
             note.Add(noteId, userId, noteTitle, text, nrOrd, date);
             notesNode.Add(note);
@@ -834,7 +861,7 @@ namespace DataManager
             XElement userId = new XElement("UserId", User.UserInstance.UID);
             XElement reminderId = new XElement("ReminderId", reminderElement.IdComp);
             XElement text = new XElement("Text", reminderElement.Text);
-            XElement nrOrd = new XElement("NrOrd", NrRem++);
+            XElement nrOrd = new XElement("NrOrd", reminderElement.NrOrd);
             XElement date = new XElement("DateAndTime", reminderElement.Date);
             reminder.Add(reminderId, userId, text, nrOrd, date);
             remindersNode.Add(reminder);
@@ -863,7 +890,7 @@ namespace DataManager
             XElement toDoId = new XElement("ToDoId", toDoElement.IdComp);
             XElement statusCheck = new XElement("StatusCheck", toDoElement.StatusCheck);
             XElement text = new XElement("Text", toDoElement.Text);
-            XElement nrOrd = new XElement("NrOrd", NrToDo + 1);
+            XElement nrOrd = new XElement("NrOrd", toDoElement.NrOrd);
             XElement date = new XElement("DateAndTime", toDoElement.Date);
             toDo.Add(toDoId, userId, statusCheck, text, nrOrd, date);
             toDosNode.Add(toDo);

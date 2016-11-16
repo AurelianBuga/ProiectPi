@@ -80,8 +80,19 @@
             <Frame x:Name="MainFrame" Content="" HorizontalAlignment="Left" Height="425" VerticalAlignment="Top" Width="572" NavigationUIVisibility="Hidden"/>
 
         </Grid>
-        <Grid HorizontalAlignment="Left" Height="13" VerticalAlignment="Top" Width="792"/>
-        <Grid HorizontalAlignment="Left" Height="55" Margin="10,13,0,0" VerticalAlignment="Top" Width="764">
+        <Grid HorizontalAlignment="Left" Height="13" VerticalAlignment="Top" Width="792">
+            <Menu x:Name="menu1" HorizontalAlignment="Left" Height="19" VerticalAlignment="Top" Width="237" Margin="0,0,0,-6">
+                <MenuItem Header="File">
+                    <MenuItem Header="New">
+                        <MenuItem Header="Reminder" Click="OpnAddReminderInfo"/>
+                        <MenuItem Header="Note" Click="OpnAddNoteInfo"/>
+                        <MenuItem Header="ToDo" Click="OpnAddToDoInfo"/>
+                        <MenuItem Header="Link" Click="OpnAddLinkInfo"/>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="45" Margin="10,23,0,0" VerticalAlignment="Top" Width="764">
             <Grid HorizontalAlignment="Left" Height="45" VerticalAlignment="Top" Width="49">
                 <Button Click="AddButton_Click" Margin="0,0,0,0">
                     <Button.Template>

@@ -73,6 +73,42 @@ namespace Proiect_PI
             }
         }
 
+        private void OpnAddReminderInfo(object sender, RoutedEventArgs e)
+        {
+            if (!AddReminderInfo.isOpn)
+            {
+                AddReminderInfo remWindow = new AddReminderInfo(ref MainFrame);
+                remWindow.Show();
+            }
+        }
+
+        private void OpnAddNoteInfo(object sender, RoutedEventArgs e)
+        {
+            if (!AddNoteInfo.isOpn)
+            {
+                AddNoteInfo noteWindow = new AddNoteInfo(ref MainFrame);
+                noteWindow.Show();
+            }
+        }
+
+        private void OpnAddToDoInfo(object sender, RoutedEventArgs e)
+        {
+            if (!AddToDoInfo.isOpn)
+            {
+                AddToDoInfo toDoWindow = new AddToDoInfo(ref MainFrame);
+                toDoWindow.Show();
+            }
+        }
+
+        private void OpnAddLinkInfo(object sender, RoutedEventArgs e)
+        {
+            if (!AddLinkInfo.isOpn)
+            {
+                AddLinkInfo linkWindow = new AddLinkInfo(ref MainFrame);
+                linkWindow.Show();
+            }
+        }
+
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             //TDO ... sa verifice ce page este deschis in frame ... si in funtie de asta se decida e fel de obiect este adaugat in lista

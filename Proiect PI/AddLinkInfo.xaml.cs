@@ -70,7 +70,7 @@ namespace Proiect_PI
             {
                 if (aliaTextBox.Text == "" || aliaTextBox.Text == "Alias...")
                 {
-                    link = new Link(User.UserInstance.UID , LinkTextBox.Text , new MySqlDateTime(DateTime.Now) , XMLManager.NrLink) ;
+                    link = new Link(User.UserInstance.UID , LinkTextBox.Text , new MySqlDateTime(DateTime.Now) , XMLManager.XMLManagerInstance.Count(XMLManager.compType.link)) ;
                     link.SetID();
                 }
                 else

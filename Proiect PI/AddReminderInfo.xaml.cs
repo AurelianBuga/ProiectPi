@@ -156,7 +156,7 @@ namespace Proiect_PI
             {
                 //se apeleaza metoda InsertComponent(reminderElement, uid , password)
                 //TDO : generator de Id-uri pt componente 
-                Reminder reminder = new Reminder(User.UserInstance.UID, ReminderTextBox.Text, GetFullDateMySqlFormat(), XMLManager.NrRem);
+                Reminder reminder = new Reminder(User.UserInstance.UID, ReminderTextBox.Text, GetFullDateMySqlFormat(), XMLManager.XMLManagerInstance.Count(XMLManager.compType.reminder));
                 reminder.SetID();
                 XMLManager.XMLManagerInstance.InsertComponent(reminder);
                 currentFrame.Navigate(new ReminderListView());
