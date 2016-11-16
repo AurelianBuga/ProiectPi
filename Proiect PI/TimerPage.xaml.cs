@@ -81,6 +81,8 @@ namespace Proiect_PI
                         timer.Stop();
                         System.Media.SystemSounds.Asterisk.Play();
                         MessageBox.Show("ALERT");
+                        resumeButton.Visibility = Visibility.Visible;
+                        pauseButton.Visibility = Visibility.Hidden;
                     }
                     else
                     {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MySql.Data.Types;
 using DataManager;
 using UserManager;
+using System.Collections.ObjectModel;
 
 /// <summary>
 /// IDEA: - sa adaug contacte (nr de telefon , adrese de email)
@@ -78,6 +79,46 @@ namespace Components
         }
 
     }
+
+    /*public class ReminderList
+    {
+        private ObservableCollection<Reminder> reminders;
+
+        public ReminderList()
+        {
+
+        }
+
+        public ReminderList(ReminderList reminderList)
+        {
+            reminders = reminderList.Reminders;
+        }
+
+        public ObservableCollection<Reminder> Reminders
+        {
+            get { return reminders; }
+        }
+
+        public void AddElement(Reminder rem)
+        {
+            reminders.Add(rem);
+        }
+
+        public void SaveList()
+        {
+            //TDO
+        }
+
+        public void UpdateList()
+        {
+            //TDO
+        }
+
+        public void EraseElement(int compId)
+        {
+            //TDO
+        }
+    }*/
 
     public class Note : TextComponent
     {
