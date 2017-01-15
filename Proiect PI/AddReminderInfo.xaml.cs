@@ -29,23 +29,41 @@ namespace Proiect_PI
         private int minute;
         private string AMPM;
         private DateTime dateDMY;
-        private Frame currentFrame;
-
+        //private Frame currentFrame;
+        private ReminderListView reminderList;
+        bool editWindowFlag = false;
 
         public static  bool isOpn {get; set; }
 
 
-        public AddReminderInfo(ref Frame currentFrame)
+        public AddReminderInfo(/*ref Frame currentFrame ,*/ ref ReminderListView reminderList)
         {
             hour = DateTime.Now.Hour;
             minute = DateTime.Now.Minute;
-            this.currentFrame = currentFrame;
+            //this.currentFrame = currentFrame;
             AMPM = DateTime.Now.ToString("tt", CultureInfo.InvariantCulture);
+            this.reminderList = reminderList;
 
             InitializeComponent();
             DataContext = this;
 
             isOpn = true;
+        }
+
+        public AddReminderInfo(ref Reminder reminder)
+        {
+            reminderList = MainWindow.MainWIndowInstance.ReminderList;
+            AMPM = DateTime.Now.ToString("tt", CultureInfo.InvariantCulture);
+            //ReminderTextBox.Text = String.Empty;
+            
+            dateDMY = reminder.Date.GetDateTime();
+            hour = dateDMY.Hour;
+            minute = dateDMY.Minute;
+            InitializeComponent();
+            DataContext = this;
+            ReminderTextBox.Text = reminder.Text;
+            isOpn = true;
+            editWindowFlag = true;
         }
 
         public int CurrentHour
@@ -146,9 +164,10 @@ namespace Proiect_PI
             if (User.UserInstance.loginType)
             {
                 //se apeleaza metoda InsertComponent(reminder)
-                Reminder reminder = new Reminder(User.UserInstance.UID, ReminderTextBox.Text, GetFullDateMySqlFormat(), DBManager.Count( "reminder"));
+                Reminder reminder = new Reminder(User.UserInstance.UID, ReminderTextBox.Text, GetFullDateMySqlFormat(), DBManager.Count("reminder"));
                 DBManager.InsertComponent(reminder);
-                currentFrame.Navigate(new ReminderListView());
+                //currentFrame.Navigate(new ReminderListView());
+                reminderList.LoadList();
                 isOpn = false;
                 this.Close();
             }
@@ -159,7 +178,8 @@ namespace Proiect_PI
                 Reminder reminder = new Reminder(User.UserInstance.UID, ReminderTextBox.Text, GetFullDateMySqlFormat(), XMLManager.XMLManagerInstance.Count(XMLManager.compType.reminder));
                 reminder.SetID();
                 XMLManager.XMLManagerInstance.InsertComponent(reminder);
-                currentFrame.Navigate(new ReminderListView());
+                //currentFrame.Navigate(new ReminderListView());
+                reminderList.LoadList();
                 isOpn = false;
                 this.Close();
             }
@@ -174,7 +194,8 @@ namespace Proiect_PI
 
         private void ReminderTextClearTextBox(object sender, RoutedEventArgs e)
         {
-            ReminderTextBox.Text = String.Empty;
+            if(!editWindowFlag)
+                ReminderTextBox.Text = String.Empty;
         }
 
         private void Increase_Hours(object sender, RoutedEventArgs e)

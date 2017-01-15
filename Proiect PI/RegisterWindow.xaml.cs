@@ -50,8 +50,9 @@ namespace Proiect_PI
             usr.Register(userInfo);
             usr.Login(userInfo.userName , userInfo.password , true);
 
-            MainWindow mn = new MainWindow();
-            mn.Show();
+            //MainWindow mn = new MainWindow();
+            //mn.Show();
+            MainWindow.MainWIndowInstance.Show();
             this.Close();
         }
 

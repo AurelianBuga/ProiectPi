@@ -25,12 +25,22 @@ namespace Proiect_PI
     public partial class LinkListView : Page
     {
         readonly ObservableCollection<Link> links = new ObservableCollection<Link>();
+        private string errorVisibility;
 
         public LinkListView()
         {
-            InitializeComponent();
             DataContext = this;
             LoadList();
+            if (links.Count == 0)
+                errorVisibility = "Visible";
+            else
+                errorVisibility = "Hidden";
+            InitializeComponent();
+        }
+
+        public string ErrorVisibility
+        {
+            get { return errorVisibility; }
         }
 
         public ObservableCollection<Link> LinkList

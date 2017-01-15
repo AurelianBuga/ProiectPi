@@ -12,7 +12,7 @@
       ShowsNavigationUI = "False"
       DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
-    <Grid  Width="572" Height="424"  Margin="0,0,0,0">
+    <Grid  Width="572" Height="424"  Margin="0,0,0,0" Background="Gray">
         <Grid HorizontalAlignment="Left" Height="272" Margin="10,69,0,0" VerticalAlignment="Top" Width="552" >
             <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="58,50,0,0" TextWrapping="Wrap" Text="{Binding Path= Minutes}" VerticalAlignment="Top" FontSize="140"/>
             <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="221,50,0,0" TextWrapping="Wrap" Text=":" VerticalAlignment="Top" FontSize="140"/>

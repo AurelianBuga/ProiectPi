@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\
 Proiect_PI
 none
 false
 DEBUG;TRACE
-C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\App.xaml
-18359374699
-10-1155663752
-29-1577054165
-14-37733517
-AddLinkInfo.xaml;AddNoteInfo.xaml;AddReminderInfo.xaml;AddToDoInfo.xaml;ErrInternetConn.xaml;LinkList.xaml;LoginWindow.xaml;MainWindow.xaml;MessageCountDown2020Rule.xaml;NoteList.xaml;RegisterWindow.xaml;ReminderList.xaml;Rule2020TimerPage.xaml;TimerPage.xaml;TimerSetPage.xaml;ToDoList.xaml;WelcomePage.xaml;WelcomeWindow.xaml;
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\App.xaml
+24-1001887599
+11-1787737981
+31-469402344
+17-1154863481
+AddLinkInfo.xaml;AddNoteInfo.xaml;AddReminderInfo.xaml;AddToDoInfo.xaml;ErrInternetConn.xaml;LinkList.xaml;LoginWindow.xaml;MainWindow.xaml;MessageCountDown2020Rule.xaml;NoteList.xaml;RegisterWindow.xaml;ReminderAlertWindow.xaml;ReminderList.xaml;Rule2020TimerPage.xaml;Themes\MetroDark\MetroDark.MSControls.Core.Implicit.xaml;Themes\MetroDark\MetroDark.MSControls.Toolkit.Implicit.xaml;Themes\MetroDark\Styles.Shared.xaml;Themes\MetroDark\Styles.WPF.xaml;Themes\MetroDark\Theme.Colors.xaml;TimerPage.xaml;TimerSetPage.xaml;ToDoList.xaml;WelcomePage.xaml;WelcomeWindow.xaml;
 
-True
+False
 

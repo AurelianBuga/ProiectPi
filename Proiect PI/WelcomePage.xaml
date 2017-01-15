@@ -12,10 +12,10 @@
       ShowsNavigationUI = "False"
       DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
-    <Grid>
+    <Grid Background="Black">
 
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="293,187,0,0" TextWrapping="Wrap" Text="{Binding Path=Username}" VerticalAlignment="Top" FontSize="40"/>
-        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="101,187,0,0" TextWrapping="Wrap" Text="Welcome " VerticalAlignment="Top" FontSize="40"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="293,187,0,0" TextWrapping="Wrap" Text="{Binding Path=Username}" VerticalAlignment="Top" FontSize="40" Foreground="White"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="101,187,0,0" TextWrapping="Wrap" Text="Welcome " VerticalAlignment="Top" FontSize="40" Foreground="White"/>
 
     </Grid>
 </Page>

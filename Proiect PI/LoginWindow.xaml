@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Proiect_PI"
         mc:Ignorable="d"
         Title="Login into application" Height="447" Width="381.5">
-    <Grid>
+    <Grid Background="DarkGray">
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="112,70,0,0" TextWrapping="Wrap" Text="Login Page" VerticalAlignment="Top" Height="44" Width="156" FontSize="30"/>
         <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="112,163,0,0" TextWrapping="Wrap" Text="Please enter your username " VerticalAlignment="Top"/>
         <TextBox x:Name="username" HorizontalAlignment="Left" Height="22" Margin="101,184,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="175"/>

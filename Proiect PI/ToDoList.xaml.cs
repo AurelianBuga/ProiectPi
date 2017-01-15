@@ -25,12 +25,22 @@ namespace Proiect_PI
     public partial class ToDoListView : Page
     {
         readonly ObservableCollection<ToDo> toDos = new ObservableCollection<ToDo>();
+        private string errorVisibility;
 
         public ToDoListView()
         {
-            InitializeComponent();
             DataContext = this;
             LoadList();
+            if (toDos.Count == 0)
+                errorVisibility = "Visible";
+            else
+                errorVisibility = "Hidden";
+            InitializeComponent();
+        }
+
+        public string ErrorVisibility
+        {
+            get { return errorVisibility; }
         }
 
         public ObservableCollection<ToDo> ListToDo
@@ -53,6 +63,8 @@ namespace Proiect_PI
                     {
                         toDos.Add(toDo);
                     }
+
+                    NotificationPanel.NotificationPanelInstance.ToDos = toDos.ToList<ToDo>();
                 }
             }
             else

@@ -12,22 +12,22 @@
       ShowsNavigationUI = "False"
       DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
-    <Grid  Width="572" Height="424"  Margin="0,0,0,0">
+    <Grid  Width="572" Height="424"  Margin="0,0,0,0" Background="Gray">
         <Button MouseDoubleClick="EditTimer" Margin="0,0,0,0" HorizontalAlignment="Right">
             <Button.Template>
                 <ControlTemplate>
                     <Grid HorizontalAlignment="Left" Height="272" Margin="10,69,0,0" VerticalAlignment="Top" Width="552">
-                        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="26,50,0,0" TextWrapping="Wrap" Text="{Binding Path= Hours}" VerticalAlignment="Top" FontSize="140"/>
-                        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="132,50,0,0" TextWrapping="Wrap" Text=":" VerticalAlignment="Top" FontSize="140"/>
-                        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="167,50,0,0" TextWrapping="Wrap" Text="{Binding Path= Minutes}" VerticalAlignment="Top" FontSize="140"/>
-                        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="326,50,0,0" TextWrapping="Wrap" Text=":" VerticalAlignment="Top" FontSize="140"/>
-                        <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="375,50,0,0" TextWrapping="Wrap" Text="{Binding Path= Seconds}" VerticalAlignment="Top" FontSize="140"/>
+                        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="26,50,0,0" TextWrapping="Wrap" Text="{Binding Path= Hours}" VerticalAlignment="Top" FontSize="140" Foreground="Black"/>
+                        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="132,50,0,0" TextWrapping="Wrap" Text=":" VerticalAlignment="Top" FontSize="140" Foreground="Black"/>
+                        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="167,50,0,0" TextWrapping="Wrap" Text="{Binding Path= Minutes}" VerticalAlignment="Top" FontSize="140" Foreground="Black"/>
+                        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="326,50,0,0" TextWrapping="Wrap" Text=":" VerticalAlignment="Top" FontSize="140" Foreground="Black"/>
+                        <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="375,50,0,0" TextWrapping="Wrap" Text="{Binding Path= Seconds}" VerticalAlignment="Top" FontSize="140" Foreground="Black"/>
                     </Grid>
                 </ControlTemplate>
             </Button.Template>
         </Button>
         <Button x:Name="pauseButton" Content="Pause&#xD;&#xA;" HorizontalAlignment="Left" Margin="220,349,0,15" Width="130" FontSize="30" Click="pauseButton_Click" Visibility="Visible" Height="60"/>
         <Button x:Name="resumeButton" Content="Resume&#xD;&#xA;" HorizontalAlignment="Left" Margin="220,349,0,15" VerticalAlignment="Top" Width="130" Height="60" FontSize="30" Click="resumeButton_Click" Visibility="Hidden"/>
-        <Button x:Name="Rule2020Button" Content="20-20" HorizontalAlignment="Left" Margin="211,10,0,0" VerticalAlignment="Top" Width="152" Height="59" FontSize="40" Click="Rule2020Button_Click"/>
+        <Button x:Name="Rule2020Button" Content="20-20" HorizontalAlignment="Left" Margin="211,10,0,0" VerticalAlignment="Top" Width="152" Height="59" FontSize="40" Click="Rule2020Button_Click" Foreground="White"/>
     </Grid>
 </Page>

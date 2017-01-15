@@ -11,7 +11,7 @@
       Height="424"
       ShowsNavigationUI = "False"
       DataContext="{Binding RelativeSource={RelativeSource Self}}">
-
+    <Grid>
     <ListBox Name="noteList" HorizontalContentAlignment="Stretch" ItemsSource="{Binding ListNote}">
         <ListBox.ItemTemplate>
             <DataTemplate>
@@ -32,4 +32,6 @@
             </DataTemplate>
         </ListBox.ItemTemplate>
     </ListBox>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="70,169,0,0" TextWrapping="Wrap" Text="Upss... No data found." VerticalAlignment="Top" Height="119" Width="416" FontSize="40" Foreground="Gray" Visibility="{Binding Path=ErrorVisibility}"/>
+    </Grid>
 </Page>

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Proiect_PI"
         mc:Ignorable="d"
         Title="Register" Height="574" Width="504">
-    <Grid>
+    <Grid Background="DarkGray">
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="47,26,0,0" TextWrapping="Wrap" Text="Please enter your informations" VerticalAlignment="Top" Height="47" Width="408" FontSize="30"/>
         <TextBlock x:Name="fNameText" HorizontalAlignment="Left" Margin="86,113,0,0" TextWrapping="Wrap" Text="First Name" VerticalAlignment="Top" FontSize="15"/>
         <TextBlock x:Name="lNameText" HorizontalAlignment="Left" Margin="86,171,0,0" TextWrapping="Wrap" Text="Last Name" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" FontSize="15"/>

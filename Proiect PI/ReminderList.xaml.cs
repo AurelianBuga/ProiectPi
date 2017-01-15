@@ -51,6 +51,8 @@ namespace Proiect_PI
                     {
                         reminders.Add(rem);
                     }
+
+                    NotificationPanel.NotificationPanelInstance.Reminders = reminders.ToList<Reminder>();
                 }
             }
             else

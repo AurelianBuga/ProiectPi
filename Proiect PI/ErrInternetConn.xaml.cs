@@ -48,8 +48,9 @@ namespace Proiect_PI
         {
             if(UserManager.User.UserInstance.Login(username, password, true) == 1)
             {
-                MainWindow main = new MainWindow();
-                main.Show();
+                //MainWindow main = new MainWindow();
+                //main.Show();
+                MainWindow.MainWIndowInstance.Show();
                 this.Close();
             }
             else

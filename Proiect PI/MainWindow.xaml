@@ -6,27 +6,28 @@
         xmlns:local="clr-namespace:Proiect_PI"
         mc:Ignorable="d"
         Title="Proiect PI" Height="560" Width="800">
-    <Grid>
-        <Grid HorizontalAlignment="Left" Height="336" Margin="18,73,0,0" VerticalAlignment="Top" Width="173">
-            <Menu x:Name="menu" HorizontalAlignment="Left" Width="173" Margin="0,0,0,-11" Height="338" VerticalAlignment="Top">
-                <Grid Height="64" Width="175">
+    <Grid Background="DarkGray">
+        <Grid HorizontalAlignment="Left" Height="336" Margin="18,73,0,0" VerticalAlignment="Top" Width="173" Background="Gray">
+            <Menu x:Name="menu" HorizontalAlignment="Left" Width="173" Margin="0,0,0,-11" Height="338" VerticalAlignment="Top" Background="Gray">
+                <Grid Height="64" Width="175" Background="Gray">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="15*"/>
                         <RowDefinition Height="49*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="33*"/>
                     </Grid.ColumnDefinitions>
-                    <Image x:Name="image" HorizontalAlignment="Right" Height="68" VerticalAlignment="Top" Width="57" Margin="0,4,118,-8" Source="pack://siteoforigin:,,,/img/reminder256.png" Grid.RowSpan="2"/>
-                    <Button Click="ViewReminderList" Margin="-6,0,10,0" HorizontalAlignment="Right" Width="171" Grid.RowSpan="2">
+                    <Image x:Name="image" HorizontalAlignment="Right" Height="68" VerticalAlignment="Top" Width="57" Margin="0,4,118,-8" Source="pack://siteoforigin:,,,/img/reminder256.png" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                    <Button Click="ViewReminderList" Margin="-6,0,10,0" HorizontalAlignment="Right" Width="171" Grid.RowSpan="2" Grid.ColumnSpan="2">
                         <Button.Template>
                             <ControlTemplate>
-                                <TextBlock x:Name="reminderTextSideBar" HorizontalAlignment="Left" Margin="78,19,0,0" TextWrapping="Wrap" Text="Reminders" VerticalAlignment="Top" Height="28" Width="83" Grid.Column="1" FontSize="17"/>
+                                <TextBlock x:Name="reminderTextSideBar" HorizontalAlignment="Left" Margin="78,19,0,0" TextWrapping="Wrap" Text="Reminders" VerticalAlignment="Top" Height="28" Width="83" Grid.Column="1" FontSize="17" Foreground="Black"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
                 </Grid>
-                <Grid Height="64" Width="172">
+                <Grid Height="64" Width="172" Background="Gray">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
@@ -34,12 +35,12 @@
                     <Button Click="ViewNoteList" Margin="-1,0,0,0" RenderTransformOrigin="0.487,0.469">
                         <Button.Template>
                             <ControlTemplate>
-                                <TextBlock x:Name="noteTextSideBar" HorizontalAlignment="Left" Margin="86,17,0,0" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Top" Height="28" Width="51" Grid.Column="1" FontSize="17"/>
+                                <TextBlock x:Name="noteTextSideBar" HorizontalAlignment="Left" Margin="86,17,0,0" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Top" Height="28" Width="51" Grid.Column="1" FontSize="17" Foreground="Black"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
                 </Grid>
-                <Grid Height="64" Width="172">
+                <Grid Height="64" Width="172" Background="Gray">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="83*"/>
                         <ColumnDefinition Width="3*"/>
@@ -48,27 +49,27 @@
                     <Button Click="ViewToDoList" Margin="-7,0,0,0">
                         <Button.Template>
                             <ControlTemplate>
-                                <TextBlock x:Name="toDoTextSideBar" HorizontalAlignment="Left" Margin="78,19,0,0" TextWrapping="Wrap" Text="To Do list" VerticalAlignment="Top" Height="28" Width="83" Grid.Column="1" FontSize="17"/>
+                                <TextBlock x:Name="toDoTextSideBar" HorizontalAlignment="Left" Margin="78,19,0,0" TextWrapping="Wrap" Text="To Do list" VerticalAlignment="Top" Height="28" Width="83" Grid.Column="1" FontSize="17" Foreground="Black"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
                 </Grid>
-                <Grid Height="64" Width="172">
+                <Grid Height="64" Width="172" Background="Gray">
                     <Image x:Name="image4" HorizontalAlignment="Left" Height="49" VerticalAlignment="Top" Width="62" Source="pack://siteoforigin:,,,/img/link512.png" Margin="6,10,0,0"/>
                     <Button Click="ViewLinkList" Margin="-6,0,6,0">
                         <Button.Template>
                             <ControlTemplate>
-                                <TextBlock x:Name="timerTextSideBar" HorizontalAlignment="Left" Margin="94,18,0,0" TextWrapping="Wrap" Text="Links" VerticalAlignment="Top" Height="28" Width="43" Grid.Column="1" FontSize="17"/>
+                                <TextBlock x:Name="timerTextSideBar" HorizontalAlignment="Left" Margin="94,18,0,0" TextWrapping="Wrap" Text="Links" VerticalAlignment="Top" Height="28" Width="43" Grid.Column="1" FontSize="17" Foreground="Black"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
                 </Grid>
-                <Grid Height="67" Width="172">
+                <Grid Height="67" Width="172" Background="Gray">
                     <Image x:Name="image5" HorizontalAlignment="Left" Height="67" VerticalAlignment="Top" Width="64" Source="pack://siteoforigin:,,,/img/timer512.png"/>
                     <Button Click="ViewTimer" MouseDoubleClick="RefreshTimerPage" Margin="-6,0,5,-4">
                         <Button.Template>
                             <ControlTemplate>
-                                <TextBlock x:Name="reminderTextSideBar" HorizontalAlignment="Left" Margin="91,19,0,0" TextWrapping="Wrap" Text="Timer" VerticalAlignment="Top" Height="28" Width="47" Grid.Column="1" FontSize="17"/>
+                                <TextBlock x:Name="reminderTextSideBar" HorizontalAlignment="Left" Margin="91,19,0,0" TextWrapping="Wrap" Text="Timer" VerticalAlignment="Top" Height="28" Width="47" Grid.Column="1" FontSize="17" Foreground="Black"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
@@ -81,14 +82,18 @@
 
         </Grid>
         <Grid HorizontalAlignment="Left" Height="13" VerticalAlignment="Top" Width="792">
-            <Menu x:Name="menu1" HorizontalAlignment="Left" Height="19" VerticalAlignment="Top" Width="237" Margin="0,0,0,-6">
-                <MenuItem Header="File">
-                    <MenuItem Header="New">
-                        <MenuItem Header="Reminder" Click="OpnAddReminderInfo"/>
-                        <MenuItem Header="Note" Click="OpnAddNoteInfo"/>
-                        <MenuItem Header="ToDo" Click="OpnAddToDoInfo"/>
-                        <MenuItem Header="Link" Click="OpnAddLinkInfo"/>
+            <Menu x:Name="menu1" HorizontalAlignment="Left" Height="19" VerticalAlignment="Top" Width="792" Margin="0,0,0,-6" Background="Black">
+                <MenuItem Header="File" Foreground="White" Background="Black">
+                    <MenuItem Header="New" Foreground="White" Background="Black">
+                        <MenuItem Header="Reminder" Click="OpnAddReminderInfo" Foreground="White" Background="Black"/>
+                        <MenuItem Header="Note" Click="OpnAddNoteInfo" Foreground="White" Background="Black"/>
+                        <MenuItem Header="ToDo" Click="OpnAddToDoInfo" Foreground="White" Background="Black"/>
+                        <MenuItem Header="Link" Click="OpnAddLinkInfo" Foreground="White" Background="Black"/>
                     </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Edit" Foreground="White">
+                </MenuItem>
+                <MenuItem Header="View" Foreground="White">
                 </MenuItem>
             </Menu>
         </Grid>
@@ -98,6 +103,13 @@
                     <Button.Template>
                         <ControlTemplate>
                             <Image x:Name="image3" HorizontalAlignment="Left" Height="43" VerticalAlignment="Top" Width="43" Source="pack://siteoforigin:,,,/img/addButton256px.png" Margin="2,0,0,0"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button Click="DeleteButton_Click" Margin="49,0,-47,0">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image x:Name="image3" HorizontalAlignment="Left" Height="43" VerticalAlignment="Top" Width="48" Source="pack://siteoforigin:,,,/img/delete.png" Margin="0,0,-1,0"/>
                         </ControlTemplate>
                     </Button.Template>
                 </Button>

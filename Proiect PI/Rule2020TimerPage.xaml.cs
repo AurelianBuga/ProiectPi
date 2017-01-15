@@ -74,7 +74,8 @@ namespace Proiect_PI
                 {
                     //END ---> ALARM
                     timer.Stop();
-                    System.Media.SystemSounds.Asterisk.Play();
+                    //System.Media.SystemSounds.Asterisk.Play();
+                    System.Media.SystemSounds.Beep.Play();
                     mainFrame.Navigate(new MessageCountDown2020Rule(ref mainFrame));
                 }
                 else

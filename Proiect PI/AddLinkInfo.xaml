@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Proiect_PI"
         mc:Ignorable="d"
         Title="AddLinkInfo" Height="300" Width="438.559">
-    <Grid>
+    <Grid Background="Gray">
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="15,10,0,0" Text="Alias for Link"  TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
         <TextBox x:Name="aliaTextBox" HorizontalAlignment="Left" Height="23" Margin="15,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="alias_TextChanged" Text="Alias..." GotFocus="aliaTextBox_GotFocus"/>
         <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="15,72,0,0" TextWrapping="Wrap" Text="Text" VerticalAlignment="Top"/>

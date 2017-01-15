@@ -46,9 +46,9 @@ namespace Components
 
     public class Reminder : TextComponent
     {
-        public Reminder(int idUsr, string text, MySqlDateTime dateAndTime, int nrOrd)
+        public Reminder(int idUsr, string text1, MySqlDateTime dateAndTime, int nrOrd)
         {
-            this.text = text;
+            this.text = text1;
             this.nrOrd = nrOrd;
             this.dateAndTime = dateAndTime;
             this.idUsr = idUsr;

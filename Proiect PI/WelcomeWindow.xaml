@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Proiect_PI"
         mc:Ignorable="d"
         Title="Welcome" Height="568" Width="546">
-    <Grid HorizontalAlignment="Left" Height="408" Margin="92,66,0,0" VerticalAlignment="Top" Width="344">
+    <Grid Background="DarkGray">
+    <Grid HorizontalAlignment="Left" Height="408" Margin="92,66,0,0" VerticalAlignment="Top" Width="344" Background="Gray">
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="52,47,0,0" TextWrapping="Wrap" Text="Welcome !" VerticalAlignment="Top" Height="70" Width="237" FontSize="50"/>
         <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="69,164,0,0" TextWrapping="Wrap" Text="Login if you are already an user ." VerticalAlignment="Top" Width="220" FontSize="14" Height="21"/>
         <Button x:Name="button" Content="Go to login page" HorizontalAlignment="Left" Margin="52,201,0,0" VerticalAlignment="Top" Width="237" Click="goToLogin" Height="30"/>
@@ -14,6 +15,7 @@
         <Button x:Name="button1" Content="Register" HorizontalAlignment="Left" Margin="52,296,0,0" VerticalAlignment="Top" Width="237" Click="GoToRegister" Height="30"/>
         <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="98,431,0,-39" TextWrapping="Wrap" Text="Buga Ciprian Aurelian 2016." VerticalAlignment="Top"/>
 
+    </Grid>
     </Grid>
 
 </Window>

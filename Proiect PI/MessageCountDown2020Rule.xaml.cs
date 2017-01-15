@@ -57,8 +57,10 @@ namespace Proiect_PI
         {
             if (Seconds == 0)
             {
+                timer.Stop();
                 System.Media.SystemSounds.Asterisk.Play();
                 mainFrame.Navigate(new Rule2020TimerPage(ref mainFrame));
+                
             }
             else
             {

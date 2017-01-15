@@ -25,12 +25,22 @@ namespace Proiect_PI
     public partial class NoteListView : Page
     {
         readonly ObservableCollection<Note> notes = new ObservableCollection<Note>();
+        private string errorVisibility;
 
         public NoteListView()
         {
-            InitializeComponent();
             DataContext = this;
             LoadList();
+            if (notes.Count == 0)
+                errorVisibility = "Visible";
+            else
+                errorVisibility = "Hidden";
+            InitializeComponent();
+        }
+
+        public string ErrorVisibility
+        {
+            get { return errorVisibility; }
         }
 
         public ObservableCollection<Note> ListNote

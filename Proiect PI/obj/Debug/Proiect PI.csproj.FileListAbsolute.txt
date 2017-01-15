@@ -76,3 +76,15 @@ C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Rule2020TimerPage.bam
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\MessageCountDown2020Rule.g.cs
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\MessageCountDown2020Rule.baml
 C:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\img\Rule202020_Infographic.png
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\System.Windows.Controls.Input.Toolkit.dll
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\System.Windows.Controls.Layout.Toolkit.dll
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\WPFToolkit.dll
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Themes\MetroDark\MetroDark.MSControls.Core.Implicit.baml
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Themes\MetroDark\MetroDark.MSControls.Toolkit.Implicit.baml
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Themes\MetroDark\Styles.Shared.baml
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Themes\MetroDark\Styles.WPF.baml
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\Themes\MetroDark\Theme.Colors.baml
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\App.baml
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\ReminderAlertWindow.g.cs
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\obj\Debug\ReminderAlertWindow.baml
+c:\Users\Aurelian\Documents\ProiectPi\Proiect PI\bin\Debug\img\delete.png

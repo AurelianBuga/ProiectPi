@@ -11,25 +11,28 @@
       Height="424"
       ShowsNavigationUI = "False"
       DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
 
-    <ListBox Name="linkList" HorizontalContentAlignment="Stretch" ItemsSource="{Binding LinkList}">
-        <ListBox.ItemTemplate>
-            <DataTemplate>
-                <Grid Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="330"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="20"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding Path = NrOrd}" VerticalAlignment="Top" FontSize="15"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Left" Margin="20,0,0,0" Text="{Binding Path = PreviewText}" VerticalAlignment="Top" FontSize="15"/>
-                    <TextBlock Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding Path = Date}" VerticalAlignment="Top" FontSize="15"/>
-                </Grid>
-            </DataTemplate>
-        </ListBox.ItemTemplate>
-    </ListBox>
+        <ListBox Name="linkList" HorizontalContentAlignment="Stretch" ItemsSource="{Binding LinkList}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="330"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding Path = NrOrd}" VerticalAlignment="Top" FontSize="15"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Left" Margin="20,0,0,0" Text="{Binding Path = PreviewText}" VerticalAlignment="Top" FontSize="15"/>
+                        <TextBlock Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding Path = Date}" VerticalAlignment="Top" FontSize="15"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="70,169,0,0" TextWrapping="Wrap" Text="Upss... No data found." VerticalAlignment="Top" Height="119" Width="416" FontSize="40" Foreground="Gray" Visibility="{Binding Path=ErrorVisibility}"/>
+    </Grid>
 </Page>

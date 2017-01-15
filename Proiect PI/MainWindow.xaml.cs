@@ -27,49 +27,63 @@ namespace Proiect_PI
 {
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly static MainWindow mainWIndowInstance = new MainWindow();
+
+        private ReminderListView reminderList;
+        private NoteListView noteList;
+        private ToDoListView toDoList;
+        private LinkListView linkList;
+        private TimerSetPage timerSetPage; 
+
+        private MainWindow()
         {
             InitializeComponent();
             MainFrame.Navigate(new WelcomePage());
+            reminderList = new ReminderListView();
+            noteList = new NoteListView();
+            toDoList = new ToDoListView();
+            linkList = new LinkListView();
+            timerSetPage = new TimerSetPage(ref MainFrame);
+        }
+
+        public static MainWindow MainWIndowInstance
+        {
+            get
+            {
+                return mainWIndowInstance;
+            }
+        }
+
+        public ReminderListView ReminderList
+        {
+            get { return reminderList; }
         }
 
         private void ViewReminderList(object sender, RoutedEventArgs e)
         {
-            if(!(MainFrame.Content is ReminderListView))
-            {
-                MainFrame.Navigate(new ReminderListView());
-            }     
+                MainFrame.Navigate(reminderList);   
         }
 
         private void ViewNoteList(object sender, RoutedEventArgs e)
         {
-            if (!(MainFrame.Content is NoteListView))
-            {
-                MainFrame.Navigate(new NoteListView());
-            }
+                MainFrame.Navigate(noteList);
         }
 
         private void ViewToDoList(object sender, RoutedEventArgs e)
         {
-            if (!(MainFrame.Content is ToDoListView))
-            {
-                MainFrame.Navigate(new ToDoListView());
-            }
+                MainFrame.Navigate(toDoList);
         }
 
         private void ViewLinkList(object sender, RoutedEventArgs e)
         {
-            if (!(MainFrame.Content is LinkListView))
-            {
-                MainFrame.Navigate(new LinkListView());
-            }
+                MainFrame.Navigate(linkList);
         }
 
         private void ViewTimer(object sender, RoutedEventArgs e)
         {
             if ((!(MainFrame.Content is TimerSetPage)) && (!(MainFrame.Content is TimerPage)) && (!(MainFrame.Content is MessageCountDown2020Rule)) && (!(MainFrame.Content is Rule2020TimerPage)))
             {
-                MainFrame.Navigate(new TimerSetPage(ref MainFrame));
+                MainFrame.Navigate(timerSetPage);
             }
         }
 
@@ -77,7 +91,7 @@ namespace Proiect_PI
         {
             if (!AddReminderInfo.isOpn)
             {
-                AddReminderInfo remWindow = new AddReminderInfo(ref MainFrame);
+                AddReminderInfo remWindow = new AddReminderInfo(/*ref MainFrame ,*/ ref reminderList);
                 remWindow.Show();
             }
         }
@@ -117,7 +131,7 @@ namespace Proiect_PI
                 //apare window pentru introducerea datelor
                 if (!AddReminderInfo.isOpn)
                 {
-                    AddReminderInfo remWindow = new AddReminderInfo(ref MainFrame);
+                    AddReminderInfo remWindow = new AddReminderInfo(/*ref MainFrame ,*/ ref reminderList);
                     remWindow.Show();
                 }  
             }
@@ -163,7 +177,11 @@ namespace Proiect_PI
         {
             MainFrame.Navigate(new TimerSetPage(ref MainFrame));
         }
-        
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
 

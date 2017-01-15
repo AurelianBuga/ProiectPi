@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Proiect_PI"
         mc:Ignorable="d"
         Title="AddNoteInfo" Height="300" Width="438.559">
-    <Grid>
+    <Grid Background="Gray">
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="15,10,0,0" TextWrapping="Wrap" Text="Title" VerticalAlignment="Top"/>
         <TextBox x:Name="title" HorizontalAlignment="Left" Height="23" Margin="15,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="title_TextChanged" Text="Title..." GotFocus="title_GotFocus"/>
         <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="15,72,0,0" TextWrapping="Wrap" Text="Text" VerticalAlignment="Top"/>
